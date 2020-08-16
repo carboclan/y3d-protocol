@@ -603,6 +603,12 @@ contract LPTokenWrapper {
     using SafeERC20 for IERC20;
 
     IERC20 public weth = IERC20(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
+    
+    // p3d
+    uint256 constant internal magnitude = 2**64;
+    uint256 internal ponziRatio = 20; // 5% at the beginning
+    mapping(address => int256) internal payoutsTo;
+    uint256 internal profitPerShare;
 
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
@@ -615,16 +621,52 @@ contract LPTokenWrapper {
         return _balances[account];
     }
 
-    function stake(uint256 amount) public {
+    function dividendsOf(address _customerAddress)
+        view
+        public
+        returns(uint256)
+    {
+        return (uint256) ((int256)(profitPerShare * _balances[_customerAddress]) - payoutsTo[_customerAddress]) / magnitude;
+    }    
+
+    function claim() public {
+        uint256 delta = dividendsOf(msg.sender);
+        _balances[msg.sender] += delta;
+        payoutsTo[msg.sender] = (int256) (profitPerShare * _balances[msg.sender]);
+    }    
+
+    function stake(uint256 amount) public {       
+        // Tells the contract that the buyer doesn't deserve dividends for the tokens before they owned them;
+        //really i know you think you do but you don't
+        int256 _updatedPayouts = (int256) ((profitPerShare * amount));
+        payoutsTo[msg.sender] += _updatedPayouts;
+
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
         weth.safeTransferFrom(msg.sender, address(this), amount);
     }
 
     function withdraw(uint256 amount) public {
+        // russian hackers BTFO
+        // require(amount <= _balances[msg.sender]);
+        // 0?
+
+        uint256 _dividends = amount.div(ponziRatio);
+        uint256 _taxedAmount = amount.sub(_dividends);
+
+        // update dividends tracker
+        int256 _updatedPayouts = (int256) (profitPerShare * amount + (_taxedAmount * magnitude));
+        payoutsTo[msg.sender] -= _updatedPayouts;
+
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
-        weth.safeTransfer(msg.sender, amount);
+        weth.safeTransfer(msg.sender, amount);         
+
+        // dividing by zero is a bad idea
+        if (_totalSupply > 0) {
+            // update the amount of dividends per token
+            profitPerShare = profitPerShare.add((_dividends * magnitude) / _totalSupply);
+        }
     }
 }
 

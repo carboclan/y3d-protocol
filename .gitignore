@@ -1,3 +1,7 @@
 node_modules
 .env
 wrangler.toml
+.secret
+.secret1
+.secret2
+.secret3

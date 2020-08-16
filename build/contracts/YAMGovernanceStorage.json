@@ -105,25 +105,25 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"DELEGATION_TYPEHASH\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"DOMAIN_TYPEHASH\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"name\":\"checkpoints\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"fromBlock\",\"type\":\"uint32\"},{\"internalType\":\"uint256\",\"name\":\"votes\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"numCheckpoints\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/brockelmore/YAM/contracts/token/YAMGovernanceStorage.sol\":\"YAMGovernanceStorage\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":50000},\"remappings\":[]},\"sources\":{\"/Users/brockelmore/YAM/contracts/token/YAMGovernanceStorage.sol\":{\"keccak256\":\"0x337e9c44bf683ce14c7299e6a59db83f4b1468d75bead7b716cb563ed3cabc39\",\"urls\":[\"bzz-raw://36c77e72c9aad315991ef2eebb85b8ff69bc27a1628468228b940d02f07b623f\",\"dweb:/ipfs/QmcnuBzdk2qhB49NrwMZwhhGqNKRs7cjALqzcnJwTE9ECx\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b506103c1806100206000396000f3fe608060405234801561001057600080fd5b50600436106100675760003560e01c80637ecebe00116100505780637ecebe00146100aa578063e7a324dc146100bd578063f1127ed8146100c557610067565b806320606b701461006c5780636fcfff451461008a575b600080fd5b6100746100e6565b60405161008191906102eb565b60405180910390f35b61009d610098366004610179565b6100fd565b60405161008191906102f9565b6100746100b8366004610179565b610115565b610074610127565b6100d86100d336600461019f565b610133565b604051610081929190610307565b6040516100f2906102d5565b604051809103902081565b60026020526000908152604090205463ffffffff1681565b60036020526000908152604090205481565b6040516100f2906102e0565b60016020818152600093845260408085209091529183529120805491015463ffffffff9091169082565b80356101688161035e565b92915050565b803561016881610375565b60006020828403121561018b57600080fd5b6000610197848461015d565b949350505050565b600080604083850312156101b257600080fd5b60006101be858561015d565b92505060206101cf8582860161016e565b9150509250929050565b6101e281610339565b82525050565b60006101f5604383610329565b7f454950373132446f6d61696e28737472696e67206e616d652c75696e7432353681527f20636861696e49642c6164647265737320766572696679696e67436f6e74726160208201527f6374290000000000000000000000000000000000000000000000000000000000604082015260430192915050565b600061027a603a83610329565b7f44656c65676174696f6e28616464726573732064656c6567617465652c75696e81527f74323536206e6f6e63652c75696e7432353620657870697279290000000000006020820152603a0192915050565b6101e281610355565b6000610168826101e8565b60006101688261026d565b6020810161016882846101d9565b6020810161016882846102cc565b6040810161031582856102cc565b61032260208301846101d9565b9392505050565b919050565b60006101688261033c565b90565b73ffffffffffffffffffffffffffffffffffffffff1690565b63ffffffff1690565b6103678161032e565b811461037257600080fd5b50565b6103678161035556fea365627a7a723158202c0c4076d587bcb4fbee9bc79dee18f3c5d9ac3d971beb1429851be0d2cea0156c6578706572696d656e74616cf564736f6c63430005110040",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100675760003560e01c80637ecebe00116100505780637ecebe00146100aa578063e7a324dc146100bd578063f1127ed8146100c557610067565b806320606b701461006c5780636fcfff451461008a575b600080fd5b6100746100e6565b60405161008191906102eb565b60405180910390f35b61009d610098366004610179565b6100fd565b60405161008191906102f9565b6100746100b8366004610179565b610115565b610074610127565b6100d86100d336600461019f565b610133565b604051610081929190610307565b6040516100f2906102d5565b604051809103902081565b60026020526000908152604090205463ffffffff1681565b60036020526000908152604090205481565b6040516100f2906102e0565b60016020818152600093845260408085209091529183529120805491015463ffffffff9091169082565b80356101688161035e565b92915050565b803561016881610375565b60006020828403121561018b57600080fd5b6000610197848461015d565b949350505050565b600080604083850312156101b257600080fd5b60006101be858561015d565b92505060206101cf8582860161016e565b9150509250929050565b6101e281610339565b82525050565b60006101f5604383610329565b7f454950373132446f6d61696e28737472696e67206e616d652c75696e7432353681527f20636861696e49642c6164647265737320766572696679696e67436f6e74726160208201527f6374290000000000000000000000000000000000000000000000000000000000604082015260430192915050565b600061027a603a83610329565b7f44656c65676174696f6e28616464726573732064656c6567617465652c75696e81527f74323536206e6f6e63652c75696e7432353620657870697279290000000000006020820152603a0192915050565b6101e281610355565b6000610168826101e8565b60006101688261026d565b6020810161016882846101d9565b6020810161016882846102cc565b6040810161031582856102cc565b61032260208301846101d9565b9392505050565b919050565b60006101688261033c565b90565b73ffffffffffffffffffffffffffffffffffffffff1690565b63ffffffff1690565b6103678161032e565b811461037257600080fd5b50565b6103678161035556fea365627a7a723158202c0c4076d587bcb4fbee9bc79dee18f3c5d9ac3d971beb1429851be0d2cea0156c6578706572696d656e74616cf564736f6c63430005110040",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"DELEGATION_TYPEHASH\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"DOMAIN_TYPEHASH\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"name\":\"checkpoints\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"fromBlock\",\"type\":\"uint32\"},{\"internalType\":\"uint256\",\"name\":\"votes\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"numCheckpoints\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/minakokojima/Documents/GitHub/my-yam-protocol/contracts/token/YAMGovernanceStorage.sol\":\"YAMGovernanceStorage\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/minakokojima/Documents/GitHub/my-yam-protocol/contracts/token/YAMGovernanceStorage.sol\":{\"keccak256\":\"0x337e9c44bf683ce14c7299e6a59db83f4b1468d75bead7b716cb563ed3cabc39\",\"urls\":[\"bzz-raw://36c77e72c9aad315991ef2eebb85b8ff69bc27a1628468228b940d02f07b623f\",\"dweb:/ipfs/QmcnuBzdk2qhB49NrwMZwhhGqNKRs7cjALqzcnJwTE9ECx\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506104f7806100206000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c806320606b701461005c5780636fcfff451461007a5780637ecebe00146100aa578063e7a324dc146100da578063f1127ed8146100f8575b600080fd5b610064610129565b60405161007191906103ab565b60405180910390f35b610094600480360361008f91908101906101fd565b610140565b6040516100a191906103e1565b60405180910390f35b6100c460048036036100bf91908101906101fd565b610163565b6040516100d191906103c6565b60405180910390f35b6100e261017b565b6040516100ef91906103ab565b60405180910390f35b610112600480360361010d9190810190610226565b610192565b6040516101209291906103fc565b60405180910390f35b60405161013590610381565b604051809103902081565b60026020528060005260406000206000915054906101000a900463ffffffff1681565b60036020528060005260406000206000915090505481565b60405161018790610396565b604051809103902081565b6001602052816000526040600020602052806000526040600020600091509150508060000160009054906101000a900463ffffffff16908060010154905082565b6000813590506101e281610486565b92915050565b6000813590506101f78161049d565b92915050565b60006020828403121561020f57600080fd5b600061021d848285016101d3565b91505092915050565b6000806040838503121561023957600080fd5b6000610247858286016101d3565b9250506020610258858286016101e8565b9150509250929050565b61026b81610442565b82525050565b600061027e604383610425565b91507f454950373132446f6d61696e28737472696e67206e616d652c75696e7432353660008301527f20636861696e49642c6164647265737320766572696679696e67436f6e74726160208301527f63742900000000000000000000000000000000000000000000000000000000006040830152604382019050919050565b600061030a603a83610425565b91507f44656c65676174696f6e28616464726573732064656c6567617465652c75696e60008301527f74323536206e6f6e63652c75696e7432353620657870697279290000000000006020830152603a82019050919050565b61036c8161046c565b82525050565b61037b81610476565b82525050565b600061038c82610271565b9150819050919050565b60006103a1826102fd565b9150819050919050565b60006020820190506103c06000830184610262565b92915050565b60006020820190506103db6000830184610363565b92915050565b60006020820190506103f66000830184610372565b92915050565b60006040820190506104116000830185610372565b61041e6020830184610363565b9392505050565b600081905092915050565b600061043b8261044c565b9050919050565b6000819050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b600063ffffffff82169050919050565b61048f81610430565b811461049a57600080fd5b50565b6104a681610476565b81146104b157600080fd5b5056fea365627a7a7231582047552c3ef4e7bdde6fd2e05d55f356a8324fe5c826f403fc6f9e4609bb79c8096c6578706572696d656e74616cf564736f6c63430005110040",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100575760003560e01c806320606b701461005c5780636fcfff451461007a5780637ecebe00146100aa578063e7a324dc146100da578063f1127ed8146100f8575b600080fd5b610064610129565b60405161007191906103ab565b60405180910390f35b610094600480360361008f91908101906101fd565b610140565b6040516100a191906103e1565b60405180910390f35b6100c460048036036100bf91908101906101fd565b610163565b6040516100d191906103c6565b60405180910390f35b6100e261017b565b6040516100ef91906103ab565b60405180910390f35b610112600480360361010d9190810190610226565b610192565b6040516101209291906103fc565b60405180910390f35b60405161013590610381565b604051809103902081565b60026020528060005260406000206000915054906101000a900463ffffffff1681565b60036020528060005260406000206000915090505481565b60405161018790610396565b604051809103902081565b6001602052816000526040600020602052806000526040600020600091509150508060000160009054906101000a900463ffffffff16908060010154905082565b6000813590506101e281610486565b92915050565b6000813590506101f78161049d565b92915050565b60006020828403121561020f57600080fd5b600061021d848285016101d3565b91505092915050565b6000806040838503121561023957600080fd5b6000610247858286016101d3565b9250506020610258858286016101e8565b9150509250929050565b61026b81610442565b82525050565b600061027e604383610425565b91507f454950373132446f6d61696e28737472696e67206e616d652c75696e7432353660008301527f20636861696e49642c6164647265737320766572696679696e67436f6e74726160208301527f63742900000000000000000000000000000000000000000000000000000000006040830152604382019050919050565b600061030a603a83610425565b91507f44656c65676174696f6e28616464726573732064656c6567617465652c75696e60008301527f74323536206e6f6e63652c75696e7432353620657870697279290000000000006020830152603a82019050919050565b61036c8161046c565b82525050565b61037b81610476565b82525050565b600061038c82610271565b9150819050919050565b60006103a1826102fd565b9150819050919050565b60006020820190506103c06000830184610262565b92915050565b60006020820190506103db6000830184610363565b92915050565b60006020820190506103f66000830184610372565b92915050565b60006040820190506104116000830185610372565b61041e6020830184610363565b9392505050565b600081905092915050565b600061043b8261044c565b9050919050565b6000819050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b600063ffffffff82169050919050565b61048f81610430565b811461049a57600080fd5b50565b6104a681610476565b81146104b157600080fd5b5056fea365627a7a7231582047552c3ef4e7bdde6fd2e05d55f356a8324fe5c826f403fc6f9e4609bb79c8096c6578706572696d656e74616cf564736f6c63430005110040",
   "sourceMap": "59:1076:26:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;59:1076:26;;;;;;;",
-  "deployedSourceMap": "59:1076:26:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;59:1076:26;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;685:122;;;:::i;:::-;;;;;;;;;;;;;;;;566:49;;;;;;;;;:::i;:::-;;;;;;;;1093:39;;;;;;;;;:::i;898:117::-;;;:::i;430:70::-;;;;;;;;;:::i;:::-;;;;;;;;;685:122;727:80;;;;;;;;;;;;;;685:122;:::o;566:49::-;;;;;;;;;;;;;;;:::o;1093:39::-;;;;;;;;;;;;;:::o;898:117::-;944:71;;;;;;430:70;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;5:130:-1:-;72:20;;97:33;72:20;97:33;;;57:78;;;;;142:128;208:20;;233:32;208:20;233:32;;277:241;;381:2;369:9;360:7;356:23;352:32;349:2;;;397:1;394;387:12;349:2;432:1;449:53;494:7;474:9;449:53;;;439:63;343:175;-1:-1;;;;343:175;525:364;;;645:2;633:9;624:7;620:23;616:32;613:2;;;661:1;658;651:12;613:2;696:1;713:53;758:7;738:9;713:53;;;703:63;;675:97;803:2;821:52;865:7;856:6;845:9;841:22;821:52;;;811:62;;782:97;607:282;;;;;;896:113;979:24;997:5;979:24;;;974:3;967:37;961:48;;;1017:477;;1195:85;1277:2;1272:3;1195:85;;;1313:34;1293:55;;1382:34;1377:2;1368:12;;1361:56;1451:5;1446:2;1437:12;;1430:27;1485:2;1476:12;;1181:313;-1:-1;;1181:313;1503:431;;1681:85;1763:2;1758:3;1681:85;;;1799:34;1779:55;;1868:28;1863:2;1854:12;;1847:50;1925:2;1916:12;;1667:267;-1:-1;;1667:267;2062:110;2143:23;2160:5;2143:23;;2179:372;;2378:148;2522:3;2378:148;;2558:372;;2757:148;2901:3;2757:148;;2937:213;3055:2;3040:18;;3069:71;3044:9;3113:6;3069:71;;3377:209;3493:2;3478:18;;3507:69;3482:9;3549:6;3507:69;;3593:320;3737:2;3722:18;;3751:69;3726:9;3793:6;3751:69;;;3831:72;3899:2;3888:9;3884:18;3875:6;3831:72;;;3708:205;;;;;;3921:145;4057:3;4035:31;-1:-1;4035:31;4074:91;;4136:24;4154:5;4136:24;;4172:72;4234:5;4217:27;4251:121;4324:42;4313:54;;4296:76;4458:88;4530:10;4519:22;;4502:44;4553:117;4622:24;4640:5;4622:24;;;4615:5;4612:35;4602:2;;4661:1;4658;4651:12;4602:2;4596:74;;4677:115;4745:23;4762:5;4745:23;",
+  "deployedSourceMap": "59:1076:26:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;59:1076:26;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;685:122;;;:::i;:::-;;;;;;;;;;;;;;;;566:49;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;1093:39;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;898:117;;;:::i;:::-;;;;;;;;;;;;;;;;430:70;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;685:122;727:80;;;;;;;;;;;;;;685:122;:::o;566:49::-;;;;;;;;;;;;;;;;;;;;;;:::o;1093:39::-;;;;;;;;;;;;;;;;;:::o;898:117::-;944:71;;;;;;;;;;;;;;898:117;:::o;430:70::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;5:130:-1:-;;85:6;72:20;63:29;;97:33;124:5;97:33;;;57:78;;;;;142:128;;221:6;208:20;199:29;;233:32;259:5;233:32;;;193:77;;;;;277:241;;381:2;369:9;360:7;356:23;352:32;349:2;;;397:1;394;387:12;349:2;432:1;449:53;494:7;485:6;474:9;470:22;449:53;;;439:63;;411:97;343:175;;;;;525:364;;;645:2;633:9;624:7;620:23;616:32;613:2;;;661:1;658;651:12;613:2;696:1;713:53;758:7;749:6;738:9;734:22;713:53;;;703:63;;675:97;803:2;821:52;865:7;856:6;845:9;841:22;821:52;;;811:62;;782:97;607:282;;;;;;896:113;979:24;997:5;979:24;;;974:3;967:37;961:48;;;1017:477;;1195:85;1277:2;1272:3;1195:85;;;1188:92;;1313:34;1309:1;1304:3;1300:11;1293:55;1382:34;1377:2;1372:3;1368:12;1361:56;1451:5;1446:2;1441:3;1437:12;1430:27;1485:2;1480:3;1476:12;1469:19;;1181:313;;;;1503:431;;1681:85;1763:2;1758:3;1681:85;;;1674:92;;1799:34;1795:1;1790:3;1786:11;1779:55;1868:28;1863:2;1858:3;1854:12;1847:50;1925:2;1920:3;1916:12;1909:19;;1667:267;;;;1942:113;2025:24;2043:5;2025:24;;;2020:3;2013:37;2007:48;;;2062:110;2143:23;2160:5;2143:23;;;2138:3;2131:36;2125:47;;;2179:372;;2378:148;2522:3;2378:148;;;2371:155;;2543:3;2536:10;;2359:192;;;;2558:372;;2757:148;2901:3;2757:148;;;2750:155;;2922:3;2915:10;;2738:192;;;;2937:213;;3055:2;3044:9;3040:18;3032:26;;3069:71;3137:1;3126:9;3122:17;3113:6;3069:71;;;3026:124;;;;;3157:213;;3275:2;3264:9;3260:18;3252:26;;3289:71;3357:1;3346:9;3342:17;3333:6;3289:71;;;3246:124;;;;;3377:209;;3493:2;3482:9;3478:18;3470:26;;3507:69;3573:1;3562:9;3558:17;3549:6;3507:69;;;3464:122;;;;;3593:320;;3737:2;3726:9;3722:18;3714:26;;3751:69;3817:1;3806:9;3802:17;3793:6;3751:69;;;3831:72;3899:2;3888:9;3884:18;3875:6;3831:72;;;3708:205;;;;;;3921:145;;4057:3;4042:18;;4035:31;;;;;4074:91;;4136:24;4154:5;4136:24;;;4125:35;;4119:46;;;;4172:72;;4234:5;4223:16;;4217:27;;;;4251:121;;4324:42;4317:5;4313:54;4302:65;;4296:76;;;;4379:72;;4441:5;4430:16;;4424:27;;;;4458:88;;4530:10;4523:5;4519:22;4508:33;;4502:44;;;;4553:117;4622:24;4640:5;4622:24;;;4615:5;4612:35;4602:2;;4661:1;4658;4651:12;4602:2;4596:74;;4677:115;4745:23;4762:5;4745:23;;;4738:5;4735:34;4725:2;;4783:1;4780;4773:12;4725:2;4719:73;",
   "source": "pragma solidity 0.5.17;\npragma experimental ABIEncoderV2;\n\ncontract YAMGovernanceStorage {\n    /// @notice A record of each accounts delegate\n    mapping (address => address) internal _delegates;\n\n    /// @notice A checkpoint for marking number of votes from a given block\n    struct Checkpoint {\n        uint32 fromBlock;\n        uint256 votes;\n    }\n\n    /// @notice A record of votes checkpoints for each account, by index\n    mapping (address => mapping (uint32 => Checkpoint)) public checkpoints;\n\n    /// @notice The number of checkpoints for each account\n    mapping (address => uint32) public numCheckpoints;\n\n    /// @notice The EIP-712 typehash for the contract's domain\n    bytes32 public constant DOMAIN_TYPEHASH = keccak256(\"EIP712Domain(string name,uint256 chainId,address verifyingContract)\");\n\n    /// @notice The EIP-712 typehash for the delegation struct used by the contract\n    bytes32 public constant DELEGATION_TYPEHASH = keccak256(\"Delegation(address delegatee,uint256 nonce,uint256 expiry)\");\n\n    /// @notice A record of states for signing / validating signatures\n    mapping (address => uint) public nonces;\n}\n",
-  "sourcePath": "/Users/brockelmore/YAM/contracts/token/YAMGovernanceStorage.sol",
+  "sourcePath": "/Users/minakokojima/Documents/GitHub/my-yam-protocol/contracts/token/YAMGovernanceStorage.sol",
   "ast": {
-    "absolutePath": "/Users/brockelmore/YAM/contracts/token/YAMGovernanceStorage.sol",
+    "absolutePath": "/Users/minakokojima/Documents/GitHub/my-yam-protocol/contracts/token/YAMGovernanceStorage.sol",
     "exportedSymbols": {
       "YAMGovernanceStorage": [
-        18944
+        19190
       ]
     },
-    "id": 18945,
+    "id": 19191,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 18909,
+        "id": 19155,
         "literals": [
           "solidity",
           "0.5",
@@ -133,7 +133,7 @@
         "src": "0:23:26"
       },
       {
-        "id": 18910,
+        "id": 19156,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -147,19 +147,19 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 18944,
+        "id": 19190,
         "linearizedBaseContracts": [
-          18944
+          19190
         ],
         "name": "YAMGovernanceStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 18914,
+            "id": 19160,
             "name": "_delegates",
             "nodeType": "VariableDeclaration",
-            "scope": 18944,
+            "scope": 19190,
             "src": "146:48:26",
             "stateVariable": true,
             "storageLocation": "default",
@@ -168,9 +168,9 @@
               "typeString": "mapping(address => address)"
             },
             "typeName": {
-              "id": 18913,
+              "id": 19159,
               "keyType": {
-                "id": 18911,
+                "id": 19157,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "155:7:26",
@@ -186,7 +186,7 @@
                 "typeString": "mapping(address => address)"
               },
               "valueType": {
-                "id": 18912,
+                "id": 19158,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "166:7:26",
@@ -202,14 +202,14 @@
           },
           {
             "canonicalName": "YAMGovernanceStorage.Checkpoint",
-            "id": 18919,
+            "id": 19165,
             "members": [
               {
                 "constant": false,
-                "id": 18916,
+                "id": 19162,
                 "name": "fromBlock",
                 "nodeType": "VariableDeclaration",
-                "scope": 18919,
+                "scope": 19165,
                 "src": "305:16:26",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -218,7 +218,7 @@
                   "typeString": "uint32"
                 },
                 "typeName": {
-                  "id": 18915,
+                  "id": 19161,
                   "name": "uint32",
                   "nodeType": "ElementaryTypeName",
                   "src": "305:6:26",
@@ -232,10 +232,10 @@
               },
               {
                 "constant": false,
-                "id": 18918,
+                "id": 19164,
                 "name": "votes",
                 "nodeType": "VariableDeclaration",
-                "scope": 18919,
+                "scope": 19165,
                 "src": "331:13:26",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -244,7 +244,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 18917,
+                  "id": 19163,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
                   "src": "331:7:26",
@@ -259,27 +259,27 @@
             ],
             "name": "Checkpoint",
             "nodeType": "StructDefinition",
-            "scope": 18944,
+            "scope": 19190,
             "src": "277:74:26",
             "visibility": "public"
           },
           {
             "constant": false,
-            "id": 18925,
+            "id": 19171,
             "name": "checkpoints",
             "nodeType": "VariableDeclaration",
-            "scope": 18944,
+            "scope": 19190,
             "src": "430:70:26",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint32_$_t_struct$_Checkpoint_$18919_storage_$_$",
+              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint32_$_t_struct$_Checkpoint_$19165_storage_$_$",
               "typeString": "mapping(address => mapping(uint32 => struct YAMGovernanceStorage.Checkpoint))"
             },
             "typeName": {
-              "id": 18924,
+              "id": 19170,
               "keyType": {
-                "id": 18920,
+                "id": 19166,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "439:7:26",
@@ -291,13 +291,13 @@
               "nodeType": "Mapping",
               "src": "430:51:26",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint32_$_t_struct$_Checkpoint_$18919_storage_$_$",
+                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint32_$_t_struct$_Checkpoint_$19165_storage_$_$",
                 "typeString": "mapping(address => mapping(uint32 => struct YAMGovernanceStorage.Checkpoint))"
               },
               "valueType": {
-                "id": 18923,
+                "id": 19169,
                 "keyType": {
-                  "id": 18921,
+                  "id": 19167,
                   "name": "uint32",
                   "nodeType": "ElementaryTypeName",
                   "src": "459:6:26",
@@ -309,18 +309,18 @@
                 "nodeType": "Mapping",
                 "src": "450:30:26",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_uint32_$_t_struct$_Checkpoint_$18919_storage_$",
+                  "typeIdentifier": "t_mapping$_t_uint32_$_t_struct$_Checkpoint_$19165_storage_$",
                   "typeString": "mapping(uint32 => struct YAMGovernanceStorage.Checkpoint)"
                 },
                 "valueType": {
                   "contractScope": null,
-                  "id": 18922,
+                  "id": 19168,
                   "name": "Checkpoint",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 18919,
+                  "referencedDeclaration": 19165,
                   "src": "469:10:26",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Checkpoint_$18919_storage_ptr",
+                    "typeIdentifier": "t_struct$_Checkpoint_$19165_storage_ptr",
                     "typeString": "struct YAMGovernanceStorage.Checkpoint"
                   }
                 }
@@ -331,10 +331,10 @@
           },
           {
             "constant": false,
-            "id": 18929,
+            "id": 19175,
             "name": "numCheckpoints",
             "nodeType": "VariableDeclaration",
-            "scope": 18944,
+            "scope": 19190,
             "src": "566:49:26",
             "stateVariable": true,
             "storageLocation": "default",
@@ -343,9 +343,9 @@
               "typeString": "mapping(address => uint32)"
             },
             "typeName": {
-              "id": 18928,
+              "id": 19174,
               "keyType": {
-                "id": 18926,
+                "id": 19172,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "575:7:26",
@@ -361,7 +361,7 @@
                 "typeString": "mapping(address => uint32)"
               },
               "valueType": {
-                "id": 18927,
+                "id": 19173,
                 "name": "uint32",
                 "nodeType": "ElementaryTypeName",
                 "src": "586:6:26",
@@ -376,10 +376,10 @@
           },
           {
             "constant": true,
-            "id": 18934,
+            "id": 19180,
             "name": "DOMAIN_TYPEHASH",
             "nodeType": "VariableDeclaration",
-            "scope": 18944,
+            "scope": 19190,
             "src": "685:122:26",
             "stateVariable": true,
             "storageLocation": "default",
@@ -388,7 +388,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 18930,
+              "id": 19176,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "685:7:26",
@@ -403,7 +403,7 @@
                 {
                   "argumentTypes": null,
                   "hexValue": "454950373132446f6d61696e28737472696e67206e616d652c75696e7432353620636861696e49642c6164647265737320766572696679696e67436f6e747261637429",
-                  "id": 18932,
+                  "id": 19178,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -426,18 +426,18 @@
                     "typeString": "literal_string \"EIP712Domain(string name,uint256 chainId,address verifyingContract)\""
                   }
                 ],
-                "id": 18931,
+                "id": 19177,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 19237,
+                "referencedDeclaration": 19483,
                 "src": "727:9:26",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
                   "typeString": "function (bytes memory) pure returns (bytes32)"
                 }
               },
-              "id": 18933,
+              "id": 19179,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -455,10 +455,10 @@
           },
           {
             "constant": true,
-            "id": 18939,
+            "id": 19185,
             "name": "DELEGATION_TYPEHASH",
             "nodeType": "VariableDeclaration",
-            "scope": 18944,
+            "scope": 19190,
             "src": "898:117:26",
             "stateVariable": true,
             "storageLocation": "default",
@@ -467,7 +467,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 18935,
+              "id": 19181,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "898:7:26",
@@ -482,7 +482,7 @@
                 {
                   "argumentTypes": null,
                   "hexValue": "44656c65676174696f6e28616464726573732064656c6567617465652c75696e74323536206e6f6e63652c75696e743235362065787069727929",
-                  "id": 18937,
+                  "id": 19183,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -505,18 +505,18 @@
                     "typeString": "literal_string \"Delegation(address delegatee,uint256 nonce,uint256 expiry)\""
                   }
                 ],
-                "id": 18936,
+                "id": 19182,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 19237,
+                "referencedDeclaration": 19483,
                 "src": "944:9:26",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
                   "typeString": "function (bytes memory) pure returns (bytes32)"
                 }
               },
-              "id": 18938,
+              "id": 19184,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -534,10 +534,10 @@
           },
           {
             "constant": false,
-            "id": 18943,
+            "id": 19189,
             "name": "nonces",
             "nodeType": "VariableDeclaration",
-            "scope": 18944,
+            "scope": 19190,
             "src": "1093:39:26",
             "stateVariable": true,
             "storageLocation": "default",
@@ -546,9 +546,9 @@
               "typeString": "mapping(address => uint256)"
             },
             "typeName": {
-              "id": 18942,
+              "id": 19188,
               "keyType": {
-                "id": 18940,
+                "id": 19186,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "1102:7:26",
@@ -564,7 +564,7 @@
                 "typeString": "mapping(address => uint256)"
               },
               "valueType": {
-                "id": 18941,
+                "id": 19187,
                 "name": "uint",
                 "nodeType": "ElementaryTypeName",
                 "src": "1113:4:26",
@@ -578,24 +578,24 @@
             "visibility": "public"
           }
         ],
-        "scope": 18945,
+        "scope": 19191,
         "src": "59:1076:26"
       }
     ],
     "src": "0:1136:26"
   },
   "legacyAST": {
-    "absolutePath": "/Users/brockelmore/YAM/contracts/token/YAMGovernanceStorage.sol",
+    "absolutePath": "/Users/minakokojima/Documents/GitHub/my-yam-protocol/contracts/token/YAMGovernanceStorage.sol",
     "exportedSymbols": {
       "YAMGovernanceStorage": [
-        18944
+        19190
       ]
     },
-    "id": 18945,
+    "id": 19191,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 18909,
+        "id": 19155,
         "literals": [
           "solidity",
           "0.5",
@@ -605,7 +605,7 @@
         "src": "0:23:26"
       },
       {
-        "id": 18910,
+        "id": 19156,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -619,19 +619,19 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 18944,
+        "id": 19190,
         "linearizedBaseContracts": [
-          18944
+          19190
         ],
         "name": "YAMGovernanceStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 18914,
+            "id": 19160,
             "name": "_delegates",
             "nodeType": "VariableDeclaration",
-            "scope": 18944,
+            "scope": 19190,
             "src": "146:48:26",
             "stateVariable": true,
             "storageLocation": "default",
@@ -640,9 +640,9 @@
               "typeString": "mapping(address => address)"
             },
             "typeName": {
-              "id": 18913,
+              "id": 19159,
               "keyType": {
-                "id": 18911,
+                "id": 19157,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "155:7:26",
@@ -658,7 +658,7 @@
                 "typeString": "mapping(address => address)"
               },
               "valueType": {
-                "id": 18912,
+                "id": 19158,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "166:7:26",
@@ -674,14 +674,14 @@
           },
           {
             "canonicalName": "YAMGovernanceStorage.Checkpoint",
-            "id": 18919,
+            "id": 19165,
             "members": [
               {
                 "constant": false,
-                "id": 18916,
+                "id": 19162,
                 "name": "fromBlock",
                 "nodeType": "VariableDeclaration",
-                "scope": 18919,
+                "scope": 19165,
                 "src": "305:16:26",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -690,7 +690,7 @@
                   "typeString": "uint32"
                 },
                 "typeName": {
-                  "id": 18915,
+                  "id": 19161,
                   "name": "uint32",
                   "nodeType": "ElementaryTypeName",
                   "src": "305:6:26",
@@ -704,10 +704,10 @@
               },
               {
                 "constant": false,
-                "id": 18918,
+                "id": 19164,
                 "name": "votes",
                 "nodeType": "VariableDeclaration",
-                "scope": 18919,
+                "scope": 19165,
                 "src": "331:13:26",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -716,7 +716,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 18917,
+                  "id": 19163,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
                   "src": "331:7:26",
@@ -731,27 +731,27 @@
             ],
             "name": "Checkpoint",
             "nodeType": "StructDefinition",
-            "scope": 18944,
+            "scope": 19190,
             "src": "277:74:26",
             "visibility": "public"
           },
           {
             "constant": false,
-            "id": 18925,
+            "id": 19171,
             "name": "checkpoints",
             "nodeType": "VariableDeclaration",
-            "scope": 18944,
+            "scope": 19190,
             "src": "430:70:26",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint32_$_t_struct$_Checkpoint_$18919_storage_$_$",
+              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint32_$_t_struct$_Checkpoint_$19165_storage_$_$",
               "typeString": "mapping(address => mapping(uint32 => struct YAMGovernanceStorage.Checkpoint))"
             },
             "typeName": {
-              "id": 18924,
+              "id": 19170,
               "keyType": {
-                "id": 18920,
+                "id": 19166,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "439:7:26",
@@ -763,13 +763,13 @@
               "nodeType": "Mapping",
               "src": "430:51:26",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint32_$_t_struct$_Checkpoint_$18919_storage_$_$",
+                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint32_$_t_struct$_Checkpoint_$19165_storage_$_$",
                 "typeString": "mapping(address => mapping(uint32 => struct YAMGovernanceStorage.Checkpoint))"
               },
               "valueType": {
-                "id": 18923,
+                "id": 19169,
                 "keyType": {
-                  "id": 18921,
+                  "id": 19167,
                   "name": "uint32",
                   "nodeType": "ElementaryTypeName",
                   "src": "459:6:26",
@@ -781,18 +781,18 @@
                 "nodeType": "Mapping",
                 "src": "450:30:26",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_uint32_$_t_struct$_Checkpoint_$18919_storage_$",
+                  "typeIdentifier": "t_mapping$_t_uint32_$_t_struct$_Checkpoint_$19165_storage_$",
                   "typeString": "mapping(uint32 => struct YAMGovernanceStorage.Checkpoint)"
                 },
                 "valueType": {
                   "contractScope": null,
-                  "id": 18922,
+                  "id": 19168,
                   "name": "Checkpoint",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 18919,
+                  "referencedDeclaration": 19165,
                   "src": "469:10:26",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Checkpoint_$18919_storage_ptr",
+                    "typeIdentifier": "t_struct$_Checkpoint_$19165_storage_ptr",
                     "typeString": "struct YAMGovernanceStorage.Checkpoint"
                   }
                 }
@@ -803,10 +803,10 @@
           },
           {
             "constant": false,
-            "id": 18929,
+            "id": 19175,
             "name": "numCheckpoints",
             "nodeType": "VariableDeclaration",
-            "scope": 18944,
+            "scope": 19190,
             "src": "566:49:26",
             "stateVariable": true,
             "storageLocation": "default",
@@ -815,9 +815,9 @@
               "typeString": "mapping(address => uint32)"
             },
             "typeName": {
-              "id": 18928,
+              "id": 19174,
               "keyType": {
-                "id": 18926,
+                "id": 19172,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "575:7:26",
@@ -833,7 +833,7 @@
                 "typeString": "mapping(address => uint32)"
               },
               "valueType": {
-                "id": 18927,
+                "id": 19173,
                 "name": "uint32",
                 "nodeType": "ElementaryTypeName",
                 "src": "586:6:26",
@@ -848,10 +848,10 @@
           },
           {
             "constant": true,
-            "id": 18934,
+            "id": 19180,
             "name": "DOMAIN_TYPEHASH",
             "nodeType": "VariableDeclaration",
-            "scope": 18944,
+            "scope": 19190,
             "src": "685:122:26",
             "stateVariable": true,
             "storageLocation": "default",
@@ -860,7 +860,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 18930,
+              "id": 19176,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "685:7:26",
@@ -875,7 +875,7 @@
                 {
                   "argumentTypes": null,
                   "hexValue": "454950373132446f6d61696e28737472696e67206e616d652c75696e7432353620636861696e49642c6164647265737320766572696679696e67436f6e747261637429",
-                  "id": 18932,
+                  "id": 19178,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -898,18 +898,18 @@
                     "typeString": "literal_string \"EIP712Domain(string name,uint256 chainId,address verifyingContract)\""
                   }
                 ],
-                "id": 18931,
+                "id": 19177,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 19237,
+                "referencedDeclaration": 19483,
                 "src": "727:9:26",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
                   "typeString": "function (bytes memory) pure returns (bytes32)"
                 }
               },
-              "id": 18933,
+              "id": 19179,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -927,10 +927,10 @@
           },
           {
             "constant": true,
-            "id": 18939,
+            "id": 19185,
             "name": "DELEGATION_TYPEHASH",
             "nodeType": "VariableDeclaration",
-            "scope": 18944,
+            "scope": 19190,
             "src": "898:117:26",
             "stateVariable": true,
             "storageLocation": "default",
@@ -939,7 +939,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 18935,
+              "id": 19181,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "898:7:26",
@@ -954,7 +954,7 @@
                 {
                   "argumentTypes": null,
                   "hexValue": "44656c65676174696f6e28616464726573732064656c6567617465652c75696e74323536206e6f6e63652c75696e743235362065787069727929",
-                  "id": 18937,
+                  "id": 19183,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -977,18 +977,18 @@
                     "typeString": "literal_string \"Delegation(address delegatee,uint256 nonce,uint256 expiry)\""
                   }
                 ],
-                "id": 18936,
+                "id": 19182,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 19237,
+                "referencedDeclaration": 19483,
                 "src": "944:9:26",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
                   "typeString": "function (bytes memory) pure returns (bytes32)"
                 }
               },
-              "id": 18938,
+              "id": 19184,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -1006,10 +1006,10 @@
           },
           {
             "constant": false,
-            "id": 18943,
+            "id": 19189,
             "name": "nonces",
             "nodeType": "VariableDeclaration",
-            "scope": 18944,
+            "scope": 19190,
             "src": "1093:39:26",
             "stateVariable": true,
             "storageLocation": "default",
@@ -1018,9 +1018,9 @@
               "typeString": "mapping(address => uint256)"
             },
             "typeName": {
-              "id": 18942,
+              "id": 19188,
               "keyType": {
-                "id": 18940,
+                "id": 19186,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "1102:7:26",
@@ -1036,7 +1036,7 @@
                 "typeString": "mapping(address => uint256)"
               },
               "valueType": {
-                "id": 18941,
+                "id": 19187,
                 "name": "uint",
                 "nodeType": "ElementaryTypeName",
                 "src": "1113:4:26",
@@ -1050,7 +1050,7 @@
             "visibility": "public"
           }
         ],
-        "scope": 18945,
+        "scope": 19191,
         "src": "59:1076:26"
       }
     ],
@@ -1058,11 +1058,11 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.5.17+commit.d19bba13.Linux.g++"
+    "version": "0.5.17+commit.d19bba13.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.0.16",
-  "updatedAt": "2020-08-09T23:21:18.302Z",
+  "schemaVersion": "3.2.0",
+  "updatedAt": "2020-08-16T00:07:36.858Z",
   "devdoc": {
     "methods": {}
   },
