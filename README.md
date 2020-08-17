@@ -13,3 +13,19 @@ Unlike the origin POWH algorithm, there is no fee when stake, but when weak hand
 Much of this codebase is modified from existing works, including:
 - [YAM](https://yam.finance) - Yes, we fixed [the bug](https://medium.com/@yamfinance/save-yam-245598d81cec).
 - [P3D](https://powh.io) - The best ethereum contract ever.
+
+## Installation
+
+**ATTENTION**: If you are using macOS Catalina or above, plase install [node-gyp](https://github.com/nodejs/node-gyp) v7+ and set environment variable, read [Installation notes for macOS Catalina (v10.15)](https://github.com/nodejs/node-gyp/blob/master/macOS_Catalina.md) for more details.
+
+1. Install [ganache-cli](https://github.com/trufflesuite/ganache-cli):
+
+```shell
+    npm install -g ganache-cli
+```
+
+1. Install dependencies:
+
+```shell
+    npm install
+```
