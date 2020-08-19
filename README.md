@@ -1,4 +1,5 @@
-#  :satellite: Y3D Protocol :satellite:
+![Node.js CI](https://github.com/edmondhonda/y3d-protocol/workflows/Node.js%20CI/badge.svg)
+#  :satellite: Honda Protocol :satellite:
 
 ## TL;DR:
 
