@@ -92,7 +92,6 @@ async function main() {
     _print_link(`Unstake ${stakedYAmount} ${stakingTokenTicker}`, unstake);
     _print_link(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
     _print_link(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
-
     
     _print_link(`Exit`, exit);
 

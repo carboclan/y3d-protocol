@@ -41,6 +41,7 @@ npm install
 
 ### FE
 ```shell
+cd www
 python -m http.server --cgi 800
 ```
 

@@ -484,7 +484,7 @@ contract LPTokenWrapper {
 }
 
 contract y3dPool is LPTokenWrapper {
-    IERC20 public y3d = IERC20(0x2B4A32a1dE12cDDd4a4ea4656CcEB98db79bfF15);
+    IERC20 public y3d = IERC20(0xCFf15c78218d7E5c992C01e6244d2f9EFD6Ac3d1);
 
     uint256 public DURATION = 30 days;
     uint256 public periodFinish;
