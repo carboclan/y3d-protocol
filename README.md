@@ -4,6 +4,9 @@
 
 Y3D = [YAM](https://yam.finance) + [P3D](https://powh.io)
 
+## DEMO
+[https://y3d.netlify.app/](https://y3d.netlify.app/)
+
 ## Prequel 
 
 Liquidity token holder is the Prometheus of the DeFi economy, they take the risk of [impermanent loss](https://medium.com/@pintail/uniswap-a-good-deal-for-liquidity-providers-104c0b6816f2), there will be no DeFi logos today without their help. In order to reward those who take the risk, we proposal a new protocol to reward all LP token holders, and by the way, we make the underlying market more liquid by make the liquidity token less liquid. ;)
