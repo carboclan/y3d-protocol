@@ -1,19 +1,29 @@
 ![Node.js CI](https://github.com/edmondhonda/y3d-protocol/workflows/Node.js%20CI/badge.svg)
-#  :satellite: Honda Protocol :satellite:
+
+#  :satellite: Y3D Protocol :satellite:
 
 ## TL;DR:
 
 Y3D = [YAM](https://yam.finance) + [P3D](https://powh.io)
 
+## Prequel 
+
+Liquidity token holder is the Prometheus of the DeFi economy, they take the risk of [impermanent loss](https://medium.com/@pintail/uniswap-a-good-deal-for-liquidity-providers-104c0b6816f2), there will be no DeFi logos today without their help. In order to reward those who take the risk, we proposal a new protocol to reward all LP token holders, and by the way, make the liquidity market more stable. ;)
+
 ## How it works?
 
-We add POWH algorithm into liquidity mining. 
-Unlike the origin POWH algorithm, there is no fee when stake, but when weak hand decided to unstake their LP token, there will be an additional 5% fees which will be divide to all other miner as their POSH.
+We keep the Yeild Farming part(which we all like it) in Yam and introduce POWH algorithm into liquidity mining. **There will be an additional 5% fees each time when people withdraw their LP token, which will be divide to all other liquidity miner as their POLH(Proof-of-Long-time-Liquidity-Holder).**
+
+## The Distribution
+
+The y3d token itself which is completely useless. There is no governance, no premine, no dev fees, and no audit as well. Mining it at your own risk.
+
+We will selected some pools on uniswap at this moment to distribute them. Stay tuned.
 
 ## Attributions
 Much of this codebase is modified from existing works, including:
-- [YAM](https://yam.finance) - Yes, we fixed [the bug](https://medium.com/@yamfinance/save-yam-245598d81cec).
-- [P3D](https://powh.io) - The best ethereum contract ever.
+- [YAM](https://yam.finance)
+- [P3D](https://powh.io)
 
 ## Installation
 
@@ -22,11 +32,21 @@ Much of this codebase is modified from existing works, including:
 1. Install [ganache-cli](https://github.com/trufflesuite/ganache-cli):
 
 ```shell
-    npm install -g ganache-cli
+npm install -g ganache-cli
 ```
 
 1. Install dependencies:
 
 ```shell
-    npm install
+npm install
+```
+
+### FE
+```shell
+python -m http.server --cgi 800
+```
+
+### Contract
+```shell
+truffle deploy --network rinkeby
 ```

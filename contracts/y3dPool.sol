@@ -9,7 +9,7 @@
 /___/ \_, //_//_/\__//_//_/\__/ \__//_/ /_\_\
      /___/
 
-* Synthetix: YAMRewards.sol
+* Synthetix: y3dRewards.sol
 *
 * Docs: https://docs.synthetix.io/
 *
@@ -591,21 +591,20 @@ contract IRewardDistributionRecipient is Ownable {
 
 pragma solidity ^0.5.0;
 
-
-interface YAM {
-    function yamsScalingFactor() external returns (uint256);
-}
-
-
-
 contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public mkr = IERC20(0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2);
+    IERC20 public lpt;
 
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
+
+    uint256 public _profitPerShare; // x 1e18, monotonically increasing.
+    mapping(address => uint256) private _unrealized; // x 1e18
+    mapping(address => uint256) private _realized; // last paid _profitPerShare
+
+    event LPTPaid(address indexed user, uint256 profit);    
 
     function totalSupply() public view returns (uint256) {
         return _totalSupply;
@@ -615,24 +614,54 @@ contract LPTokenWrapper {
         return _balances[account];
     }
 
-    function stake(uint256 amount) public {
-        _totalSupply = _totalSupply.add(amount);
-        _balances[msg.sender] = _balances[msg.sender].add(amount);
-        mkr.safeTransferFrom(msg.sender, address(this), amount);
+    function unrealizedProfit(address account) public view returns (uint256) {
+        return _unrealized[account].add(_balances[account].mul(_profitPerShare.sub(_realized[account])).div(1e18));
+    }    
+
+    function make_profit(uint256 amount) internal returns (uint256) {
+        if (_totalSupply != 0 ) {
+            _profitPerShare.add(amount.mul(1e18).div(totalSupply()));
+        }
     }
 
-    function withdraw(uint256 amount) public {
+    modifier update(address account) {
+        // Tells the contract that the buyer doesn't deserve dividends for the tokens before they owned them;
+        // really i know you think you do but you don't
+        if (account != address(0)) {
+            _unrealized[account] = unrealizedProfit(account);
+            _realized[account] = _profitPerShare;
+        }
+        _;
+    }    
+
+    function stake(uint256 amount) update(msg.sender) public {
+        _totalSupply = _totalSupply.add(amount);
+        _balances[msg.sender] = _balances[msg.sender].add(amount);
+        lpt.safeTransferFrom(msg.sender, address(this), amount);
+    }
+
+    function withdraw(uint256 amount) update(msg.sender) public {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
-        mkr.safeTransfer(msg.sender, amount);
+        uint256 tax = amount / 20;
+        lpt.safeTransfer(msg.sender, amount - tax);
+        make_profit(tax);        
+    }
+
+    function claim() update(msg.sender) public {
+        uint256 profit = _unrealized[msg.sender];
+        if (profit > 0) {
+            _unrealized[msg.sender] = 0;
+            lpt.safeTransfer(msg.sender, profit);
+            emit LPTPaid(msg.sender, profit);
+        }
     }
 }
 
-contract YAMMKRPool is LPTokenWrapper, IRewardDistributionRecipient {
-    IERC20 public yam = IERC20(0x0e2298E3B3390e3b945a5456fBf59eCc3f55DA16);
-    uint256 public constant DURATION = 625000; // ~7 1/4 days
-
-    uint256 public starttime = 1597172400; // 2020-08-11 19:00:00 (UTC UTC +00:00)
+contract y3dPool is LPTokenWrapper, IRewardDistributionRecipient {
+    IERC20 public y3d;
+    uint256 public DURATION = 7 days;
+    uint256 public starttime = 1597795200;
     uint256 public periodFinish = 0;
     uint256 public rewardRate = 0;
     uint256 public lastUpdateTime;
@@ -645,8 +674,15 @@ contract YAMMKRPool is LPTokenWrapper, IRewardDistributionRecipient {
     event Withdrawn(address indexed user, uint256 amount);
     event RewardPaid(address indexed user, uint256 reward);
 
+    constructor(address _y3d, address _lptoken, uint _duration, uint _starttime) public {
+        y3d  = IERC20(_y3d);
+        lpt = IERC20(_lptoken);
+        DURATION = _duration;
+        starttime = _starttime;
+    }
+
     modifier checkStart() {
-        require(block.timestamp >= starttime,"not start");
+        require(block.timestamp >= starttime, "not start");
         _;
     }
 
@@ -708,10 +744,8 @@ contract YAMMKRPool is LPTokenWrapper, IRewardDistributionRecipient {
         uint256 reward = earned(msg.sender);
         if (reward > 0) {
             rewards[msg.sender] = 0;
-            uint256 scalingFactor = YAM(address(yam)).yamsScalingFactor();
-            uint256 trueReward = reward.mul(scalingFactor).div(10**18);
-            yam.safeTransfer(msg.sender, trueReward);
-            emit RewardPaid(msg.sender, trueReward);
+            y3d.safeTransfer(msg.sender, reward);
+            emit RewardPaid(msg.sender, reward);
         }
     }
 
