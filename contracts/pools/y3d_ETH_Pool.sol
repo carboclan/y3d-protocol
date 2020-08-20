@@ -18,7 +18,6 @@
 
 pragma solidity ^0.5.0;
 
-
 /**
  * @dev Standard math utilities missing in the Solidity language.
  */
@@ -420,11 +419,12 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public lpt = IERC20(0xc778417E063141139Fce010982780140Aa0cD5Ab);
+    IERC20 public lpt;
 
     uint256 public _totalSupply;
     mapping(address => uint256) public _balances;
 
+    uint256 public _pool;
     uint256 public _profitPerShare; // x 1e18, monotonically increasing.
     mapping(address => uint256) public _unrealized; // x 1e18
     mapping(address => uint256) public _realized; // last paid _profitPerShare
@@ -444,9 +444,7 @@ contract LPTokenWrapper {
     }    
 
     function make_profit(uint256 amount) internal {
-        if (_totalSupply != 0 ) {
-            _profitPerShare = _profitPerShare.add(amount.mul(1e18).div(totalSupply()));
-        }
+        _profitPerShare = _profitPerShare.add(amount.mul(1e18).div(totalSupply()));        
     }
 
     modifier update(address account) {
@@ -468,9 +466,9 @@ contract LPTokenWrapper {
     function withdraw(uint256 amount) update(msg.sender) public {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
-        uint256 tax = amount / 20;
+        uint256 tax = amount.div(20);
         lpt.safeTransfer(msg.sender, amount - tax);
-        make_profit(tax);        
+        make_profit(tax);
     }
 
     function claim() update(msg.sender) public {
@@ -483,8 +481,8 @@ contract LPTokenWrapper {
     }
 }
 
-contract y3dPool is LPTokenWrapper {
-    IERC20 public y3d = IERC20(0xfE4aF09935012f2fA4c96aD27221e5DA579C23Eb);
+contract y3d_ETH_Pool is LPTokenWrapper {
+    IERC20 public y3d;
 
     uint256 public DURATION = 30 days;
     uint256 public periodFinish;
@@ -498,6 +496,13 @@ contract y3dPool is LPTokenWrapper {
     event Staked(address indexed user, uint256 amount);
     event Withdrawn(address indexed user, uint256 amount);
     event RewardPaid(address indexed user, uint256 reward);
+
+    constructor() public {
+        y3d = IERC20(0xfE4aF09935012f2fA4c96aD27221e5DA579C23Eb);
+        lpt = IERC20(0xeD28a47d73d435406dAe96e00c9c7ED47567084a);      
+        _balances[msg.sender] = 1; // avoid divided by 0
+        _totalSupply = 1;
+    }
 
     modifier updateReward(address account) {
         rewardPerTokenStored = rewardPerToken();
@@ -514,9 +519,6 @@ contract y3dPool is LPTokenWrapper {
     }
 
     function rewardPerToken() public view returns (uint256) {
-        if (totalSupply() == 0) {
-            return rewardPerTokenStored;
-        }
         return
             rewardPerTokenStored.add(
                 lastTimeRewardApplicable()

@@ -16,8 +16,8 @@ async function main() {
 
     _print(`Initialized ${App.YOUR_ADDRESS}`);
     _print("Reading smart contracts...\n");
-    _print(`${rewardTokenTicker} Address: ${rewardTokenAddr}`);
-    _print(`Reward Pool Address: ${rewardPoolAddr}\n`);
+    _print(`<a href="https://etherscan.io/address/${rewardTokenAddr}">${rewardTokenTicker} Address: ${rewardTokenAddr}</a>`);
+    _print(`<a href="https://etherscan.io/address/${rewardPoolAddr}">Pool Address: ${rewardPoolAddr}</a>\n`);
 
     const P_STAKING_POOL = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, App.provider);
     const Y_TOKEN = new ethers.Contract(stakingToken, ERC20_ABI, App.provider);
@@ -47,7 +47,7 @@ async function main() {
    _print(`                  = ${toDollar(totalStakedYAmount * stakingTokenPrice)}\n`);
    _print(`You are staking   : ${stakedYAmount} ${stakingTokenTicker} (${toFixed(stakedYAmount * 100 / totalStakedYAmount, 3)}% of the pool)`);
    _print(`                  = ${toDollar(stakedYAmount * stakingTokenPrice)}\n`);
-   _print(`\n======== 🍝 ${rewardTokenTicker} REWARDS 🍝 ========`)
+   _print(`\n======== ♨️ ${rewardTokenTicker} REWARDS ♨️ ========`)
    _print(`Claimable Rewards : ${toFixed(earnedYFFI, 4)} ${rewardTokenTicker} = $${toFixed(earnedYFFI * rewardTokenPrice, 2)}`);
    const YFFIWeeklyEstimate = rewardPerToken * stakedYAmount;
    _print(`Hourly estimate   : ${toFixed(YFFIWeeklyEstimate / (24 * 7), 4)} ${rewardTokenTicker} = ${toDollar((YFFIWeeklyEstimate / (24 * 7)) * rewardTokenPrice)} (out of total ${toFixed(weekly_reward / (7 * 24), 2)} ${rewardTokenTicker})`)

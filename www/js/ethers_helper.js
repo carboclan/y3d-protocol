@@ -514,5 +514,5 @@ const rewardsContract_claim_LP = async function(rewardPoolAddr, App) {
 };
 
 const print_warning = function() {
-  _print_bold("WARNING: THIS CONTRACT IS NOT AUDITED. DO NOT USE THIS WEBSITE UNLESS YOU HAVE REVIEWED THE CONTRACTS.\n")
+  _print_bold("WARNING: Do audit the contract before staking any asset!\n")
 };
