@@ -445,7 +445,7 @@ contract LPTokenWrapper {
 
     function make_profit(uint256 amount) internal {
         if (_totalSupply != 0 ) {
-            _profitPerShare.add(amount.mul(1e18).div(totalSupply()));
+            _profitPerShare = _profitPerShare.add(amount.mul(1e18).div(totalSupply()));
         }
     }
 
