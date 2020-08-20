@@ -445,7 +445,7 @@ contract LPTokenWrapper {
 
     function make_profit(uint256 amount) internal {
         if (_totalSupply != 0 ) {
-            _profitPerShare.add(amount.mul(1e18).div(totalSupply()));
+            _profitPerShare = _profitPerShare.add(amount.mul(1e18).div(totalSupply()));
         }
     }
 
@@ -484,7 +484,7 @@ contract LPTokenWrapper {
 }
 
 contract y3dPool is LPTokenWrapper {
-    IERC20 public y3d = IERC20(0xCFf15c78218d7E5c992C01e6244d2f9EFD6Ac3d1);
+    IERC20 public y3d = IERC20(0xfE4aF09935012f2fA4c96aD27221e5DA579C23Eb);
 
     uint256 public DURATION = 30 days;
     uint256 public periodFinish;

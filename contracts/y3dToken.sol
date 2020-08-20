@@ -50,9 +50,9 @@ contract y3dToken is DSMath {
     bytes32                                           public  name = "y3d";
 
     constructor(address chef) public {
-        // hard limit 15,000,000 y3d
-        totalSupply = 16000000000000000000000000;
-        balanceOf[chef] = 16000000000000000000000000;
+        // hard limit 21,000 y3d
+        totalSupply = 21000000000000000000000;
+        balanceOf[chef] = 21000000000000000000000;
     }
 
     event Approval(address indexed src, address indexed guy, uint wad);
