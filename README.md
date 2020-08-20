@@ -13,7 +13,7 @@ Liquidity token holder is the Prometheus of the DeFi economy, they take the risk
 
 ## How it works?
 
-We keep the Yeild Farming part(which we all like it) in Yam and introduce POWH algorithm into liquidity mining. **There will be an additional 5% fees each time when people withdraw their LP token, which will be divide to all other liquidity miner as their POLH(Proof-of-Long-time-Liquidity-Holder).**
+We keep the Yield Farming part(which we all like it) in Yam and introduce POWH algorithm into liquidity mining. **There will be an additional 5% fees each time when people withdraw their LP token, which will be divide to all other liquidity miner as their POLH(Proof-of-Long-time-Liquidity-Holder).**
 
 ## The Distribution
 
