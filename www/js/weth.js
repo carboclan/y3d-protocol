@@ -10,7 +10,7 @@ async function main() {
     const stakingTokenTicker = "WETH";
     const rewardPoolAddr = WETH_REWARD_ADDR;
     const rewardTokenAddr = PASTA_TOKEN_ADDR;
-    const rewardTokenTicker = "PASTA";
+    const rewardTokenTicker = "Y3D";
 
     const App = await init_ethers();
 

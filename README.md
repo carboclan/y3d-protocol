@@ -1,4 +1,4 @@
-#  :satellite: Y3D Protocol :satellite:
+#  ♨️ Y3D Protocol ♨️
 
 ## TL;DR:
 
@@ -6,7 +6,7 @@ Y3D = [YAM](https://yam.finance) + [P3D](https://powh.io)
 
 ## Prequel 
 
-Liquidity token holder is the Prometheus of the DeFi economy, they take the risk of [impermanent loss](https://medium.com/@pintail/uniswap-a-good-deal-for-liquidity-providers-104c0b6816f2), there will be no DeFi logos today without their help. In order to reward those who take the risk, we proposal a new protocol to reward all LP token holders, and by the way, make the liquidity market more stable. ;)
+Liquidity token holder is the Prometheus of the DeFi economy, they take the risk of [impermanent loss](https://medium.com/@pintail/uniswap-a-good-deal-for-liquidity-providers-104c0b6816f2), there will be no DeFi logos today without their help. In order to reward those who take the risk, we proposal a new protocol to reward all LP token holders, and by the way, we make the underlying market more liquid by make the liquidity token less liquid. ;)
 
 ## How it works?
 
@@ -14,9 +14,7 @@ We keep the Yeild Farming part(which we all like it) in Yam and introduce POWH a
 
 ## The Distribution
 
-The y3d token itself which is completely useless. There is no governance, no premine, no dev fees, and no audit as well. Mining it at your own risk.
-
-We will selected some pools on uniswap at this moment to distribute them. Stay tuned.
+The y3d token itself which is completely useless. There is no governance, no premine, no dev fees, and no audit as well. Mining it at your own risk. We will selected some pools on uniswap at this moment to distribute them. Stay tuned.
 
 ## Attributions
 Much of this codebase is modified from existing works, including:
@@ -42,7 +40,7 @@ npm install
 ### FE
 ```shell
 cd www
-python -m http.server --cgi 800
+python -m http.server --cgi 8000
 ```
 
 ### Contract
