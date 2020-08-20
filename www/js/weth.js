@@ -88,12 +88,11 @@ async function main() {
         return rewardsContract_exit(rewardPoolAddr, App);
     };
 
-    _print_link(`Stake ${unstakedY} ${stakingTokenTicker}`, approveTENDAndStake);
-    _print_link(`Unstake ${stakedYAmount} ${stakingTokenTicker}`, unstake);
-    _print_link(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
-    _print_link(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
-    
-    _print_link(`Exit`, exit);
+    _print_button(`Stake ${unstakedY} ${stakingTokenTicker}`, approveTENDAndStake);
+    _print_button(`Unstake ${stakedYAmount} ${stakingTokenTicker}`, unstake);
+    _print_button(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
+    _print_button(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
+    _print_button(`Exit`, exit);
 
     hideLoading();
 
