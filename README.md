@@ -24,7 +24,21 @@ Much of this codebase is modified from existing works, including:
 - [YAM](https://yam.finance)
 - [P3D](https://powh.io)
 
-## Installation
+
+## FAQ
+
+- How much will i lose at most?
+You will lose 5% of your LP token if you jump in and go out immediately.
+
+- What am I going to win?
+You are going to mining our y3d token and might win other LP token once a staker exit the scam before you.
+
+- Will I lose the transaction fee during staking?
+No you won't.
+
+## Develop
+
+### Installation
 
 **ATTENTION**: If you are using macOS Catalina or above, plase install [node-gyp](https://github.com/nodejs/node-gyp) v7+ and set environment variable, read [Installation notes for macOS Catalina (v10.15)](https://github.com/nodejs/node-gyp/blob/master/macOS_Catalina.md) for more details.
 
