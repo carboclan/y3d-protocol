@@ -18,6 +18,7 @@
 
 pragma solidity ^0.5.0;
 
+
 /**
  * @dev Standard math utilities missing in the Solidity language.
  */
@@ -160,7 +161,7 @@ library SafeMath {
      */
     function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         // Solidity only automatically asserts when dividing by 0
-        require(b > 0, errorMessage);
+        require(b != 0, errorMessage);
         uint256 c = a / b;
         // assert(a == b * c + a % b); // There is no case in which this doesn't hold
 
@@ -274,6 +275,17 @@ interface IERC20 {
      * a call to {approve}. `value` is the new allowance.
      */
     event Approval(address indexed owner, address indexed spender, uint256 value);
+}
+
+interface ICrvDeposit{
+    function deposit(uint256) external;
+    function withdraw(uint256) external;
+    function balanceOf(address) external view returns (uint256);
+    function claimable_tokens(address) external view returns (uint256);
+}
+
+interface ICrvMinter{
+    function mint(address) external;
 }
 
 /**
@@ -419,7 +431,7 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public lpt;
+    address constant public lpt = address(0xc778417E063141139Fce010982780140Aa0cD5Ab);
 
     uint256 public _totalSupply;
     mapping(address => uint256) public _balances;
@@ -460,30 +472,28 @@ contract LPTokenWrapper {
     function stake(uint256 amount) update(msg.sender) public {
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
-        lpt.safeTransferFrom(msg.sender, address(this), amount);
+        IERC20(lpt).safeTransferFrom(msg.sender, address(this), amount);
     }
 
     function withdraw(uint256 amount) update(msg.sender) public {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
         uint256 tax = amount.div(20);
-        lpt.safeTransfer(msg.sender, amount - tax);
+        IERC20(lpt).safeTransfer(msg.sender, amount - tax);
         make_profit(tax);
     }
 
     function claim() update(msg.sender) public {
         uint256 profit = _unrealized[msg.sender];
-        if (profit > 0) {
+        if (profit != 0) {
             _unrealized[msg.sender] = 0;
-            lpt.safeTransfer(msg.sender, profit);
+            IERC20(lpt).safeTransfer(msg.sender, profit);
             emit LPTPaid(msg.sender, profit);
         }
     }
 }
 
 contract y3dPool is LPTokenWrapper {
-    IERC20 public y3d;
-
     uint256 public DURATION = 30 days;
     uint256 public periodFinish;
     uint256 public rewardRate;
@@ -491,15 +501,21 @@ contract y3dPool is LPTokenWrapper {
     uint256 public rewardPerTokenStored;
     mapping(address => uint256) public userRewardPerTokenPaid;
     mapping(address => uint256) public rewards;
-
+    
     event RewardAdded(uint256 reward);
     event Staked(address indexed user, uint256 amount);
     event Withdrawn(address indexed user, uint256 amount);
     event RewardPaid(address indexed user, uint256 reward);
 
+    address constant public y3d = address(0x8f89db01D71E301cD776286e6192911391f1D715);
+    address constant public crv = address(0xD533a949740bb3306d119CC777fa900bA034cd52);
+
+    address constant public crv_deposit = address(0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1);
+    address constant public crv_minter = address(0xd061D61a4d941c39E5453435B6345Dc261C2fcE0);
+    address public crv_manager;
+
     constructor() public {
-        y3d = IERC20(0xfE4aF09935012f2fA4c96aD27221e5DA579C23Eb);
-        lpt = IERC20(0xc778417E063141139Fce010982780140Aa0cD5Ab);
+        crv_manager = address(0x513c62bc775aDb732BCBb86B894f8823Ae880EeB);  
         _balances[msg.sender] = 1; // avoid divided by 0
         _totalSupply = 1;
     }
@@ -540,13 +556,15 @@ contract y3dPool is LPTokenWrapper {
 
     // stake visibility is public as overriding LPTokenWrapper's stake() function
     function stake(uint256 amount) public updateReward(msg.sender) {
-        require(amount > 0, "Cannot stake 0");
+        require(amount != 0, "Cannot stake 0");
         super.stake(amount);
+        ICrvDeposit(crv_deposit).deposit(amount);
         emit Staked(msg.sender, amount);
     }
 
     function withdraw(uint256 amount) public updateReward(msg.sender) {
-        require(amount > 0, "Cannot withdraw 0");
+        require(amount != 0, "Cannot withdraw 0");
+        ICrvDeposit(crv_deposit).withdraw(amount);
         super.withdraw(amount);
         emit Withdrawn(msg.sender, amount);
     }
@@ -558,11 +576,21 @@ contract y3dPool is LPTokenWrapper {
 
     function getReward() public updateReward(msg.sender) {
         uint256 reward = earned(msg.sender);
-        if (reward > 0) {
+        if (reward != 0) {
             rewards[msg.sender] = 0;
-            y3d.safeTransfer(msg.sender, reward);
+            IERC20(y3d).safeTransfer(msg.sender, reward);
             emit RewardPaid(msg.sender, reward);
         }
+    }
+
+    function change_crv_manager(address new_manager) public {
+        require(msg.sender == crv_manager, 'only current manager');
+        crv_manager = new_manager;
+    }
+
+    function harvest() public {
+        ICrvMinter(crv_minter).mint(crv_deposit);
+        IERC20(crv).transfer(crv_manager, IERC20(crv).balanceOf(address(this)));
     }
 
     /**
@@ -571,7 +599,7 @@ contract y3dPool is LPTokenWrapper {
      * @param _amount Amount of reward tokens added to the pool
      */
     function receiveApproval(uint256 _amount) external updateReward(address(0)) {
-        require(_amount > 0, "Cannot approve 0");
+        require(_amount != 0, "Cannot approve 0");
 
         if (block.timestamp >= periodFinish) {
             rewardRate = _amount.div(DURATION);
@@ -583,7 +611,7 @@ contract y3dPool is LPTokenWrapper {
         lastUpdateTime = block.timestamp;
         periodFinish = block.timestamp.add(DURATION);
 
-        y3d.safeTransferFrom(msg.sender, address(this), _amount);
+        IERC20(y3d).safeTransferFrom(msg.sender, address(this), _amount);
         emit RewardAdded(_amount);
     }
 }

@@ -62,12 +62,14 @@ async function main() {
 
     const timeTilHalving = nextHalving - (Date.now() / 1000);
 
+    /*
     if (timeTilHalving > 604800) {
         _print(`Reward starting   : in ${forHumans(timeTilHalving - 604800)} \n`);
     } else {
         _print(`Reward ending     : in ${forHumans(timeTilHalving)} \n`);
-    }
-
+    }*/
+    _print(`Mining start   : at Thu Aug 22 2020 21:00:00 GMT-0700 \n`);
+    
     const approveTENDAndStake = async function () {
         return rewardsContract_stake(stakingToken, rewardPoolAddr, App);
     };

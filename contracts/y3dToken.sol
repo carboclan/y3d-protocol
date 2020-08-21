@@ -24,7 +24,7 @@ contract DSMath {
     }
 }
 
-// token.sol -- ERC20 implementation with minting and burning
+// token.sol -- ERC20 implementation with burning
 
 // Copyright (C) 2015, 2016, 2017  DappHub, LLC
 
@@ -81,17 +81,16 @@ contract y3dToken is DSMath {
 
         require(balanceOf[src] >= wad, "ds-token-insufficient-balance");
         balanceOf[src] = sub(balanceOf[src], wad);
-        uint one = wad / 200;
-        uint ninetynine = sub(wad, one);
-        balanceOf[dst] = add(balanceOf[dst], ninetynine);
-        burn(one);
+        balanceOf[dst] = add(balanceOf[dst], wad);
 
         emit Transfer(src, dst, wad);
         return true;
     }
 
-    function burn(uint wad) internal {
+    function burn(uint wad) public {
+        require(balanceOf[msg.sender] >= wad, "ds-token-insufficient-balance");
         totalSupply = sub(totalSupply, wad);
+        balanceOf[msg.sender] = sub(balanceOf[msg.sender], wad);
         emit Burn(wad);
     }
 }

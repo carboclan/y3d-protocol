@@ -61,6 +61,8 @@ python -m http.server --cgi 8000
 ```
 
 ### Contract
+- [y3dPool Contract Diff](https://gist.github.com/lychees/8cf40410871e98438080963913302a83/revisions)
+
 ```shell
 truffle deploy --network rinkeby
 ```
