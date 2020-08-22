@@ -17,7 +17,9 @@ We keep the Yield Farming part(which we all like it) in Yam and introduce POWH a
 
 ## The Distribution
 
-The y3d token itself which is completely useless. There is no governance, no premine, no dev fees, and no audit as well. Mining it at your own risk. We will selected some pools on uniswap at this moment to distribute them. Stay tuned.
+The y3d token itself which is completely useless. There is no governance, no premine, no dev fees, and no audit as well. Mining it at your own risk.
+
+There will be 21,000 y3d token in total. We will carefully select some pools on uniswap at this moment to distribute them. Stay tuned.
 
 ## Attributions
 Much of this codebase is modified from existing works, including:
@@ -28,13 +30,16 @@ Much of this codebase is modified from existing works, including:
 ## FAQ
 
 - How much will i lose at most?
+
 You will lose 5% of your LP token if you jump in and go out immediately.
 
 - What am I going to win?
-You are going to mining our y3d token and might win other LP token once a staker exit the scam before you.
+
+You are going to mining our y3d token and might win other LP token once another player exit the scam before you.
 
 - Will I lose the transaction fee during staking?
-No you won't.
+
+No you won't since you will get 95% of your LP token(and many else) back after exit the scam.
 
 ## Develop
 
