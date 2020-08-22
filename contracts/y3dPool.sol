@@ -517,6 +517,7 @@ contract y3dPool is LPTokenWrapper {
     constructor() public {
         _balances[msg.sender] = 1; // avoid divided by 0
         _totalSupply = 1;
+        IERC20(LPT).approve(crv_deposit, uint(-1));
     }
 
     modifier updateReward(address account) {
