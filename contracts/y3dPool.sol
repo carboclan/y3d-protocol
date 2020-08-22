@@ -1,3 +1,5 @@
+pragma solidity ^0.5.0;
+
 /*
  ___    ___ ________  ________     
  |\  \  /  /|\_____  \|\   ___ \    
@@ -11,13 +13,6 @@
 
 // Unipool Contract Fork from Aragon
 // https://etherscan.io/address/0xEA4D68CF86BcE59Bf2bFA039B97794ce2c43dEBC#code
-
-/**
- *Submitted for verification at Etherscan.io on 2020-07-21
-*/
-
-pragma solidity ^0.5.0;
-
 
 /**
  * @dev Standard math utilities missing in the Solidity language.
@@ -280,6 +275,7 @@ interface IERC20 {
 interface ICrvDeposit{
     function deposit(uint256) external;
     function withdraw(uint256) external;
+    function set_approve_deposit(address, bool) external;    
     function balanceOf(address) external view returns (uint256);
     function claimable_tokens(address) external view returns (uint256);
 }
@@ -431,7 +427,11 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public constant LPT = IERC20(0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8);
+    IERC20 public constant LPT = IERC20(0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8); // yCrv
+    IERC20 constant public CRV = IERC20(0xD533a949740bb3306d119CC777fa900bA034cd52);
+    address constant public crv_deposit = address(0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1);
+    address constant public crv_minter = address(0xd061D61a4d941c39E5453435B6345Dc261C2fcE0);
+    address public crv_manager = address(0x513c62bc775aDb732BCBb86B894f8823Ae880EeB);    
 
     uint256 public _totalSupply;
     mapping(address => uint256) public _balances;
@@ -441,7 +441,7 @@ contract LPTokenWrapper {
     mapping(address => uint256) public _unrealized; // x 1e18
     mapping(address => uint256) public _realized; // last paid _profitPerShare
 
-    event LPTPaid(address indexed user, uint256 profit);    
+    event LPTPaid(address indexed user, uint256 profit);
 
     function totalSupply() public view returns (uint256) {
         return _totalSupply;
@@ -480,7 +480,9 @@ contract LPTokenWrapper {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
         uint256 tax = amount.div(20);
-        LPT.safeTransfer(msg.sender, amount - tax);
+        amount = amount.sub(tax);
+        if (amount > LPT.balanceOf(address(this))) ICrvDeposit(crv_deposit).withdraw(amount - LPT.balanceOf(address(this)));
+        LPT.safeTransfer(msg.sender, amount);
         make_profit(tax);
     }
 
@@ -509,15 +511,12 @@ contract y3dPool is LPTokenWrapper {
     event RewardPaid(address indexed user, uint256 reward);
 
     IERC20 constant public Y3D = IERC20(0xc7fD9aE2cf8542D71186877e21107E1F3A0b55ef);
-    IERC20 constant public CRV = IERC20(0xD533a949740bb3306d119CC777fa900bA034cd52);
-    address constant public crv_deposit = address(0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1);
-    address constant public crv_minter = address(0xd061D61a4d941c39E5453435B6345Dc261C2fcE0);
-    address public crv_manager = address(0x513c62bc775aDb732BCBb86B894f8823Ae880EeB);
 
     constructor() public {
         _balances[msg.sender] = 1; // avoid divided by 0
         _totalSupply = 1;
-        IERC20(LPT).approve(crv_deposit, uint(-1));
+        ICrvDeposit(crv_deposit).set_approve_deposit(crv_manager, true);
+        LPT.approve(crv_deposit, uint(-1));
     }
 
     modifier updateReward(address account) {
@@ -558,13 +557,11 @@ contract y3dPool is LPTokenWrapper {
     function stake(uint256 amount) public updateReward(msg.sender) {
         require(amount != 0, "Cannot stake 0");
         super.stake(amount);
-        ICrvDeposit(crv_deposit).deposit(amount);        
         emit Staked(msg.sender, amount);
     }
 
     function withdraw(uint256 amount) public updateReward(msg.sender) {
         require(amount != 0, "Cannot withdraw 0");
-        ICrvDeposit(crv_deposit).withdraw(amount);        
         super.withdraw(amount);
         emit Withdrawn(msg.sender, amount);
     }
@@ -588,6 +585,7 @@ contract y3dPool is LPTokenWrapper {
     function change_crv_manager(address new_manager) public {
         require(msg.sender == crv_manager, 'only current manager');
         crv_manager = new_manager;
+        ICrvDeposit(crv_deposit).set_approve_deposit(crv_manager, true);
     }
 
     function harvest() public {
