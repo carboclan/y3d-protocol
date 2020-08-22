@@ -497,7 +497,7 @@ contract y3dPool is LPTokenWrapper {
     event Withdrawn(address indexed user, uint256 amount);
     event RewardPaid(address indexed user, uint256 reward);
 
-    IERC20 public constant Y3D = IERC20(0xc778417E063141139Fce010982780140Aa0cD5Ab);
+	IERC20 constant public Y3D = IERC20(0xc7fD9aE2cf8542D71186877e21107E1F3A0b55ef);
 
     constructor() public {
         _balances[msg.sender] = 1; // avoid divided by 0

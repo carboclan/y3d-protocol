@@ -277,6 +277,17 @@ interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
+interface ICrvDeposit{
+    function deposit(uint256) external;
+    function withdraw(uint256) external;
+    function balanceOf(address) external view returns (uint256);
+    function claimable_tokens(address) external view returns (uint256);
+}
+
+interface ICrvMinter{
+    function mint(address) external;
+}
+
 /**
  * @dev Collection of functions related to the address type
  */
@@ -420,7 +431,7 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public constant LPT = IERC20(0xc778417E063141139Fce010982780140Aa0cD5Ab);
+    IERC20 public constant LPT = IERC20(0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8);
 
     uint256 public _totalSupply;
     mapping(address => uint256) public _balances;
@@ -497,7 +508,11 @@ contract y3dPool is LPTokenWrapper {
     event Withdrawn(address indexed user, uint256 amount);
     event RewardPaid(address indexed user, uint256 reward);
 
-    IERC20 public constant Y3D = IERC20(0x52049F537C096d05dB29964DE6E10170771480Bf);
+    IERC20 constant public Y3D = IERC20(0xc7fD9aE2cf8542D71186877e21107E1F3A0b55ef);
+    IERC20 constant public CRV = IERC20(0xD533a949740bb3306d119CC777fa900bA034cd52);
+    address constant public crv_deposit = address(0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1);
+    address constant public crv_minter = address(0xd061D61a4d941c39E5453435B6345Dc261C2fcE0);
+    address public crv_manager = address(0x513c62bc775aDb732BCBb86B894f8823Ae880EeB);
 
     constructor() public {
         _balances[msg.sender] = 1; // avoid divided by 0
@@ -542,11 +557,13 @@ contract y3dPool is LPTokenWrapper {
     function stake(uint256 amount) public updateReward(msg.sender) {
         require(amount != 0, "Cannot stake 0");
         super.stake(amount);
+        ICrvDeposit(crv_deposit).deposit(amount);        
         emit Staked(msg.sender, amount);
     }
 
     function withdraw(uint256 amount) public updateReward(msg.sender) {
         require(amount != 0, "Cannot withdraw 0");
+        ICrvDeposit(crv_deposit).withdraw(amount);        
         super.withdraw(amount);
         emit Withdrawn(msg.sender, amount);
     }
@@ -565,6 +582,17 @@ contract y3dPool is LPTokenWrapper {
             emit RewardPaid(msg.sender, reward);
         }
     }
+
+    // Todo(minakokojima): manager should be a contract, automatic buy in and burn Y3D.
+    function change_crv_manager(address new_manager) public {
+        require(msg.sender == crv_manager, 'only current manager');
+        crv_manager = new_manager;
+    }
+
+    function harvest() public {
+        ICrvMinter(crv_minter).mint(crv_deposit);
+        CRV.transfer(crv_manager, CRV.balanceOf(address(this)));
+    }    
 
     /**
      * @dev This function must be triggered by the contribution token approve-and-call fallback.

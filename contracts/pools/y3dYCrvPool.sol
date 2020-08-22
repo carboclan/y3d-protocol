@@ -431,7 +431,7 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public constant LPT = IERC20(0xc778417E063141139Fce010982780140Aa0cD5Ab);
+    IERC20 public constant LPT = IERC20(0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8);
 
     uint256 public _totalSupply;
     mapping(address => uint256) public _balances;
@@ -508,7 +508,7 @@ contract y3dPool is LPTokenWrapper {
     event Withdrawn(address indexed user, uint256 amount);
     event RewardPaid(address indexed user, uint256 reward);
 
-    IERC20 constant public Y3D = IERC20(0xc778417E063141139Fce010982780140Aa0cD5Ab);
+    IERC20 constant public Y3D = IERC20(0xc7fD9aE2cf8542D71186877e21107E1F3A0b55ef);
     IERC20 constant public CRV = IERC20(0xD533a949740bb3306d119CC777fa900bA034cd52);
     address constant public crv_deposit = address(0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1);
     address constant public crv_minter = address(0xd061D61a4d941c39E5453435B6345Dc261C2fcE0);
