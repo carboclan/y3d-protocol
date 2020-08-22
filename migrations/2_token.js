@@ -25,10 +25,10 @@ async function deployToken(deployer, network, accounts) {
   // Put mining
   console.log('Init Mining');  
   let y3dToken = new web3.eth.Contract(Y3dToken.abi, Y3dToken.address);    
-  await y3dToken.methods.approve(Y3dPool.address, "1000000000000000000").send({from: accounts[0], gas: 6700000});
+  await y3dToken.methods.approve(Y3dPool.address, "1000000000000000000000").send({from: accounts[0], gas: 6700000});
 
   let y3dPool = new web3.eth.Contract(Y3dPool.abi, Y3dPool.address);
-  await y3dPool.methods.receiveApproval("1000000000000000000").send({from: accounts[0], gas: 6700000});
+  await y3dPool.methods.receiveApproval("1000000000000000000000").send({from: accounts[0], gas: 6700000});
 
 /*
   await deployer.deploy(Y3d_ETH_Pool);  

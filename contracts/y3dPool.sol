@@ -501,7 +501,7 @@ contract y3dPool is LPTokenWrapper {
     uint256 public rewardPerTokenStored;
     mapping(address => uint256) public userRewardPerTokenPaid;
     mapping(address => uint256) public rewards;
-    
+
     event RewardAdded(uint256 reward);
     event Staked(address indexed user, uint256 amount);
     event Withdrawn(address indexed user, uint256 amount);
@@ -509,9 +509,9 @@ contract y3dPool is LPTokenWrapper {
 
     address constant public y3d = address(0x8f89db01D71E301cD776286e6192911391f1D715);
     address constant public crv = address(0xD533a949740bb3306d119CC777fa900bA034cd52);
-
     address constant public crv_deposit = address(0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1);
     address constant public crv_minter = address(0xd061D61a4d941c39E5453435B6345Dc261C2fcE0);
+
     address public crv_manager;
 
     constructor() public {
@@ -572,6 +572,7 @@ contract y3dPool is LPTokenWrapper {
     function exit() external {
         withdraw(balanceOf(msg.sender));
         getReward();
+        calim();
     }
 
     function getReward() public updateReward(msg.sender) {

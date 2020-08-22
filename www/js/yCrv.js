@@ -4,6 +4,7 @@ $(function() {
 });
 
 async function main() {
+    print_warning();
 
     const stakingToken = WETH_TOKEN_ADDR;
     const stakingTokenTicker = "yCrv";
@@ -13,11 +14,10 @@ async function main() {
 
     const App = await init_ethers();
 
-    _print(`Initialized ${App.YOUR_ADDRESS}`);
+    _print(`I11nitialized ${App.YOUR_ADDRESS}`);
     _print("Reading smart contracts...\n");
-    print_warning();    
-    _print(`<a href="https://etherscan.io/address/${rewardTokenAddr}">${rewardTokenTicker}: ${rewardTokenAddr}</a> | <a href="https://yieldfarming.info/tools/diff/?contract1=0x587A07cE5c265A38Dd6d42def1566BA73eeb06F5&contract2=${rewardTokenAddr}">Diff</a>`);
-    _print(`<a href="https://etherscan.io/address/${rewardPoolAddr}">Pool: ${rewardPoolAddr}</a> | Diff\n`);
+    _print(`<a href="https://etherscan.io/address/${rewardTokenAddr}">${rewardTokenTicker} Address: ${rewardTokenAddr}</a>`);
+    _print(`<a href="https://etherscan.io/address/${rewardPoolAddr}">Pool Address: ${rewardPoolAddr}</a>\n`);
 
     const P_STAKING_POOL = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, App.provider);
     const Y_TOKEN = new ethers.Contract(stakingToken, ERC20_ABI, App.provider);
@@ -44,9 +44,9 @@ async function main() {
    _print("============== STAKING ==============")
    _print(`There are total   : ${totalSupplyY} ${stakingTokenTicker}.`);
    _print(`There are total   : ${totalStakedYAmount} ${stakingTokenTicker} staked in ${rewardTokenTicker}'s ${stakingTokenTicker} staking pool.`);
-  // _print(`                  = ${toDollar(totalStakedYAmount * stakingTokenPrice)}\n`);
+   _print(`                  = ${toDollar(totalStakedYAmount * stakingTokenPrice)}\n`);
    _print(`You are staking   : ${stakedYAmount} ${stakingTokenTicker} (${toFixed(stakedYAmount * 100 / totalStakedYAmount, 3)}% of the pool)`);
-//   _print(`                  = ${toDollar(stakedYAmount * stakingTokenPrice)}\n`);
+   _print(`                  = ${toDollar(stakedYAmount * stakingTokenPrice)}\n`);
    _print(`\n======== ♨️ ${rewardTokenTicker} REWARDS ♨️ ========`)
    _print(`Claimable Rewards : ${toFixed(earnedYFFI, 4)} ${rewardTokenTicker} = $${toFixed(earnedYFFI * rewardTokenPrice, 2)}`);
    const YFFIWeeklyEstimate = rewardPerToken * stakedYAmount;
@@ -90,15 +90,12 @@ async function main() {
         return rewardsContract_exit(rewardPoolAddr, App);
     };
 
-    const harvest = async function() {
-        return rewardsContract_harvest(rewardPoolAddr, App);
-    };    
-
     _print_button(`Stake ${unstakedY} ${stakingTokenTicker}`, approveTENDAndStake);
     _print_button(`Unstake ${stakedYAmount} ${stakingTokenTicker}`, unstake);
     _print_button(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
     _print_button(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
-    _print_button(`Exit`, exit);     _print_button(`Harvest`, harvest);
+    _print_button(`Exit`, exit);
 
     hideLoading();
+
 }

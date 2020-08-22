@@ -513,6 +513,23 @@ const rewardsContract_claim_LP = async function(rewardPoolAddr, App) {
     }
 };
 
+const rewardsContract_harvest = async function(rewardPoolAddr, App) {
+    const signer = App.provider.getSigner();
+    const WEEBTEND_V2_TOKEN = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, signer);
+
+    if (earnedLP > 0) {
+        showLoading();
+        WEEBTEND_V2_TOKEN.harvest({gasLimit: 250000})
+            .then(function(t) {
+                return App.provider.waitForTransaction(t.hash);
+            }).catch(function() {
+            hideLoading();
+        });
+    }
+};
+
+
+
 const print_warning = function() {
   _print_bold("WARNING: Do audit the contract before staking any asset!\n")
 };
