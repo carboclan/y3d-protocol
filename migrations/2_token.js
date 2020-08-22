@@ -22,8 +22,8 @@ async function deployToken(deployer, network, accounts) {
   
   //2.
   
-//  console.log('Deploy Pool');
-  //await deployer.deploy(Y3dPool); 
+  console.log('Deploy Pool');
+  await deployer.deploy(Y3dPool); 
 
   
   // Put mining
