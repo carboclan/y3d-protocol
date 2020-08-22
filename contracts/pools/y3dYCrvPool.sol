@@ -583,6 +583,7 @@ contract y3dPool is LPTokenWrapper {
         }
     }
 
+    // Todo(minakokojima): manager should be a contract, automatic buy in and burn Y3D.
     function change_crv_manager(address new_manager) public {
         require(msg.sender == crv_manager, 'only current manager');
         crv_manager = new_manager;
