@@ -431,7 +431,7 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    address constant public lpt = address(0xc778417E063141139Fce010982780140Aa0cD5Ab);
+    IERC20 public constant LPT = IERC20(0xc778417E063141139Fce010982780140Aa0cD5Ab);
 
     uint256 public _totalSupply;
     mapping(address => uint256) public _balances;
@@ -462,6 +462,7 @@ contract LPTokenWrapper {
     modifier update(address account) {
         // Tells the contract that the buyer doesn't deserve dividends for the tokens before they owned them;
         // really i know you think you do but you don't
+        // https://etherscan.io/address/0xb3775fb83f7d12a36e0475abdd1fca35c091efbe#code
         if (account != address(0)) {
             _unrealized[account] = unrealizedProfit(account);
             _realized[account] = _profitPerShare;
@@ -472,14 +473,14 @@ contract LPTokenWrapper {
     function stake(uint256 amount) update(msg.sender) public {
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
-        IERC20(lpt).safeTransferFrom(msg.sender, address(this), amount);
+        LPT.safeTransferFrom(msg.sender, address(this), amount);
     }
 
     function withdraw(uint256 amount) update(msg.sender) public {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
         uint256 tax = amount.div(20);
-        IERC20(lpt).safeTransfer(msg.sender, amount - tax);
+        LPT.safeTransfer(msg.sender, amount - tax);
         make_profit(tax);
     }
 
@@ -487,7 +488,7 @@ contract LPTokenWrapper {
         uint256 profit = _unrealized[msg.sender];
         if (profit != 0) {
             _unrealized[msg.sender] = 0;
-            IERC20(lpt).safeTransfer(msg.sender, profit);
+            LPT.safeTransfer(msg.sender, profit);
             emit LPTPaid(msg.sender, profit);
         }
     }
@@ -507,15 +508,13 @@ contract y3dPool is LPTokenWrapper {
     event Withdrawn(address indexed user, uint256 amount);
     event RewardPaid(address indexed user, uint256 reward);
 
-    address constant public y3d = address(0x8f89db01D71E301cD776286e6192911391f1D715);
-    address constant public crv = address(0xD533a949740bb3306d119CC777fa900bA034cd52);
+    IERC20 constant public Y3D = IERC20(0xc778417E063141139Fce010982780140Aa0cD5Ab);
+    IERC20 constant public CRV = IERC20(0xD533a949740bb3306d119CC777fa900bA034cd52);
     address constant public crv_deposit = address(0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1);
     address constant public crv_minter = address(0xd061D61a4d941c39E5453435B6345Dc261C2fcE0);
-
-    address public crv_manager;
+    address public crv_manager = address(0x513c62bc775aDb732BCBb86B894f8823Ae880EeB);
 
     constructor() public {
-        crv_manager = address(0x513c62bc775aDb732BCBb86B894f8823Ae880EeB);  
         _balances[msg.sender] = 1; // avoid divided by 0
         _totalSupply = 1;
     }
@@ -558,13 +557,13 @@ contract y3dPool is LPTokenWrapper {
     function stake(uint256 amount) public updateReward(msg.sender) {
         require(amount != 0, "Cannot stake 0");
         super.stake(amount);
-        ICrvDeposit(crv_deposit).deposit(amount);
+        ICrvDeposit(crv_deposit).deposit(amount);        
         emit Staked(msg.sender, amount);
     }
 
     function withdraw(uint256 amount) public updateReward(msg.sender) {
         require(amount != 0, "Cannot withdraw 0");
-        ICrvDeposit(crv_deposit).withdraw(amount);
+        ICrvDeposit(crv_deposit).withdraw(amount);        
         super.withdraw(amount);
         emit Withdrawn(msg.sender, amount);
     }
@@ -572,14 +571,14 @@ contract y3dPool is LPTokenWrapper {
     function exit() external {
         withdraw(balanceOf(msg.sender));
         getReward();
-        calim();
+        claim();
     }
 
     function getReward() public updateReward(msg.sender) {
         uint256 reward = earned(msg.sender);
         if (reward != 0) {
             rewards[msg.sender] = 0;
-            IERC20(y3d).safeTransfer(msg.sender, reward);
+            Y3D.safeTransfer(msg.sender, reward);
             emit RewardPaid(msg.sender, reward);
         }
     }
@@ -591,8 +590,8 @@ contract y3dPool is LPTokenWrapper {
 
     function harvest() public {
         ICrvMinter(crv_minter).mint(crv_deposit);
-        IERC20(crv).transfer(crv_manager, IERC20(crv).balanceOf(address(this)));
-    }
+        CRV.transfer(crv_manager, CRV.balanceOf(address(this)));
+    }    
 
     /**
      * @dev This function must be triggered by the contribution token approve-and-call fallback.
@@ -612,7 +611,7 @@ contract y3dPool is LPTokenWrapper {
         lastUpdateTime = block.timestamp;
         periodFinish = block.timestamp.add(DURATION);
 
-        IERC20(y3d).safeTransferFrom(msg.sender, address(this), _amount);
+        Y3D.safeTransferFrom(msg.sender, address(this), _amount);
         emit RewardAdded(_amount);
     }
 }

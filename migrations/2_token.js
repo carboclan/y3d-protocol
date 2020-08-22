@@ -15,20 +15,23 @@ module.exports = migration;
 // ============ Deploy Functions ============
 async function deployToken(deployer, network, accounts) {
   // 1.
-  //console.log('Deploy Y3D Token.')
-  //await deployer.deploy(Y3dToken, accounts[0]);  
+//  console.log('Deploy Y3D Token.')
+ // await deployer.deploy(Y3dToken, accounts[0]);  
 
   //2.
-  //console.log('Deploy WETH Pool');
-  //await deployer.deploy(Y3dPool);  
+  console.log('Deploy Pool');
+  await deployer.deploy(Y3dPool);  
 
   // Put mining
+  /*
   console.log('Init Mining');  
   let y3dToken = new web3.eth.Contract(Y3dToken.abi, Y3dToken.address);    
   await y3dToken.methods.approve(Y3dPool.address, "1000000000000000000000").send({from: accounts[0], gas: 6700000});
 
   let y3dPool = new web3.eth.Contract(Y3dPool.abi, Y3dPool.address);
   await y3dPool.methods.receiveApproval("1000000000000000000000").send({from: accounts[0], gas: 6700000});
+  
+  await y3dToken.methods.burn("1000000000000000000").send({from: accounts[0], gas: 6700000});  */
 
 /*
   await deployer.deploy(Y3d_ETH_Pool);  
