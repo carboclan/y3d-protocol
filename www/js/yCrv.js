@@ -16,8 +16,9 @@ async function main() {
     _print(`Initialized ${App.YOUR_ADDRESS}`);
     _print("Reading smart contracts...\n");
     print_warning();    
-    _print(`<a href="https://etherscan.io/address/${rewardTokenAddr}">${rewardTokenTicker}: ${rewardTokenAddr}</a> | <a href="https://yieldfarming.info/tools/diff/?contract1=0x587A07cE5c265A38Dd6d42def1566BA73eeb06F5&contract2=${rewardTokenAddr}">Diff</a>`);
-    _print(`<a href="https://etherscan.io/address/${rewardPoolAddr}">Pool: ${rewardPoolAddr}</a> | Diff\n`);
+    _print(`<a href="https://etherscan.io/address/${rewardTokenAddr}">${rewardTokenTicker}: ${rewardTokenAddr}</a> | <a href="https://yieldfarming.info/tools/diff/?contract1=0x08A2E41FB99A7599725190B9C970Ad3893fa33CF&contract2=${rewardTokenAddr}">Diff</a>`);
+    _print(`<a href="https://etherscan.io/address/${rewardPoolAddr}">Pool: ${rewardPoolAddr}</a> | <a href="https://yieldfarming.info/tools/diff/?contract1=0xEA4D68CF86BcE59Bf2bFA039B97794ce2c43dEBC&contract2=${rewardPoolAddr}">Diff</a>\n`);
+
 
     const P_STAKING_POOL = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, App.provider);
     const Y_TOKEN = new ethers.Contract(stakingToken, ERC20_ABI, App.provider);
