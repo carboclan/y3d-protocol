@@ -22,12 +22,21 @@ async function main() {
 
     const P_STAKING_POOL = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, App.provider);
     const Y_TOKEN = new ethers.Contract(stakingToken, ERC20_ABI, App.provider);
+    const Mining_TOKEN = new ethers.Contract("0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1", ERC20_ABI, App.provider);
+
 
     const stakedYAmount = await P_STAKING_POOL.balanceOf(App.YOUR_ADDRESS) / 1e18;
     const earnedYFFI = await P_STAKING_POOL.earned(App.YOUR_ADDRESS) / 1e18;
     const earnedLP = await P_STAKING_POOL.unrealizedProfit(App.YOUR_ADDRESS) / 1e18;    
+
+    const miningAmount = await Mining_TOKEN.balanceOf(rewardPoolAddr) / 1e18;
+
     const totalSupplyY = await Y_TOKEN.totalSupply() / 1e18;
-    const totalTotalYAmount = await Y_TOKEN.balanceOf(rewardPoolAddr) / 1e18;
+    const totalTotalYAmount = await Y_TOKEN.balanceOf(rewardPoolAddr) / 1e18 + miningAmount;
+
+
+    
+
     const totalStakedYAmount = await P_STAKING_POOL.totalSupply() / 1e18;
 
     // Find out reward rate
@@ -39,6 +48,9 @@ async function main() {
     // Find out underlying assets of Y
     const unstakedY = await Y_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
 
+    // Find out underlying assets of Y
+    const crv_miningY = await Y_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;    
+
     const prices = await lookUpPrices(["ethereum", "spaghetti"]);
     const stakingTokenPrice = prices["ethereum"].usd;
     const rewardTokenPrice = prices["spaghetti"].usd;
@@ -47,7 +59,9 @@ async function main() {
    _print(`There are total   : ${totalSupplyY} ${stakingTokenTicker}.`);
    _print(`There are total   : ${totalStakedYAmount} ${stakingTokenTicker} staked in ${rewardTokenTicker}'s ${stakingTokenTicker} staking pool.`);
   // _print(`                  = ${toDollar(totalStakedYAmount * stakingTokenPrice)}\n`);
+   _print(`There are total   : ${miningAmount} in ${rewardTokenTicker}'s ${stakingTokenTicker} staking pool that are minning Crv.`);
    _print(`There are total   : ${totalTotalYAmount - totalStakedYAmount} ${stakingTokenTicker} in ${rewardTokenTicker}'s ${stakingTokenTicker} staking pool that ready to claim.`);
+   
 
    _print(`You are staking   : ${stakedYAmount} ${stakingTokenTicker} (${toFixed(stakedYAmount * 100 / totalStakedYAmount, 3)}% of the pool)`);
 //   _print(`                  = ${toDollar(stakedYAmount * stakingTokenPrice)}\n`);
