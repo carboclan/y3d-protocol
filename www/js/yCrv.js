@@ -102,7 +102,8 @@ async function main() {
     _print_button(`Unstake ${stakedYAmount} ${stakingTokenTicker}`, unstake);
     //_print_button(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
     _print_button(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
-    _print_button(`Exit`, exit);     _print_button(`Harvest`, harvest);
+    _print_button(`Exit`, exit);     
+    //_print_button(`Harvest`, harvest);
 
     hideLoading();
 }
