@@ -98,7 +98,7 @@ async function main() {
         return rewardsContract_harvest(rewardPoolAddr, App);
     };    
 
-    //_print_button(`Stake ${unstakedY} ${stakingTokenTicker}`, approveTENDAndStake);
+    _print_button(`Stake ${unstakedY} ${stakingTokenTicker}`, approveTENDAndStake);
     _print_button(`Unstake ${stakedYAmount} ${stakingTokenTicker}`, unstake);
     //_print_button(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
     _print_button(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
