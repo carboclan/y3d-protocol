@@ -21,6 +21,9 @@ The y3d token itself which is completely useless. There is no governance, no pre
 
 There will be 21,000 y3d token in total. We will carefully select some pools on uniswap at this moment to distribute them. Stay tuned.
 
+- [(News) yCrv Pool, 1,000 y3d in 30 days, start at, Tuesday, August 25, 2020 at 7:00:00 pm](https://twitter.com/Y3dScam/status/1297933387202613251)
+
+
 ## Attributions
 Much of this codebase is modified from existing works, including:
 - [YAM](https://yam.finance)
