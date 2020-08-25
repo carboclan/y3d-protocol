@@ -160,7 +160,7 @@ const _print_button = function(message, onclickFunction) {
     });
 };
 
-const _print_button_input = function(message, onclickFunction) {
+const _print_button_input = function(message, defaultValue, onclickFunction) {
     if (!logger) {
         logger = document.getElementById('log');
     }
@@ -169,8 +169,7 @@ const _print_button_input = function(message, onclickFunction) {
     const input_uuid = ID();
 
     logger.innerHTML += '<button type="button" id=' + uuid + '>' + message + '</button>';
-    logger.innerHTML += '<input type="text" id=' + input_uuid + '></input>';
-
+    logger.innerHTML += '<input type="text" id=' + input_uuid + ' placeholder="'+ defaultValue +'"></input>';
     $(document).ready(function() {
         $('#' + uuid).click(function(){
             const value = $('#' + input_uuid).val();
