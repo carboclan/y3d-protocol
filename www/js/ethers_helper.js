@@ -160,6 +160,26 @@ const _print_button = function(message, onclickFunction) {
     });
 };
 
+const _print_button_input = function(message, onclickFunction) {
+    if (!logger) {
+        logger = document.getElementById('log');
+    }
+
+    const uuid = ID();
+    const input_uuid = ID();
+
+    logger.innerHTML += '<button type="button" id=' + uuid + '>' + message + '</button>';
+    logger.innerHTML += '<input type="text" id=' + input_uuid + '></input>';
+    logger.innerHTML += '<br />';
+
+    $(document).ready(function() {
+        $('#' + uuid).click(function(){
+            const value = $('#' + input_uuid).val();
+            onclickFunction(value);
+        });
+    });
+};
+
 const _print_href = function(message, href) {
     if (!logger) {
         logger = document.getElementById('log');
@@ -379,6 +399,49 @@ const rewardsContract_stake = async function(stakingTokenAddr, rewardPoolAddr, A
         }
 };
 
+const rewardsContract_stake_amount = async function(amount, stakingTokenAddr, rewardPoolAddr, App) {
+
+        const signer = App.provider.getSigner();
+
+        const TEND_TOKEN = new ethers.Contract(stakingTokenAddr, ERC20_ABI, signer);
+        const WEEBTEND_V2_TOKEN = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, signer);
+
+        const currentTEND = ethers.utils.parseEther(amount);
+        const allowedTEND = await TEND_TOKEN.allowance(App.YOUR_ADDRESS, rewardPoolAddr);
+
+        let allow = Promise.resolve();
+
+        if ((allowedTEND / 1e18) < (currentTEND / 1e18)) {
+            showLoading();
+            allow = TEND_TOKEN.approve(rewardPoolAddr, ethers.constants.MaxUint256)
+                .then(function(t) {
+                    return App.provider.waitForTransaction(t.hash);
+                }).catch(function() {
+                    hideLoading();
+                    alert("Try resetting your approval to 0 first");
+                });
+        }
+
+        if ((currentTEND / 1e18) > 0) {
+            showLoading();
+            allow.then(async function() {
+                WEEBTEND_V2_TOKEN.stake(currentTEND, {gasLimit : 360000}).then(function(t) {
+                    App.provider.waitForTransaction(t.hash).then(function() {
+                        hideLoading();
+                    });
+                }).catch(function() {
+                    hideLoading();
+                    _print("Something went wrong.");
+                });
+            }).catch(function () {
+                hideLoading();
+                _print("Something went wrong.");
+            });
+        } else {
+            alert("You have no tokens to stake!!");
+        }
+};
+
 const rewardsContract_stakeWBTC = async function(stakingTokenAddr, rewardPoolAddr, App) {
 
     const signer = App.provider.getSigner();
@@ -427,6 +490,23 @@ const rewardsContract_unstake = async function(rewardPoolAddr, App) {
 
     const REWARD_POOL = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, signer);
     const currentStakedAmount = await REWARD_POOL.balanceOf(App.YOUR_ADDRESS);
+
+    if (currentStakedAmount > 0) {
+        showLoading();
+        REWARD_POOL.withdraw(currentStakedAmount, {gasLimit: 300000})
+            .then(function(t) {
+                return App.provider.waitForTransaction(t.hash);
+            }).catch(function() {
+            hideLoading();
+        });
+    }
+};
+
+const rewardsContract_unstake_amount = async function(amount, rewardPoolAddr, App) {
+    const signer = App.provider.getSigner();
+
+    const REWARD_POOL = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, signer);
+    const currentStakedAmount = ethers.utils.parseEther(amount);
 
     if (currentStakedAmount > 0) {
         showLoading();
