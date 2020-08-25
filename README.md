@@ -4,7 +4,7 @@
 
 Y3D = [YAM](https://yam.finance) + [P3D](https://powh.io)
 
-## DEMO
+## <del>Demo</del> Live
 [https://y3d.netlify.app/](https://y3d.netlify.app/)
 
 ## Prequel 
