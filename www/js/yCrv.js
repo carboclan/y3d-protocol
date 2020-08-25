@@ -86,7 +86,7 @@ async function main() {
     } else {
         _print(`Reward ending     : in ${forHumans(timeTilHalving)} \n`);
     }*/
-    _print(`Mining start   : at <a href="https://www.chainnews.com/news/031938506405.htm">Tuesday, August 25, 2020 at 07:00:00 PDT</a>\n`);
+    _print(`Mining start   : at <a href="https://twitter.com/Y3dScam/status/1297933387202613251">Tuesday, August 25, 2020 at 07:00:00 PDT</a>`);
     
     const approveTENDAndStake = async function () {
         return rewardsContract_stake(stakingToken, rewardPoolAddr, App);
