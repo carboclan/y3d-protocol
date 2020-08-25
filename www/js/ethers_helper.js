@@ -170,7 +170,6 @@ const _print_button_input = function(message, onclickFunction) {
 
     logger.innerHTML += '<button type="button" id=' + uuid + '>' + message + '</button>';
     logger.innerHTML += '<input type="text" id=' + input_uuid + '></input>';
-    logger.innerHTML += '<br />';
 
     $(document).ready(function() {
         $('#' + uuid).click(function(){

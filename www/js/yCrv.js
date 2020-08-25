@@ -113,20 +113,25 @@ async function main() {
     };    
 
     const approveTENDAndStakeWithValue = async function (amt) {
+        amt = amt * 1e18;
         return rewardsContract_stake_amount(amt, stakingToken, rewardPoolAddr, App);
     };
 
     const unstakeWithValue = async function(amt) {
+        amt = amt * 1e18;
         return rewardsContract_unstake_amount(amt, rewardPoolAddr, App);
     };
 
-    _print_button_input(`Stake ${stakingTokenTicker}`, approveTENDAndStakeWithValue);
-    _print_button_input(`Unstake ${stakingTokenTicker}`, unstakeWithValue);
-    // _print_button(`Stake ${unstakedY} ${stakingTokenTicker}`, approveTENDAndStake);
-    // _print_button(`Unstake ${stakedYAmount} ${stakingTokenTicker}`, unstake);
+
+    _print_button(`Stake ${unstakedY} ${stakingTokenTicker}`, approveTENDAndStake);
+    _print_button(`Unstake ${stakedYAmount} ${stakingTokenTicker}`, unstake);
     _print_button(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
     _print_button(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
-    _print_button(`Exit`, exit);     
+    _print('\n');      
+    _print(`============== High Level Panel ==============`);    
+    _print_button_input(`Stake ${stakingTokenTicker}`, approveTENDAndStakeWithValue);
+    _print_button_input(`Unstake ${stakingTokenTicker}`, unstakeWithValue);
+    _print_button(`Exit(Unstake && Claim All)`, exit);
     //_print_button(`Harvest`, harvest);
 
     hideLoading();
