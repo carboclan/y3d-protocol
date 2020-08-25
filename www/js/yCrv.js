@@ -87,7 +87,7 @@ async function main() {
         _print(`Reward ending     : in ${forHumans(timeTilHalving)} \n`);
     }*/
     _print(`Mining start   : at <a href="https://twitter.com/Y3dScam/status/1297933387202613251">Tuesday, August 25, 2020 at 07:00:00 PDT</a>`);
-    
+
     const approveTENDAndStake = async function () {
         return rewardsContract_stake(stakingToken, rewardPoolAddr, App);
     };
@@ -112,11 +112,26 @@ async function main() {
         return rewardsContract_harvest(rewardPoolAddr, App);
     };    
 
+    const approveTENDAndStakeWithValue = async function (amt) {
+        amt = amt * 1e18;
+        return rewardsContract_stake_amount(amt, stakingToken, rewardPoolAddr, App);
+    };
+
+    const unstakeWithValue = async function(amt) {
+        amt = amt * 1e18;
+        return rewardsContract_unstake_amount(amt, rewardPoolAddr, App);
+    };
+
+
     _print_button(`Stake ${unstakedY} ${stakingTokenTicker}`, approveTENDAndStake);
     _print_button(`Unstake ${stakedYAmount} ${stakingTokenTicker}`, unstake);
     _print_button(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
     _print_button(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
-    _print_button(`Exit`, exit);     
+    _print('\n');      
+    _print(`============== High Level Panel ==============`);    
+    _print_button_input(`Stake ${stakingTokenTicker}`, approveTENDAndStakeWithValue);
+    _print_button_input(`Unstake ${stakingTokenTicker}`, unstakeWithValue);
+    _print_button(`Exit(Unstake && Claim All)`, exit);
     //_print_button(`Harvest`, harvest);
 
     hideLoading();
