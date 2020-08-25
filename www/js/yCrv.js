@@ -122,7 +122,9 @@ async function main() {
         return rewardsContract_unstake_amount(amt, rewardPoolAddr, App);
     };
 
-
+    _print('\n');
+    _print('\n');    
+    _print(`============== Basic Panel ==============`);    
     _print_button(`Stake ${unstakedY} ${stakingTokenTicker}`, approveTENDAndStake);
     _print_button(`Unstake ${stakedYAmount} ${stakingTokenTicker}`, unstake);
     _print_button(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
