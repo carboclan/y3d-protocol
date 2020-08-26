@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@openzeppelin/contracts": "^3.1.0",
     "dotenv-flow": "^3.2.0",
     "ethers": "^5.0.8",
     "ganache-core": "^2.11.2"

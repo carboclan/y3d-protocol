@@ -2,7 +2,7 @@
  *Submitted for verification at Etherscan.io on 2020-08-23
 */
 
-pragma solidity ^0.5.0;
+pragma solidity ^0.6.0;
 
 /*
  ___    ___ ________  ________     
@@ -557,13 +557,13 @@ contract y3dPool is LPTokenWrapper {
     }
 
     // stake visibility is public as overriding LPTokenWrapper's stake() function
-    function stake(uint256 amount) public updateReward(msg.sender) {
+    function stake(uint256 amount) public virtual updateReward(msg.sender) {
         require(amount != 0, "Cannot stake 0");
         super.stake(amount);
         emit Staked(msg.sender, amount);
     }
 
-    function withdraw(uint256 amount) public updateReward(msg.sender) {
+    function withdraw(uint256 amount) public virtual updateReward(msg.sender) {
         require(amount != 0, "Cannot withdraw 0");
         super.withdraw(amount);
         emit Withdrawn(msg.sender, amount);
