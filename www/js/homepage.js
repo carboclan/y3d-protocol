@@ -1,4 +1,5 @@
-$(async function() {
-
+$(async function () {
+  $('#joinWechat').click(function () {
+    $('#wechatImg').toggle();
+  });
 });
-
