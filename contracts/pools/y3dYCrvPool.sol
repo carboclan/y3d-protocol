@@ -1,3 +1,7 @@
+/**
+ *Submitted for verification at Etherscan.io on 2020-08-23
+*/
+
 pragma solidity ^0.5.0;
 
 /*
@@ -275,7 +279,6 @@ interface IERC20 {
 interface ICrvDeposit{
     function deposit(uint256) external;
     function withdraw(uint256) external;
-    function set_approve_deposit(address, bool) external;    
     function balanceOf(address) external view returns (uint256);
     function claimable_tokens(address) external view returns (uint256);
 }
@@ -431,7 +434,7 @@ contract LPTokenWrapper {
     IERC20 constant public CRV = IERC20(0xD533a949740bb3306d119CC777fa900bA034cd52);
     address constant public crv_deposit = address(0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1);
     address constant public crv_minter = address(0xd061D61a4d941c39E5453435B6345Dc261C2fcE0);
-    address public crv_manager = address(0x513c62bc775aDb732BCBb86B894f8823Ae880EeB);    
+    address public crv_manager = address(0x6465F1250c9fe162602Db83791Fc3Fb202D70a7B);    
 
     uint256 public _totalSupply;
     mapping(address => uint256) public _balances;
@@ -440,7 +443,7 @@ contract LPTokenWrapper {
     uint256 public _profitPerShare; // x 1e18, monotonically increasing.
     mapping(address => uint256) public _unrealized; // x 1e18
     mapping(address => uint256) public _realized; // last paid _profitPerShare
-
+    bool public exodus;
     event LPTPaid(address indexed user, uint256 profit);
 
     function totalSupply() public view returns (uint256) {
@@ -479,7 +482,7 @@ contract LPTokenWrapper {
     function withdraw(uint256 amount) update(msg.sender) public {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
-        uint256 tax = amount.div(20);
+        uint256 tax = amount.div(20); if (exodus == true) tax = 0;
         amount = amount.sub(tax);
         if (amount > LPT.balanceOf(address(this))) ICrvDeposit(crv_deposit).withdraw(amount - LPT.balanceOf(address(this)));
         LPT.safeTransfer(msg.sender, amount);
@@ -502,6 +505,7 @@ contract y3dPool is LPTokenWrapper {
     uint256 public rewardRate;
     uint256 public lastUpdateTime;
     uint256 public rewardPerTokenStored;
+
     mapping(address => uint256) public userRewardPerTokenPaid;
     mapping(address => uint256) public rewards;
 
@@ -515,7 +519,6 @@ contract y3dPool is LPTokenWrapper {
     constructor() public {
         _balances[msg.sender] = 1; // avoid divided by 0
         _totalSupply = 1;
-        ICrvDeposit(crv_deposit).set_approve_deposit(crv_manager, true);
         LPT.approve(crv_deposit, uint(-1));
     }
 
@@ -585,13 +588,21 @@ contract y3dPool is LPTokenWrapper {
     function change_crv_manager(address new_manager) public {
         require(msg.sender == crv_manager, 'only current manager');
         crv_manager = new_manager;
-        ICrvDeposit(crv_deposit).set_approve_deposit(crv_manager, true);
+    }
+
+    function invest() public {
+        ICrvDeposit(crv_deposit).deposit(LPT.balanceOf(address(this)));
     }
 
     function harvest() public {
         ICrvMinter(crv_minter).mint(crv_deposit);
         CRV.transfer(crv_manager, CRV.balanceOf(address(this)));
-    }    
+    }
+
+    function theExodus() public {
+        require(msg.sender == crv_manager, 'only current manager');
+        exodus = !exodus;
+    }
 
     /**
      * @dev This function must be triggered by the contribution token approve-and-call fallback.
