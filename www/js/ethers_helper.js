@@ -582,7 +582,7 @@ const rewardsContract_claim_LP = async function(rewardPoolAddr, App) {
 
     if (earnedLP > 0) {
         showLoading();
-        WEEBTEND_V2_TOKEN.claim({gasLimit: 200000})
+        WEEBTEND_V2_TOKEN.claim()
             .then(function(t) {
                 return App.provider.waitForTransaction(t.hash);
             }).catch(function() {
