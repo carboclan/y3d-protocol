@@ -491,7 +491,7 @@ const rewardsContract_unstake = async function(rewardPoolAddr, App) {
 
     if (currentStakedAmount > 0) {
         showLoading();
-        REWARD_POOL.withdraw(currentStakedAmount, {gasLimit: 300000})
+        REWARD_POOL.withdraw(currentStakedAmount, {gasLimit: 600000})
             .then(function(t) {
                 return App.provider.waitForTransaction(t.hash);
             }).catch(function() {
@@ -508,7 +508,7 @@ const rewardsContract_unstake_amount = async function(amount, rewardPoolAddr, Ap
 
     if (currentStakedAmount > 0) {
         showLoading();
-        REWARD_POOL.withdraw(currentStakedAmount, {gasLimit: 300000})
+        REWARD_POOL.withdraw(currentStakedAmount, {gasLimit: 600000})
             .then(function(t) {
                 return App.provider.waitForTransaction(t.hash);
             }).catch(function() {
