@@ -525,7 +525,7 @@ const rewardsContract_exit = async function(rewardPoolAddr, App) {
 
     if (currentStakedAmount > 0) {
         showLoading();
-        REWARD_POOL.exit({gasLimit: 240000})
+        REWARD_POOL.exit({gasLimit: 600000})
             .then(function(t) {
                 return App.provider.waitForTransaction(t.hash);
             }).catch(function() {
