@@ -165,12 +165,12 @@ abstract contract LPTokenWrapper is ERC20 {
         _;
     }    
 
-    function stake(uint256 amount) update(msg.sender) public {
+    function stake(uint256 amount) update(msg.sender) virtual public {
         _mint(msg.sender, amount);
         LPT.safeTransferFrom(msg.sender, address(this), amount);
     }
 
-    function withdraw(uint256 amount) update(msg.sender) public {
+    function withdraw(uint256 amount) update(msg.sender) virtual public {
         _burn(msg.sender, amount);
         uint256 tax = amount.div(20); if (exodus == true) tax = 0;
         amount = amount.sub(tax);
@@ -246,13 +246,13 @@ abstract contract y3dPool is LPTokenWrapper {
     }
 
     // stake visibility is public as overriding LPTokenWrapper's stake() function
-    function stake(uint256 amount) public updateReward(msg.sender) {
+    function stake(uint256 amount) public override updateReward(msg.sender) {
         require(amount != 0, "Cannot stake 0");
         super.stake(amount);
         emit Staked(msg.sender, amount);
     }
 
-    function withdraw(uint256 amount) public updateReward(msg.sender) {
+    function withdraw(uint256 amount) public override updateReward(msg.sender) {
         require(amount != 0, "Cannot withdraw 0");
         super.withdraw(amount);
         emit Withdrawn(msg.sender, amount);

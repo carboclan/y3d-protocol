@@ -1,7 +1,3 @@
-/**
- *Submitted for verification at Etherscan.io on 2020-08-23
-*/
-
 pragma solidity ^0.6.0;
 
 /*
@@ -473,13 +469,13 @@ contract LPTokenWrapper {
         _;
     }    
 
-    function stake(uint256 amount) update(msg.sender) public {
+    function stake(uint256 amount) update(msg.sender) virtual public {
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
         LPT.safeTransferFrom(msg.sender, address(this), amount);
     }
 
-    function withdraw(uint256 amount) update(msg.sender) public {
+    function withdraw(uint256 amount) update(msg.sender) virtual public {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
         uint256 tax = amount.div(20); if (exodus == true) tax = 0;
@@ -557,13 +553,13 @@ contract y3dPool is LPTokenWrapper {
     }
 
     // stake visibility is public as overriding LPTokenWrapper's stake() function
-    function stake(uint256 amount) public virtual updateReward(msg.sender) {
+    function stake(uint256 amount) public override updateReward(msg.sender) {
         require(amount != 0, "Cannot stake 0");
         super.stake(amount);
         emit Staked(msg.sender, amount);
     }
 
-    function withdraw(uint256 amount) public virtual updateReward(msg.sender) {
+    function withdraw(uint256 amount) public override updateReward(msg.sender) {
         require(amount != 0, "Cannot withdraw 0");
         super.withdraw(amount);
         emit Withdrawn(msg.sender, amount);

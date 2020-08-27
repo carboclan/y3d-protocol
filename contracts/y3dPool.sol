@@ -469,13 +469,13 @@ contract LPTokenWrapper {
         _;
     }    
 
-    function stake(uint256 amount) update(msg.sender) public {
+    function stake(uint256 amount) update(msg.sender) virtual public {
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
         LPT.safeTransferFrom(msg.sender, address(this), amount);
     }
 
-    function withdraw(uint256 amount) update(msg.sender) public {
+    function withdraw(uint256 amount) update(msg.sender) virtual public {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
         uint256 tax = amount.div(20); if (exodus == true) tax = 0;
