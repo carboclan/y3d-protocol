@@ -29,11 +29,11 @@ async function main() {
   const yyCrvPool = await yyCRV_TOKEN.pool() / 1e18;
 
   const stake = async function (amount) {
-    return yyCrvContract_stake(yyCrvTokenAddr, yCrvTokenAddr, amount, App);
+    return yyCrvContract_stake(yyCrvTokenAddr, yCrvTokenAddr, App.YOUR_ADDRESS, amount, App);
   };
 
   const unstake = async function (amount) {
-    return yyCrvContract_unstake(yyCrvTokenAddr, amount, App);
+    return yyCrvContract_unstake(yyCrvTokenAddr, App.YOUR_ADDRESS, amount, App);
   };
 
   const make_profit = async function (amount) {

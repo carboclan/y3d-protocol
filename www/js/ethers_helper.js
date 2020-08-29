@@ -607,7 +607,7 @@ const rewardsContract_harvest = async function(rewardPoolAddr, App) {
 };
 
 // ============================== yyCRV ==============================
-const yyCrvContract_stake = async function(contractAddr, yCrvTokenAddr, amount, App) {
+const yyCrvContract_stake = async function(contractAddr, yCrvTokenAddr, owner, amount, App) {
     const signer = App.provider.getSigner();
     const yCRV_TOKEN = new ethers.Contract(yCrvTokenAddr, YCRV_ABI, signer);
     const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
@@ -615,13 +615,16 @@ const yyCrvContract_stake = async function(contractAddr, yCrvTokenAddr, amount, 
     let allow = Promise.resolve();
     if (amt > 0) {
         showLoading();
-        allow = yCRV_TOKEN.approve(contractAddr, ethers.constants.MaxUint256).then(function(t) {
-            return App.provider.waitForTransaction(t.hash);
-        }).catch(function(e) {
-            hideLoading();
-            console.log(e)
-            alert("Try resetting your approval to 0 first");
-        });
+        const allowance = await yCRV_TOKEN.allowance(owner, contractAddr)
+        if (allowance == 0) {
+            allow = yCRV_TOKEN.approve(contractAddr, ethers.constants.MaxUint256).then(function(t) {
+                return App.provider.waitForTransaction(t.hash);
+            }).catch(function(e) {
+                hideLoading();
+                console.log(e)
+                alert("Try resetting your approval to 0 first");
+            });
+        }
 
         allow.then(async function() {
             yyCRV.stake(amt).then(function(t) {
@@ -637,21 +640,23 @@ const yyCrvContract_stake = async function(contractAddr, yCrvTokenAddr, amount, 
     }
 };
 
-const yyCrvContract_unstake = async function(contractAddr, amount, App) {
+const yyCrvContract_unstake = async function(contractAddr, owner, amount, App) {
     const signer = App.provider.getSigner();
     const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
     const amt = ethers.utils.parseEther(amount);
     let allow = Promise.resolve();
     if (amt > 0) {
         showLoading();
-
-        allow = yyCRV.approve(contractAddr, ethers.constants.MaxUint256).then(function(t) {
-            return App.provider.waitForTransaction(t.hash);
-        }).catch(function(e) {
-            console.log(e);
-            hideLoading();
-            alert("Try resetting your approval to 0 first");
-        });
+        const allowance = await yyCRV.allowance(owner, contractAddr)
+        if (allowance == 0) {
+            allow = yyCRV.approve(contractAddr, ethers.constants.MaxUint256).then(function(t) {
+                return App.provider.waitForTransaction(t.hash);
+            }).catch(function(e) {
+                console.log(e);
+                hideLoading();
+                alert("Try resetting your approval to 0 first");
+            });
+        }
 
         allow.then(async function() {
             yyCRV.unstake(amt).then(function(t) {
