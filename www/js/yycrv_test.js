@@ -18,8 +18,8 @@ async function main() {
 
   _print(`Initialized ${App.YOUR_ADDRESS}`);
   _print("Reading smart contracts...\n");
-  _print(`yCrv Address: ${yCrvTokenAddr}`);
-  _print(`yyCrv Address: ${yyCrvTokenAddr}\n`);
+  _print(`yCrv Address: <a href="https://rinkeby.etherscan.io/address/${yCrvTokenAddr}#code">${yCrvTokenAddr}</a>`);
+  _print(`yyCrv Address: <a href="https://rinkeby.etherscan.io/address/${yyCrvTokenAddr}#code">${yyCrvTokenAddr}</a>\n`);
 
   const yCRV_TOKEN = new ethers.Contract(yCrvTokenAddr, YCRV_ABI, App.provider);
   const yyCRV_TOKEN = new ethers.Contract(yyCrvTokenAddr, YYCRV_ABI, App.provider);
@@ -67,16 +67,22 @@ async function main() {
 
   _print(`Total yCrv staked: ${yyCrvPool}`);
   _print(`Total yyCrv supply: ${yyCrvTotalSupply}`);
+  _print(`yyCrv price: ${Math.round(yyCrvPool/yyCrvTotalSupply*1.05*1000)/1000}$\n`);  
+  _print(`Minimum Mining Ratio: a%`);
+  _print(`Maximum Mining Ratio: b%`);
+  _print(`Current Mining Ratio: c%\n`);    
+  _print(`Locked CRV in <a href="https://etherscan.io/address/0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2#code">Curve DAO</a>:`);  
   _print(`Boost: 1.0 <a href="https://dao.curve.fi/minter/calc">https://dao.curve.fi/minter/calc</a>`);
   _print(`\n`);
-
   _print(`Minimum Mining Ratio: ${minMiningRatio} %`);
   _print(`Maximum Mining Ratio: ${maxMiningRatio} %`);
   _print(`Current Mining Ratio: ${curMiningRatio} %`);
   _print(`\n`);
-
   _print_button_input(`Stake ${stakingTokenTicker}`, yCRVBalance, stake);
   _print_button_input(`Unstake`, yyCRVBalance, unstake); 
+  _print(`\n`);
+
+    
   _print_button_input(`Donate`, yCRVBalance, make_profit);
   _print(`\n`);
   _print(`Withdraw Fee Ratio: ${withdrawFeeRatio.toFixed(1)} %`);
