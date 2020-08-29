@@ -25,6 +25,7 @@ async function main() {
   const yyCRV_TOKEN = new ethers.Contract(yyCrvTokenAddr, YYCRV_ABI, App.provider);
   const yCRVBalance = await yCRV_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
   const yyCRVBalance = await yyCRV_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
+  const withdrawFeeRatio = await yyCRV_TOKEN.fee(App.YOUR_ADDRESS) / 10;
   const yyCrvTotalSupply = await yyCRV_TOKEN.totalSupply() / 1e18;
   const yyCrvPool = await yyCRV_TOKEN.pool() / 1e18;
   const maxMiningRatio = await yyCRV_TOKEN.maximum_mining_ratio();
@@ -77,7 +78,9 @@ async function main() {
   _print_button_input(`Stake ${stakingTokenTicker}`, yCRVBalance, stake);
   _print_button_input(`Unstake`, yyCRVBalance, unstake); 
   _print_button_input(`Donate`, yCRVBalance, make_profit);
-  
+  _print(`\n`);
+  _print(`Withdraw Fee Ratio: ${withdrawFeeRatio.toFixed(1)} %`);
+
   _print(`\n\n <a href="https://rinkeby.etherscan.io/address/0xe0f88584bf7e843af50c0bf3d53591566128773f#code">fake yCrv and y3d Faucet ⬅️</a>`);
 
   /*
