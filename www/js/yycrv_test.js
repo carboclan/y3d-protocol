@@ -18,8 +18,8 @@ async function main() {
 
   _print(`Initialized ${App.YOUR_ADDRESS}`);
   _print("Reading smart contracts...\n");
-  _print(`yCrv Address: ${yCrvTokenAddr}`);
-  _print(`yyCrv Address: ${yyCrvTokenAddr}\n`);
+  _print(`yCrv Address: <a href="https://rinkeby.etherscan.io/address/${yCrvTokenAddr}#code">${yCrvTokenAddr}</a>`);
+  _print(`yyCrv Address: <a href="https://rinkeby.etherscan.io/address/${yyCrvTokenAddr}#code">${yyCrvTokenAddr}</a>\n`);
 
   const yCRV_TOKEN = new ethers.Contract(yCrvTokenAddr, YCRV_ABI, App.provider);
   const yyCRV_TOKEN = new ethers.Contract(yyCrvTokenAddr, YYCRV_ABI, App.provider);

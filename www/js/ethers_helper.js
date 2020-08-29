@@ -761,5 +761,5 @@ const yyCrvContract_withdraw = async function(contractAddr, amount, App) {
 };
 
 const print_warning = function() {
-  _print_bold("WARNING: Do audit the contract before staking any asset!\n")
+    _print_bold("WARNING: Do audit the contract before staking any asset!\n")
 };
