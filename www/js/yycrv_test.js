@@ -7,6 +7,7 @@ async function main() {
   print_warning();
 
   const stakingTokenAddr = YCRV_TEST_ADDR;
+  const yyCrvTokenAddr = YYCRV_TEST_ADDR;
   const stakingTokenTicker = "yCrv";
   const rewardPoolAddr = YYCRV_TEST_ADDR;
   const rewardTokenAddr = YYCRV_TEST_ADDR;
@@ -23,31 +24,31 @@ async function main() {
   const yCRVBalance = await yCRV_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
 
   const invest_yCRV = async function (amount) {
-    return yyCrvContract_invest(stakingTokenAddr, amount, App);
+    return yyCrvContract_invest(yyCrvTokenAddr, amount, App);
   };
 
   const redeem = async function (amount) {
-    return yyCrvContract_redeem(stakingTokenAddr, amount, App);
+    return yyCrvContract_redeem(yyCrvTokenAddr, amount, App);
   };
 
   const depositAll = async function () {
-    return yyCrvContract_deposit_all(stakingTokenAddr, App);
+    return yyCrvContract_deposit_all(yyCrvTokenAddr, App);
   };
 
   const deposit = async function () {
-    return yyCrvContract_deposit(stakingTokenAddr, App);
+    return yyCrvContract_deposit(yyCrvTokenAddr, App);
   };
 
   const withdraw = async function (amount) {
-    return yyCrvContract_withdraw(stakingTokenAddr, amount, App);
+    return yyCrvContract_withdraw(yyCrvTokenAddr, amount, App);
   };
 
   const harvestToConsul = async function () {
-    return yyCrvContract_harvest_to_consul(stakingTokenAddr, App);
+    return yyCrvContract_harvest_to_consul(yyCrvTokenAddr, App);
   };
 
   const harvestToUniswap = async function () {
-    return yyCrvContract_harvest_to_uniswap(stakingTokenAddr, App);
+    return yyCrvContract_harvest_to_uniswap(yyCrvTokenAddr, App);
   };
 
   _print_button_input(`Invest ${stakingTokenTicker}`, yCRVBalance, invest_yCRV);
