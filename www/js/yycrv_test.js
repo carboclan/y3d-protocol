@@ -27,12 +27,12 @@ async function main() {
   const yyCrvTotalSupply = await yyCRV_TOKEN.totalSupply() / 1e18;
   const yyCrvPool = await yyCRV_TOKEN.pool() / 1e18;
 
-  const invest_yCRV = async function (amount) {
-    return yyCrvContract_invest(yyCrvTokenAddr, yCrvTokenAddr, amount, App);
+  const stake = async function (amount) {
+    return yyCrvContract_stake(yyCrvTokenAddr, yCrvTokenAddr, amount, App);
   };
 
-  const redeem = async function (amount) {
-    return yyCrvContract_redeem(yyCrvTokenAddr, amount, App);
+  const unstake = async function (amount) {
+    return yyCrvContract_unstake(yyCrvTokenAddr, amount, App);
   };
 
   const depositAll = async function () {
@@ -57,10 +57,13 @@ async function main() {
 
   _print(`Total yCrv staked: ${yyCrvPool}`);
   _print(`Total yyCrv supply: ${yyCrvTotalSupply}`);
+  _print(`Boost: 1.0 <a href="https://dao.curve.fi/minter/calc">https://dao.curve.fi/minter/calc</a>`);
   _print(`\n`);
 
-  _print_button_input(`Stake ${stakingTokenTicker}`, yCRVBalance, invest_yCRV);
-  _print_button_input(`Unstake`, 0, redeem);
+
+
+  _print_button_input(`Stake ${stakingTokenTicker}`, yCRVBalance, stake);
+  _print_button_input(`Unstake`, 0, unstake);
 
   
   _print(`\n\n <a href="https://rinkeby.etherscan.io/address/0xe0f88584bf7e843af50c0bf3d53591566128773f#code">fake yCrv and y3d Faucet ⬅️</a>`);
