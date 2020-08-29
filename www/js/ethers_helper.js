@@ -606,7 +606,92 @@ const rewardsContract_harvest = async function(rewardPoolAddr, App) {
     }
 };
 
+// ============================== yyCRV ==============================
+const yyCrvContract_invest = async function(contractAddr, amount, App) {
+    const signer = App.provider.getSigner();
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    const amt = ethers.utils.parseEther(amount);
+    if (amt > 0) {
+        showLoading();
+        yyCRV.invest(amt).then(function(t) {
+            return App.provider.waitForTransaction(t.hash);
+        }).catch(function() {
+            hideLoading();
+        });
+    }
+};
 
+const yyCrvContract_redeem = async function(contractAddr, amount, App) {
+    const signer = App.provider.getSigner();
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    const amt = ethers.utils.parseEther(amount);
+    if (amt > 0) {
+        showLoading();
+        yyCRV.redeem(amt).then(function(t) {
+            return App.provider.waitForTransaction(t.hash);
+        }).catch(function() {
+            hideLoading();
+        });
+    }
+};
+
+const yyCrvContract_deposit_all = async function(contractAddr, App) {
+    const signer = App.provider.getSigner();
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    showLoading();
+    yyCRV.deposit_all().then(function(t) {
+        return App.provider.waitForTransaction(t.hash);
+    }).catch(function() {
+        hideLoading();
+    });
+};
+
+const yyCrvContract_deposit = async function(contractAddr, App) {
+    const signer = App.provider.getSigner();
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    showLoading();
+    yyCRV.deposit().then(function(t) {
+        return App.provider.waitForTransaction(t.hash);
+    }).catch(function() {
+        hideLoading();
+    });
+};
+
+const yyCrvContract_harvest_to_consul = async function(contractAddr, App) {
+    const signer = App.provider.getSigner();
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    showLoading();
+    yyCRV.harvest_to_consul().then(function(t) {
+        return App.provider.waitForTransaction(t.hash);
+    }).catch(function() {
+        hideLoading();
+    });
+};
+
+const yyCrvContract_harvest_to_uniswap = async function(contractAddr, App) {
+    const signer = App.provider.getSigner();
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    showLoading();
+    yyCRV.harvest_to_uniswap().then(function(t) {
+        return App.provider.waitForTransaction(t.hash);
+    }).catch(function() {
+        hideLoading();
+    });
+};
+
+const yyCrvContract_withdraw = async function(contractAddr, amount, App) {
+    const signer = App.provider.getSigner();
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    const amt = ethers.utils.parseEther(amount);
+    if (amt > 0) {
+        showLoading();
+        yyCRV.withdraw(amt).then(function(t) {
+            return App.provider.waitForTransaction(t.hash);
+        }).catch(function() {
+            hideLoading();
+        });
+    }
+};
 
 const print_warning = function() {
   _print_bold("WARNING: Do audit the contract before staking any asset!\n")
