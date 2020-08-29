@@ -607,16 +607,32 @@ const rewardsContract_harvest = async function(rewardPoolAddr, App) {
 };
 
 // ============================== yyCRV ==============================
-const yyCrvContract_invest = async function(contractAddr, amount, App) {
+const yyCrvContract_invest = async function(contractAddr, yCrvTokenAddr, amount, App) {
     const signer = App.provider.getSigner();
+    const yCRV_TOKEN = new ethers.Contract(yCrvTokenAddr, YCRV_ABI, signer);
     const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
     const amt = ethers.utils.parseEther(amount);
+    let allow = Promise.resolve();
     if (amt > 0) {
         showLoading();
-        yyCRV.invest(amt).then(function(t) {
+        allow = yCRV_TOKEN.approve(contractAddr, ethers.constants.MaxUint256).then(function(t) {
             return App.provider.waitForTransaction(t.hash);
-        }).catch(function() {
+        }).catch(function(e) {
             hideLoading();
+            console.log(e)
+            alert("Try resetting your approval to 0 first");
+        });
+
+        allow.then(async function() {
+            yyCRV.invest(amt).then(function(t) {
+                return App.provider.waitForTransaction(t.hash);
+            }).catch(function() {
+                hideLoading();
+                _print("Something went wrong.");
+            });
+        }).catch(function () {
+            hideLoading();
+            _print("Something went wrong.");
         });
     }
 };

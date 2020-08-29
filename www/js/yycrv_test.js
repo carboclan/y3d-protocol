@@ -6,7 +6,7 @@ $(function () {
 async function main() {
   print_warning();
 
-  const stakingTokenAddr = YCRV_TEST_ADDR;
+  const yCrvTokenAddr = YCRV_TEST_ADDR;
   const yyCrvTokenAddr = YYCRV_TEST_ADDR;
   const stakingTokenTicker = "yCrv";
   const rewardPoolAddr = YYCRV_TEST_ADDR;
@@ -20,11 +20,11 @@ async function main() {
   _print(`${rewardTokenTicker} Address: ${rewardTokenAddr}`);
   _print(`Reward Pool Address: ${rewardPoolAddr}\n`);
 
-  const yCRV_TOKEN = new ethers.Contract(stakingTokenAddr, YCRV_ABI, App.provider);
+  const yCRV_TOKEN = new ethers.Contract(yCrvTokenAddr, YCRV_ABI, App.provider);
   const yCRVBalance = await yCRV_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
 
   const invest_yCRV = async function (amount) {
-    return yyCrvContract_invest(yyCrvTokenAddr, amount, App);
+    return yyCrvContract_invest(yyCrvTokenAddr, yCrvTokenAddr, amount, App);
   };
 
   const redeem = async function (amount) {
