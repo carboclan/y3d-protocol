@@ -651,6 +651,36 @@ const yyCrvContract_unstake = async function(contractAddr, amount, App) {
     }
 };
 
+const yyCrvContract_make_profit = async function(contractAddr, yCrvTokenAddr, amount, App) {
+    const signer = App.provider.getSigner();
+    const yCRV_TOKEN = new ethers.Contract(yCrvTokenAddr, YCRV_ABI, signer);
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    const amt = ethers.utils.parseEther(amount);
+    let allow = Promise.resolve();
+    if (amt > 0) {
+        showLoading();
+        allow = yCRV_TOKEN.approve(contractAddr, ethers.constants.MaxUint256).then(function(t) {
+            return App.provider.waitForTransaction(t.hash);
+        }).catch(function(e) {
+            hideLoading();
+            console.log(e)
+            alert("Try resetting your approval to 0 first");
+        });
+
+        allow.then(async function() {
+            yyCRV.make_profit_external(amt).then(function(t) {
+                return App.provider.waitForTransaction(t.hash);
+            }).catch(function() {
+                hideLoading();
+                _print("Something went wrong.");
+            });
+        }).catch(function () {
+            hideLoading();
+            _print("Something went wrong.");
+        });
+    }
+};
+
 const yyCrvContract_deposit_all = async function(contractAddr, App) {
     const signer = App.provider.getSigner();
     const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);

@@ -35,6 +35,10 @@ async function main() {
     return yyCrvContract_unstake(yyCrvTokenAddr, amount, App);
   };
 
+  const make_profit = async function (amount) {
+    return yyCrvContract_make_profit(yyCrvTokenAddr, amount, App);
+  };  
+
   const depositAll = async function () {
     return yyCrvContract_deposit_all(yyCrvTokenAddr, App);
   };
@@ -63,8 +67,8 @@ async function main() {
 
 
   _print_button_input(`Stake ${stakingTokenTicker}`, yCRVBalance, stake);
-  _print_button_input(`Unstake`, 0, unstake);
-
+  _print_button_input(`Unstake`, 0, unstake); 
+  _print_button_input(`Donate`, yCRVBalance, make_profit);
   
   _print(`\n\n <a href="https://rinkeby.etherscan.io/address/0xe0f88584bf7e843af50c0bf3d53591566128773f#code">fake yCrv and y3d Faucet ⬅️</a>`);
 
