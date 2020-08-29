@@ -22,7 +22,10 @@ async function main() {
   _print(`yyCrv Address: ${yyCrvTokenAddr}\n`);
 
   const yCRV_TOKEN = new ethers.Contract(yCrvTokenAddr, YCRV_ABI, App.provider);
+  const yyCRV_TOKEN = new ethers.Contract(yyCrvTokenAddr, YYCRV_ABI, App.provider);
   const yCRVBalance = await yCRV_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
+  const yyCrvTotalSupply = await yyCRV_TOKEN.totalSupply() / 1e18;
+  const yyCrvPool = await yyCRV_TOKEN.pool() / 1e18;
 
   const invest_yCRV = async function (amount) {
     return yyCrvContract_invest(yyCrvTokenAddr, yCrvTokenAddr, amount, App);
@@ -52,10 +55,9 @@ async function main() {
     return yyCrvContract_harvest_to_uniswap(yyCrvTokenAddr, App);
   };
 
-  _print(`total yCrv staked: xxx`);
-  _print(`total yyCrv supply: yyy`);
+  _print(`Total yCrv staked: ${yyCrvPool}`);
+  _print(`Total yyCrv supply: ${yyCrvTotalSupply}`);
   _print(`\n`);
-  
 
   _print_button_input(`Stake ${stakingTokenTicker}`, yCRVBalance, invest_yCRV);
   _print_button_input(`Unstake`, 0, redeem);
