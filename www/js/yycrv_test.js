@@ -27,6 +27,10 @@ async function main() {
   const yyCRVBalance = await yyCRV_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
   const yyCrvTotalSupply = await yyCRV_TOKEN.totalSupply() / 1e18;
   const yyCrvPool = await yyCRV_TOKEN.pool() / 1e18;
+  const maxMiningRatio = await yyCRV_TOKEN.maximum_mining_ratio();
+  const minMiningRatio = await yyCRV_TOKEN.minimum_mining_ratio();
+  // NEED FIX
+  const curMiningRatio = (yyCrvTotalSupply/yyCrvPool*100).toFixed(2);
 
   const stake = async function (amount) {
     return yyCrvContract_stake(yyCrvTokenAddr, yCrvTokenAddr, App.YOUR_ADDRESS, amount, App);
@@ -63,6 +67,11 @@ async function main() {
   _print(`Total yCrv staked: ${yyCrvPool}`);
   _print(`Total yyCrv supply: ${yyCrvTotalSupply}`);
   _print(`Boost: 1.0 <a href="https://dao.curve.fi/minter/calc">https://dao.curve.fi/minter/calc</a>`);
+  _print(`\n`);
+
+  _print(`Minimum Mining Ratio: ${minMiningRatio} %`);
+  _print(`Maximum Mining Ratio: ${maxMiningRatio} %`);
+  _print(`Current Mining Ratio: ${curMiningRatio} %`);
   _print(`\n`);
 
   _print_button_input(`Stake ${stakingTokenTicker}`, yCRVBalance, stake);
