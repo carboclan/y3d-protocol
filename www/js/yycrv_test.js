@@ -24,6 +24,7 @@ async function main() {
   const yCRV_TOKEN = new ethers.Contract(yCrvTokenAddr, YCRV_ABI, App.provider);
   const yyCRV_TOKEN = new ethers.Contract(yyCrvTokenAddr, YYCRV_ABI, App.provider);
   const yCRVBalance = await yCRV_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
+  const yyCRVBalance = await yyCRV_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
   const yyCrvTotalSupply = await yyCRV_TOKEN.totalSupply() / 1e18;
   const yyCrvPool = await yyCRV_TOKEN.pool() / 1e18;
 
@@ -64,10 +65,8 @@ async function main() {
   _print(`Boost: 1.0 <a href="https://dao.curve.fi/minter/calc">https://dao.curve.fi/minter/calc</a>`);
   _print(`\n`);
 
-
-
   _print_button_input(`Stake ${stakingTokenTicker}`, yCRVBalance, stake);
-  _print_button_input(`Unstake`, 0, unstake); 
+  _print_button_input(`Unstake`, yyCRVBalance, unstake); 
   _print_button_input(`Donate`, yCRVBalance, make_profit);
   
   _print(`\n\n <a href="https://rinkeby.etherscan.io/address/0xe0f88584bf7e843af50c0bf3d53591566128773f#code">fake yCrv and y3d Faucet ⬅️</a>`);
