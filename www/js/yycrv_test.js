@@ -9,6 +9,7 @@ async function main() {
   const yCrvTokenAddr = YCRV_TEST_ADDR;
   const yyCrvTokenAddr = YYCRV_TEST_ADDR;
   const stakingTokenTicker = "yCrv";
+
   const rewardPoolAddr = YYCRV_TEST_ADDR;
   const rewardTokenAddr = YYCRV_TEST_ADDR;
   const rewardTokenTicker = "yyCrv";
@@ -17,8 +18,8 @@ async function main() {
 
   _print(`Initialized ${App.YOUR_ADDRESS}`);
   _print("Reading smart contracts...\n");
-  _print(`${rewardTokenTicker} Address: ${rewardTokenAddr}`);
-  _print(`Reward Pool Address: ${rewardPoolAddr}\n`);
+  _print(`yCrv Address: ${yCrvTokenAddr}`);
+  _print(`yyCrv Address: ${yyCrvTokenAddr}\n`);
 
   const yCRV_TOKEN = new ethers.Contract(yCrvTokenAddr, YCRV_ABI, App.provider);
   const yCRVBalance = await yCRV_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
@@ -51,13 +52,24 @@ async function main() {
     return yyCrvContract_harvest_to_uniswap(yyCrvTokenAddr, App);
   };
 
-  _print_button_input(`Invest ${stakingTokenTicker}`, yCRVBalance, invest_yCRV);
-  _print_button_input(`Redeem Shares`, 0, redeem);
+  _print(`total yCrv staked: xxx`);
+  _print(`total yyCrv supply: yyy`);
+  _print(`\n`);
+  
+
+  _print_button_input(`Stake ${stakingTokenTicker}`, yCRVBalance, invest_yCRV);
+  _print_button_input(`Unstake`, 0, redeem);
+
+  
+  _print(`\n\n <a href="https://rinkeby.etherscan.io/address/0xe0f88584bf7e843af50c0bf3d53591566128773f#code">fake yCrv and y3d Faucet ⬅️</a>`);
+
+  /*
   _print_button_input(`Withdraw ${rewardTokenTicker}`, 0, withdraw);
   _print_button(`Deposit All`, depositAll);
   _print_button(`Deposit`, deposit);
   _print_button(`Harvest To Consul`, harvestToConsul);
   _print_button(`Harvest To Uniswap`, harvestToUniswap);
+  */
 
   hideLoading();
 }
