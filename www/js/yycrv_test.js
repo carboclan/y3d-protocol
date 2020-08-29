@@ -30,8 +30,12 @@ async function main() {
   const yyCrvPool = await yyCRV_TOKEN.pool() / 1e18;
   const maxMiningRatio = await yyCRV_TOKEN.maximum_mining_ratio();
   const minMiningRatio = await yyCRV_TOKEN.minimum_mining_ratio();
-  // NEED FIX
-  const curMiningRatio = (yyCrvTotalSupply/yyCrvPool*100).toFixed(2);
+
+  const Mining_TOKEN = new ethers.Contract("0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1", ERC20_ABI, App.provider);
+//  const miningAmount = await Mining_TOKEN.balanceOf(yyCrvTokenAddr) / 1e18;
+
+  const miningAmount = 0; //await Mining_TOKEN.balanceOf(yyCrvTokenAddr) / 1e18;
+  const curMiningRatio = (miningAmount/yyCrvPool*100).toFixed(2);
 
   const stake = async function (amount) {
     return yyCrvContract_stake(yyCrvTokenAddr, yCrvTokenAddr, App.YOUR_ADDRESS, amount, App);
@@ -74,9 +78,10 @@ async function main() {
   _print(`Locked CRV in <a href="https://etherscan.io/address/0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2#code">Curve DAO</a>:`);  
   _print(`Boost: 1.0 <a href="https://dao.curve.fi/minter/calc">https://dao.curve.fi/minter/calc</a>`);
   _print(`\n`);
-  _print(`Minimum Mining Ratio: ${minMiningRatio} %`);
+/*  _print(`Minimum Mining Ratio: ${minMiningRatio} %`);
   _print(`Maximum Mining Ratio: ${maxMiningRatio} %`);
-  _print(`Current Mining Ratio: ${curMiningRatio} %`);
+  _print(`Current Mining Ratio: ${curMiningRatio} %`);*/
+  _print(`Current Mining Ratio: ${curMiningRatio} %`);  
   _print(`\n`);
   _print_button_input(`Stake ${stakingTokenTicker}`, yCRVBalance, stake);
   _print_button_input(`Unstake`, yyCRVBalance, unstake); 
