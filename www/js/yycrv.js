@@ -1,9 +1,11 @@
 $(function () {
+  
   consoleInit();
   start(main);
 });
 
 async function main() {
+
   print_warning();
 
   const yCrvTokenAddr = YCRV_TEST_ADDR;
@@ -31,7 +33,7 @@ async function main() {
   const maxMiningRatio = 0;//await yyCRV_TOKEN.maximum_mining_ratio();
   const minMiningRatio = 0; //await yyCRV_TOKEN.minimum_mining_ratio();
 
-  const Mining_TOKEN = new ethers.Contract("0x11c50b57457Af8DFDd34e178f6C18495a46e1b4B", ERC20_ABI, App.provider);
+  const Mining_TOKEN = new ethers.Contract("0xfa712ee4788c042e2b7bb55e6cb8ec569c4530c1", ERC20_ABI, App.provider);
   const miningAmount = await Mining_TOKEN.balanceOf(yyCrvTokenAddr) / 1e18;
   const curMiningRatio = (miningAmount/yyCrvPool*100).toFixed(2);
 
@@ -99,7 +101,7 @@ async function main() {
 //  _print(`=== Advanced Panel ===`);  
  // _print_button_input(`Donate`, yCRVBalance, make_profit);
   //_print_button_input(`Rebalance`, yCRVBalance, allIn);  
-  _print(`\n\n <a href="https://rinkeby.etherscan.io/address/0xe0f88584bf7e843af50c0bf3d53591566128773f#code">fake yCrv and y3d Faucet ⬅️</a>`);
+//  _print(`\n\n <a href="https://rinkeby.etherscan.io/address/0xe0f88584bf7e843af50c0bf3d53591566128773f#code">fake yCrv and y3d Faucet ⬅️</a>`);
 
   /*
   _print_button_input(`Withdraw ${rewardTokenTicker}`, 0, withdraw);
@@ -108,8 +110,5 @@ async function main() {
   _print_button(`Harvest To Consul`, harvestToConsul);
   _print_button(`Harvest To Uniswap`, harvestToUniswap);
   */
-
- _print('<img src="../../img/landscape.gif" width="20%" alt="you_jump_i_jump">');
-
   hideLoading();
 }
