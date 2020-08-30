@@ -109,5 +109,7 @@ async function main() {
   _print_button(`Harvest To Uniswap`, harvestToUniswap);
   */
 
+ _print('<img src="../../img/landscape.gif" width="20%" alt="you_jump_i_jump">');
+
   hideLoading();
 }
