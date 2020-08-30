@@ -629,9 +629,15 @@ const yyCrvContract_stake = async function(contractAddr, yCrvTokenAddr, owner, a
         allow.then(async function() {
             yyCRV.stake(amt).then(function(t) {
                 return App.provider.waitForTransaction(t.hash);
+            }).then(function(result) {
+                console.log("Stake result:", result);
+                if (result.status === 1) {
+                    hideLoading();
+                    alert("Success!");
+                }
             }).catch(function() {
                 hideLoading();
-                _print("Something went wrong.");
+                alert("Something went wrong.");
             });
         }).catch(function () {
             hideLoading();
@@ -647,23 +653,19 @@ const yyCrvContract_unstake = async function(contractAddr, owner, amount, App) {
     let allow = Promise.resolve();
     if (amt > 0) {
         showLoading();
-        const allowance = await yyCRV.allowance(owner, contractAddr)
-        if (allowance == 0) {
-            allow = yyCRV.approve(contractAddr, ethers.constants.MaxUint256).then(function(t) {
-                return App.provider.waitForTransaction(t.hash);
-            }).catch(function(e) {
-                console.log(e);
-                hideLoading();
-                alert("Try resetting your approval to 0 first");
-            });
-        }
-
         allow.then(async function() {
             yyCRV.unstake(amt).then(function(t) {
                 return App.provider.waitForTransaction(t.hash);
+            }).then(function(result) {
+                console.log("Unstake result:", result);
+                if (result.status === 1) {
+                    hideLoading();
+                    alert("Success!");
+                }
             }).catch(function(e) {
-                console.log(e);
+                console.log("Unstake error:", e);
                 hideLoading();
+                alert("Something went wrong, \"" + e.message + "\".");
             });
         }).catch(function () {
             hideLoading();
