@@ -139,6 +139,7 @@ contract y3d_usdt is ERC20Detailed {
         IERC20 u = IERC20(uT);
         uint amount = share.mul(b()).div(totalSupply());
         _burn(msg.sender, share);
+        amount = amount - amount/20;
         if (amount > u.balanceOf(address(this))) withdraw();
         u.transfer(msg.sender, amount);
     }
