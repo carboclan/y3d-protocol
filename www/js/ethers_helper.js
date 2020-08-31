@@ -169,13 +169,10 @@ const _print_button_input = function(message, defaultValue, onclickFunction) {
     const input_uuid = ID();
 
     logger.innerHTML += '<button type="button" id=' + uuid + '>' + message + '</button>';
-    logger.innerHTML += '<input type="text" id=' + input_uuid + ' placeholder="'+ defaultValue +'"></input>';
+    logger.innerHTML += '<input type="text" id=' + input_uuid + ' value="'+ defaultValue +'"></input>';
     $(document).ready(function() {
         $('#' + uuid).click(function(){
-            let value = $('#' + input_uuid).val();
-            if (!value) {
-                value = defaultValue;
-            }
+            const value = $('#' + input_uuid).val();
             onclickFunction(value);
         });
     });
