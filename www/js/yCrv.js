@@ -113,12 +113,10 @@ async function main() {
     };    
 
     const approveTENDAndStakeWithValue = async function (amt) {
-        amt = amt * 1e18;
         return rewardsContract_stake_amount(amt, stakingToken, rewardPoolAddr, App);
     };
 
     const unstakeWithValue = async function(amt) {
-        amt = amt * 1e18;
         return rewardsContract_unstake_amount(amt, rewardPoolAddr, App);
     };
 
