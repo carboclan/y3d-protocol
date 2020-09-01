@@ -15,13 +15,14 @@ async function main() {
   const rewardPoolAddr = YYCRV_TEST_ADDR;
   const rewardTokenAddr = YYCRV_TEST_ADDR;
   const rewardTokenTicker = "yyCrv";
+  
 
   const App = await init_ethers();
 
   _print(`Initialized ${App.YOUR_ADDRESS}`);
   _print("Reading smart contracts...\n");
   _print(`yCrv Address: <a href="https://etherscan.io/address/${yCrvTokenAddr}#code">${yCrvTokenAddr}</a>`);
-  _print(`yyCrv Address: <a href="https://etherscan.io/address/${yyCrvTokenAddr}#code">${yyCrvTokenAddr}</a>\n`);
+  _print(`yyCrv Address: <a href="https://etherscan.io/address/${yyCrvTokenAddr}#code">${yyCrvTokenAddr}</a> | <a href="https://www.diffchecker.com/5rWn2D7L">Diff</a>\n`);
 
   const yCRV_TOKEN = new ethers.Contract(yCrvTokenAddr, YCRV_ABI, App.provider);
   const yyCRV_TOKEN = new ethers.Contract(yyCrvTokenAddr, YYCRV_ABI, App.provider);
@@ -84,10 +85,11 @@ async function main() {
  // _print(`Maximum Mining Ratio: b%`);
  // _print(`Current Mining Ratio: c%\n`);    
   
-  _print(`Mining yCrv: ${miningAmount}`);
-  _print(`Mining Ratio: ${miningAmount}/${yyCrvPool} = ${curMiningRatio}%`);
-  _print(`Locked CRV in <a href="https://etherscan.io/address/0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2#code">Curve DAO</a>:`);
-  _print(`Boost: x1.0 <a href="https://dao.curve.fi/minter/calc">Calc</a>`);
+  _print(`Mining yCrv  : ${miningAmount}`);
+  _print(`Mining ratio : ${miningAmount}/${yyCrvPool} = ${curMiningRatio}%`);
+  _print(`P3D ratio    : 3%`);  
+  //_print(`Locked CRV in <a href="https://etherscan.io/address/0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2#code">Curve DAO</a>:`);
+  //_print(`Boost: x1.0 <a href="https://dao.curve.fi/minter/calc">Calc</a>`);
   _print(`\n`);
 /*  _print(`Minimum Mining Ratio: ${minMiningRatio} %`);
   _print(`Maximum Mining Ratio: ${maxMiningRatio} %`);
