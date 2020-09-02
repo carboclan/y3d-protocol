@@ -7,8 +7,8 @@ async function main() {
     const uniSwapPoolAddr = "0xcd4079b9713cdd1e629492b9c07ebd0dbd9f5202";
     const y3DTokenAddr = PASTA_TOKEN_ADDR;
     const y3DTokenTicker = "Y3D";
-    const rewardPoolAddr = "0xcd60e6f0f05e7091ba231ccaf20088b43fbfbd8b";    
-    const rewardTokenTicker = "Y3D";    
+    const rewardPoolAddr = "0xcd60e6f0f05e7091ba231ccaf20088b43fbfbd8b";
+    const rewardTokenTicker = "Y3D";
     const yyCrvTokenAddr = YYCRV_TEST_ADDR;
     const yyCrvTokenTicker = "yyCrv";
 
@@ -26,6 +26,7 @@ async function main() {
     const totalY3DPoolAmount = await Y3D_TOKEN.balanceOf(uniSwapPoolAddr) / 1e18;
     const totalYYCRVPoolAmount = await YYCRV_TOKEN.balanceOf(uniSwapPoolAddr) / 1e18;
     const stakingTokenPrice = 1.07;
+
     _print("========== UNISWAP ==========")
     _print(`${totalYYCRVPoolAmount} ${yyCrvTokenTicker}`);
     _print(`${totalY3DPoolAmount} ${y3DTokenTicker}`);
@@ -48,6 +49,55 @@ async function main() {
     _print(`Daily estimate    : ${toFixed(YFFIWeeklyEstimate / 7, 2)} ${rewardTokenTicker} = ${toDollar((YFFIWeeklyEstimate / 7) * rewardTokenPrice)} (out of total ${toFixed(weekly_reward / 7, 2)} ${rewardTokenTicker})`)
     _print(`Weekly estimate   : ${toFixed(YFFIWeeklyEstimate, 2)} ${rewardTokenTicker} = ${toDollar(YFFIWeeklyEstimate * rewardTokenPrice)} (out of total ${weekly_reward} ${rewardTokenTicker})`)*/
     _print(`Mining start      : TBD`);
-    _print(`P3D ratio         : 5%`);  
+    _print(`P3D ratio         : 5%`);
+
+    const INPUT_TOKEN = new ethers.Contract(inputTokenAddr, ERC20_ABI, App.provider);
+    const REWARD_TOKEN = new ethers.Contract(rewardTokenAddr, ERC20_ABI, App.provider);
+    const stakedAmount = await INPUT_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
+    const unstakedAmount = await REWARD_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
+    // const earnedYFFI = await REWARD_TOKEN.earned(App.YOUR_ADDRESS) / 1e18;
+    // const earnedLP = await REWARD_TOKEN.unrealizedProfit(App.YOUR_ADDRESS) / 1e18;
+
+    const approveTENDAndStake = async function () {
+        return rewardsContract_stake(stakingToken, rewardPoolAddr, App);
+    };
+
+    const unstake = async function() {
+        return rewardsContract_unstake(rewardPoolAddr, App);
+    };
+
+    const claim = async function() {
+        return rewardsContract_claim(rewardPoolAddr, App);
+    };
+
+    const claim_LP = async function() {
+        return rewardsContract_claim_LP(rewardPoolAddr, App);
+    };
+
+    const approveTENDAndStakeWithValue = async function (amt) {
+        return rewardsContract_stake_amount(amt, stakingToken, rewardPoolAddr, App);
+    };
+
+    const unstakeWithValue = async function(amt) {
+        return rewardsContract_unstake_amount(amt, rewardPoolAddr, App);
+    };
+
+    const exit = async function() {
+        return rewardsContract_exit(rewardPoolAddr, App);
+    };
+
+    _print('\n');
+    _print('\n');
+    _print(`============== Basic Panel ==============`);
+    _print_button(`Stake ${unstakedAmount} ${stakingTokenTicker}`, approveTENDAndStake);
+    _print_button(`Unstake ${stakedAmount} ${stakingTokenTicker}`, unstake);
+    // _print_button(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
+    // _print_button(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
+    _print('\n');
+    _print(`============== High Level Panel ==============`);
+    _print_button_input(`Stake ${stakingTokenTicker}`, stakedAmount, approveTENDAndStakeWithValue);
+    _print_button_input(`Unstake ${stakingTokenTicker}`, stakedAmount, unstakeWithValue);
+    _print_button(`Exit(Unstake && Claim All)`, exit);
+
     hideLoading();
 }
