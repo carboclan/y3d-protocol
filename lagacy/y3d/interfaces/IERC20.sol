@@ -1,6 +1,6 @@
-pragma solidity ^0.5.17;
+pragma solidity ^0.6.0;
 
-interface IyToken {
+interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint value);
     event Transfer(address indexed from, address indexed to, uint value);
 
@@ -14,8 +14,4 @@ interface IyToken {
     function approve(address spender, uint value) external returns (bool);
     function transfer(address to, uint value) external returns (bool);
     function transferFrom(address from, address to, uint value) external returns (bool);
-
-    function deposit(uint) external;
-    function withdraw(uint) external;
-    function balance() view external returns (uint);    
 }

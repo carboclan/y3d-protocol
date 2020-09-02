@@ -7,7 +7,7 @@ async function main() {
     const uniSwapPoolAddr = "0xcd4079b9713cdd1e629492b9c07ebd0dbd9f5202";
     const y3DTokenAddr = PASTA_TOKEN_ADDR;
     const y3DTokenTicker = "Y3D";
-    const rewardPoolAddr = WETH_REWARD_ADDR;    
+    const rewardPoolAddr = "0xcd60e6f0f05e7091ba231ccaf20088b43fbfbd8b";    
     const rewardTokenTicker = "Y3D";    
     const yyCrvTokenAddr = YYCRV_TEST_ADDR;
     const yyCrvTokenTicker = "yyCrv";

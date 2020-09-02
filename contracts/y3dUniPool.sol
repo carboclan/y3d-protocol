@@ -31,15 +31,6 @@ library Math {
     function min(uint256 a, uint256 b) internal pure returns (uint256) {
         return a < b ? a : b;
     }
-
-    /**
-     * @dev Returns the average of two numbers. The result is rounded towards
-     * zero.
-     */
-    function average(uint256 a, uint256 b) internal pure returns (uint256) {
-        // (a + b) / 2 can overflow, so we distribute
-        return (a / 2) + (b / 2) + ((a % 2 + b % 2) / 2);
-    }
 }
 
 /**
@@ -272,17 +263,6 @@ interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-interface ICrvDeposit{
-    function deposit(uint256) external;
-    function withdraw(uint256) external;
-    function balanceOf(address) external view returns (uint256);
-    function claimable_tokens(address) external view returns (uint256);
-}
-
-interface ICrvMinter{
-    function mint(address) external;
-}
-
 /**
  * @dev Collection of functions related to the address type
  */
@@ -426,20 +406,14 @@ contract LPTokenWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public constant LPT = IERC20(0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8); // yCrv
-    IERC20 constant public CRV = IERC20(0xD533a949740bb3306d119CC777fa900bA034cd52);
-    address constant public crv_deposit = address(0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1);
-    address constant public crv_minter = address(0xd061D61a4d941c39E5453435B6345Dc261C2fcE0);
-    address public crv_manager = address(0x6465F1250c9fe162602Db83791Fc3Fb202D70a7B);    
+    IERC20 public constant LPT = IERC20(0xCd4079b9713CdD1e629492B9c07Ebd0dbD9F5202); // Uniswap y3d-yyCrv LP Token
 
     uint256 public _totalSupply;
     mapping(address => uint256) public _balances;
 
-    uint256 public _pool;
     uint256 public _profitPerShare; // x 1e18, monotonically increasing.
     mapping(address => uint256) public _unrealized; // x 1e18
     mapping(address => uint256) public _realized; // last paid _profitPerShare
-    bool public exodus;
     event LPTPaid(address indexed user, uint256 profit);
 
     function totalSupply() public view returns (uint256) {
@@ -469,18 +443,17 @@ contract LPTokenWrapper {
         _;
     }    
 
-    function stake(uint256 amount) update(msg.sender) virtual public {
+    function stake(uint256 amount) update(msg.sender) public virtual {
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
         LPT.safeTransferFrom(msg.sender, address(this), amount);
     }
 
-    function withdraw(uint256 amount) update(msg.sender) virtual public {
+    function withdraw(uint256 amount) update(msg.sender) public virtual {
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
-        uint256 tax = amount.div(20); if (exodus == true) tax = 0;
+        uint256 tax = amount.div(20);
         amount = amount.sub(tax);
-        if (amount > LPT.balanceOf(address(this))) ICrvDeposit(crv_deposit).withdraw(amount - LPT.balanceOf(address(this)));
         LPT.safeTransfer(msg.sender, amount);
         make_profit(tax);
     }
@@ -495,7 +468,7 @@ contract LPTokenWrapper {
     }
 }
 
-contract y3dPool is LPTokenWrapper {
+contract y3dUniPool is LPTokenWrapper {
     uint256 public DURATION = 30 days;
     uint256 public periodFinish;
     uint256 public rewardRate;
@@ -515,7 +488,6 @@ contract y3dPool is LPTokenWrapper {
     constructor() public {
         _balances[msg.sender] = 1; // avoid divided by 0
         _totalSupply = 1;
-        LPT.approve(crv_deposit, uint(-1));
     }
 
     modifier updateReward(address account) {
@@ -578,26 +550,6 @@ contract y3dPool is LPTokenWrapper {
             Y3D.safeTransfer(msg.sender, reward);
             emit RewardPaid(msg.sender, reward);
         }
-    }
-
-    // Todo(minakokojima): manager should be a contract, automatic buy in and burn Y3D.
-    function change_crv_manager(address new_manager) public {
-        require(msg.sender == crv_manager, 'only current manager');
-        crv_manager = new_manager;
-    }
-
-    function invest() public {
-        ICrvDeposit(crv_deposit).deposit(LPT.balanceOf(address(this)));
-    }
-
-    function harvest() public {
-        ICrvMinter(crv_minter).mint(crv_deposit);
-        CRV.transfer(crv_manager, CRV.balanceOf(address(this)));
-    }
-
-    function theExodus() public {
-        require(msg.sender == crv_manager, 'only current manager');
-        exodus = !exodus;
     }
 
     /**

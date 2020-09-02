@@ -2,6 +2,7 @@
 //const Y3dFactory = artifacts.require("y3dFactory");
 const Y3dToken = artifacts.require("y3dToken");
 const Y3dPool = artifacts.require("y3dPool");
+const Y3dUniPool = artifacts.require("y3dUniPool");
 const Y3d_ETH_Pool = artifacts.require("y3d_ETH_Pool");
 
 const migration = async (deployer, network, accounts) => {
@@ -23,7 +24,7 @@ async function deployToken(deployer, network, accounts) {
   //2.
   
 //  console.log('Deploy Pool');
- // await deployer.deploy(Y3dPool); 
+ await deployer.deploy(Y3dUniPool); 
 
   
   // Put mining
