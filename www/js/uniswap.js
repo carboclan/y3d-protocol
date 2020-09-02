@@ -12,7 +12,7 @@ async function main() {
     const yyCrvTokenAddr = YYCRV_TEST_ADDR;
     const yyCrvTokenTicker = "yyCrv";
 
-    const inputTokenAddr = "0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8";
+    const inputTokenAddr = "0xcd4079b9713cdd1e629492b9c07ebd0dbd9f5202";
     const stakingTokenAddr = inputTokenAddr;
     const stakingTokenTicker = "Uniswap Y3D-yyCrv LP";
     const rewardTokenAddr = PASTA_TOKEN_ADDR;
@@ -51,9 +51,9 @@ async function main() {
     _print(`P3D ratio         : 5%`);
 
     const INPUT_TOKEN = new ethers.Contract(inputTokenAddr, ERC20_ABI, App.provider);
-    const REWARD_TOKEN = new ethers.Contract(rewardTokenAddr, ERC20_ABI, App.provider);
-    const stakedAmount = await INPUT_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
-    const unstakedAmount = await REWARD_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
+    const REWARD_TOKEN = new ethers.Contract(rewardPoolAddr, ERC20_ABI, App.provider);
+    const unstakedAmount = await INPUT_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
+    const stakedAmount = await REWARD_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
     // const earnedYFFI = await REWARD_TOKEN.earned(App.YOUR_ADDRESS) / 1e18;
     // const earnedLP = await REWARD_TOKEN.unrealizedProfit(App.YOUR_ADDRESS) / 1e18;
 
@@ -97,7 +97,7 @@ async function main() {
     _print(`============== High Level Panel ==============`);
     _print_button_input(`Stake ${stakingTokenTicker}`, stakedAmount, approveTENDAndStakeWithValue);
     _print_button_input(`Unstake ${stakingTokenTicker}`, stakedAmount, unstakeWithValue);
-    _print_button(`Exit(Unstake && Claim All)`, exit);
-*/
+    _print_button(`Exit(Unstake && Claim All)`, exit);*/
+
     hideLoading();
 }
