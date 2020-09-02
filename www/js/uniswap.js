@@ -13,8 +13,7 @@ async function main() {
     const yyCrvTokenTicker = "yyCrv";
 
     const inputTokenAddr = "0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8";
-
-    const stakingToken = WETH_TOKEN_ADDR;
+    const stakingTokenAddr = inputTokenAddr;
     const stakingTokenTicker = "yCrv";
     const rewardTokenAddr = PASTA_TOKEN_ADDR;
 
@@ -59,7 +58,7 @@ async function main() {
     // const earnedLP = await REWARD_TOKEN.unrealizedProfit(App.YOUR_ADDRESS) / 1e18;
 
     const approveTENDAndStake = async function () {
-        return rewardsContract_stake(stakingToken, rewardPoolAddr, App);
+        return rewardsContract_stake(stakingTokenAddr, rewardPoolAddr, App);
     };
 
     const unstake = async function() {
@@ -75,7 +74,7 @@ async function main() {
     };
 
     const approveTENDAndStakeWithValue = async function (amt) {
-        return rewardsContract_stake_amount(amt, stakingToken, rewardPoolAddr, App);
+        return rewardsContract_stake_amount(amt, stakingTokenAddr, rewardPoolAddr, App);
     };
 
     const unstakeWithValue = async function(amt) {
