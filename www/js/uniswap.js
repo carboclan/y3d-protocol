@@ -85,7 +85,7 @@ async function main() {
         return rewardsContract_exit(rewardPoolAddr, App);
     };
 
-    /*
+    
     _print('\n');
     _print('\n');
     _print(`============== Basic Panel ==============`);
@@ -95,9 +95,9 @@ async function main() {
     // _print_button(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
     _print('\n');
     _print(`============== High Level Panel ==============`);
-    _print_button_input(`Stake ${stakingTokenTicker}`, stakedAmount, approveTENDAndStakeWithValue);
+    _print_button_input(`Stake ${stakingTokenTicker}`, unstakedAmount, approveTENDAndStakeWithValue);
     _print_button_input(`Unstake ${stakingTokenTicker}`, stakedAmount, unstakeWithValue);
-    _print_button(`Exit(Unstake && Claim All)`, exit);*/
+    _print_button(`Exit(Unstake && Claim All)`, exit);
 
     hideLoading();
 }
