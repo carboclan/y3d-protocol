@@ -36,9 +36,10 @@ async function main() {
 
   const Mining_TOKEN = new ethers.Contract("0xfa712ee4788c042e2b7bb55e6cb8ec569c4530c1", ERC20_ABI, App.provider);
   const miningAmount = await Mining_TOKEN.balanceOf(yyCrvTokenAddr) / 1e18;
-  const curMiningRatio = (miningAmount/yyCrvPool*100).toFixed(2);
 
   const yyCrvTotal = miningAmount + await yCRV_TOKEN.balanceOf(yyCrvTokenAddr) / 1e18;
+  const curMiningRatio = (miningAmount/yyCrvTotal*100).toFixed(2);
+
 
   const stake = async function (amount) {
     return yyCrvContract_stake(yyCrvTokenAddr, yCrvTokenAddr, App.YOUR_ADDRESS, amount, App);
