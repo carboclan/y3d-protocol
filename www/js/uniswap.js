@@ -14,7 +14,7 @@ async function main() {
 
     const inputTokenAddr = "0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8";
     const stakingTokenAddr = inputTokenAddr;
-    const stakingTokenTicker = "yCrv";
+    const stakingTokenTicker = "Uniswap Y3D-yyCrv LP";
     const rewardTokenAddr = PASTA_TOKEN_ADDR;
 
     const App = await init_ethers();
@@ -85,6 +85,7 @@ async function main() {
         return rewardsContract_exit(rewardPoolAddr, App);
     };
 
+    /*
     _print('\n');
     _print('\n');
     _print(`============== Basic Panel ==============`);
@@ -97,6 +98,6 @@ async function main() {
     _print_button_input(`Stake ${stakingTokenTicker}`, stakedAmount, approveTENDAndStakeWithValue);
     _print_button_input(`Unstake ${stakingTokenTicker}`, stakedAmount, unstakeWithValue);
     _print_button(`Exit(Unstake && Claim All)`, exit);
-
+*/
     hideLoading();
 }
