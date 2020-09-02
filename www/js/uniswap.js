@@ -47,8 +47,9 @@ async function main() {
     _print(`Hourly estimate   : ${toFixed(YFFIWeeklyEstimate / (24 * 7), 4)} ${rewardTokenTicker} = ${toDollar((YFFIWeeklyEstimate / (24 * 7)) * rewardTokenPrice)} (out of total ${toFixed(weekly_reward / (7 * 24), 2)} ${rewardTokenTicker})`)
     _print(`Daily estimate    : ${toFixed(YFFIWeeklyEstimate / 7, 2)} ${rewardTokenTicker} = ${toDollar((YFFIWeeklyEstimate / 7) * rewardTokenPrice)} (out of total ${toFixed(weekly_reward / 7, 2)} ${rewardTokenTicker})`)
     _print(`Weekly estimate   : ${toFixed(YFFIWeeklyEstimate, 2)} ${rewardTokenTicker} = ${toDollar(YFFIWeeklyEstimate * rewardTokenPrice)} (out of total ${weekly_reward} ${rewardTokenTicker})`)*/
-    _print(`Mining start      : TBD`);
+    _print(`Mining start      : at <a href="https://www.timeanddate.com/worldclock/fixedtime.html?msg=Y3D+Liquidity+Mining&iso=20200904T00&p1=224">Friday, September 4, 2020 at 12:00 midnight PDT</a>`);
     _print(`P3D ratio         : 5%`);
+
 
     const INPUT_TOKEN = new ethers.Contract(inputTokenAddr, ERC20_ABI, App.provider);
     const REWARD_TOKEN = new ethers.Contract(rewardPoolAddr, ERC20_ABI, App.provider);
