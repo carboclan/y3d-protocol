@@ -38,6 +38,8 @@ async function main() {
   const miningAmount = await Mining_TOKEN.balanceOf(yyCrvTokenAddr) / 1e18;
   const curMiningRatio = (miningAmount/yyCrvPool*100).toFixed(2);
 
+  const yyCrvTotal = miningAmount + await yCRV_TOKEN.balanceOf(yyCrvTokenAddr) / 1e18;
+
   const stake = async function (amount) {
     return yyCrvContract_stake(yyCrvTokenAddr, yCrvTokenAddr, App.YOUR_ADDRESS, amount, App);
   };
@@ -86,7 +88,7 @@ async function main() {
  // _print(`Current Mining Ratio: c%\n`);    
   
   _print(`Mining yCrv  : ${miningAmount}`);
-  _print(`Mining ratio : ${miningAmount}/${yyCrvPool} = ${curMiningRatio}%`);
+  _print(`Mining ratio : ${miningAmount}/${yyCrvTotal} = ${curMiningRatio}%`);
   _print(`P3D ratio    : 3%`);  
   //_print(`Locked CRV in <a href="https://etherscan.io/address/0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2#code">Curve DAO</a>:`);
   //_print(`Boost: x1.0 <a href="https://dao.curve.fi/minter/calc">Calc</a>`);
