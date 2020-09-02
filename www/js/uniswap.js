@@ -81,11 +81,6 @@ async function main() {
     const unstakeWithValue = async function(amt) {
         return rewardsContract_unstake_amount(amt, rewardPoolAddr, App);
     };
-
-    const exit = async function() {
-        return rewardsContract_exit(rewardPoolAddr, App);
-    };
-
     
     _print('\n');
     _print('\n');
@@ -98,7 +93,6 @@ async function main() {
     _print(`============== High Level Panel ==============`);
     _print_button_input(`Stake ${stakingTokenTicker}`, unstakedAmount, approveTENDAndStakeWithValue);
     _print_button_input(`Unstake ${stakingTokenTicker}`, stakedAmount, unstakeWithValue);
-    _print_button(`Exit(Unstake && Claim All)`, exit);
 
     hideLoading();
 }
