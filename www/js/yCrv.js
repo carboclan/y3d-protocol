@@ -25,7 +25,7 @@ async function main() {
 
     const stakedYAmount = await P_STAKING_POOL.balanceOf(App.YOUR_ADDRESS) / 1e18;
     const earnedYFFI = await P_STAKING_POOL.earned(App.YOUR_ADDRESS) / 1e18;
-    const earnedLP = await P_STAKING_POOL.unrealizedProfit(App.YOUR_ADDRESS) / 1e18;    
+    const earnedLP = await P_STAKING_POOL.unrealizedProfit(App.YOUR_ADDRESS) / 1e18;
 
     const miningAmount = await Mining_TOKEN.balanceOf(rewardPoolAddr) / 1e18;
 
@@ -98,7 +98,7 @@ async function main() {
 
     const claim_LP = async function() {
         return rewardsContract_claim_LP(rewardPoolAddr, App);
-    };    
+    };
 
     const exit = async function() {
         return rewardsContract_exit(rewardPoolAddr, App);
@@ -106,7 +106,7 @@ async function main() {
 
     const harvest = async function() {
         return rewardsContract_harvest(rewardPoolAddr, App);
-    };    
+    };
 
     const approveTENDAndStakeWithValue = async function (amt) {
         return rewardsContract_stake_amount(amt, stakingToken, rewardPoolAddr, App);
@@ -117,14 +117,14 @@ async function main() {
     };
 
     _print('\n');
-    _print('\n');    
-    _print(`============== Basic Panel ==============`);    
+    _print('\n');
+    _print(`============== Basic Panel ==============`);
     _print_button(`Stake ${unstakedY} ${stakingTokenTicker}`, approveTENDAndStake);
     _print_button(`Unstake ${stakedYAmount} ${stakingTokenTicker}`, unstake);
     _print_button(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
     _print_button(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
-    _print('\n');      
-    _print(`============== High Level Panel ==============`);    
+    _print('\n');
+    _print(`============== High Level Panel ==============`);
     _print_button_input(`Stake ${stakingTokenTicker}`, unstakedY, approveTENDAndStakeWithValue);
     _print_button_input(`Unstake ${stakingTokenTicker}`, stakedYAmount, unstakeWithValue);
     _print_button(`Exit(Unstake && Claim All)`, exit);
