@@ -31,12 +31,12 @@ async function main() {
     ])
 
     _print("========== Dashboard ==========")
-    _print(`total minted yyCrv: ${minted_yCRV / 1e18}`);    
-    _print(`total minted USDT: ${mintedUsdt / 1e6}`);
-    _print(`unminted USDT: ${unmintedUsdt / 1e6}`);
-    _print(`your deposited USDT: ${depositUsdtBalance / 1e6}`);
-    _print(`your current USDT balance (undeposited):  ${usdtBalance / 1e6}`);
-    _print(`your current yCrv balance:  ${yCrvBalance / 1e18}`);
+    _print(`Total minted yyCrv: ${minted_yCRV / 1e18}`);    
+    _print(`Total minted USDT: ${mintedUsdt / 1e6}`);
+    _print(`Unminted USDT: ${unmintedUsdt / 1e6}`);
+    _print(`Your deposited USDT: ${depositUsdtBalance / 1e6}`);
+    _print(`Your current USDT balance (undeposited):  ${usdtBalance / 1e6}`);
+    _print(`Your current yCrv balance:  ${yCrvBalance / 1e18}`);
 
     const approveUsdtAndDeposit = async function () {
         return uniDepositContract_deposit(depositUsdt, uniDepositAddr, App);
