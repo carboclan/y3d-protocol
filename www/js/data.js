@@ -28,6 +28,8 @@ const YFII_TEST_REWARD_ADDR = "0x093430541975e7aa0b2D9De2085BF99F33a5e91C";
 
 const YCRV_TEST_ADDR = "0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8";
 
+const uniDepositAddr = '0xc51A2d1A92F3f94811A516Ad01A41989fA3d7152'
+ 
 // test end
 
 const P_STAKING_POOL_ABI = [
@@ -558,3 +560,6 @@ const YYCRV_ABI = [{"inputs":[],"payable":false,"stateMutability":"nonpayable","
 const YYCRV_TEST_ADDR = "0x199ddb4bdf09f699d2cf9ca10212bd5e3b570ac2";
 
 const e18 = BigInt("1000000000000000000");
+
+// UniDeposit
+const UNI_DEPOSIT_ABI = [{"inputs":[{"internalType":"address","name":"_usdt","type":"address"},{"internalType":"address","name":"_ycrv","type":"address"},{"internalType":"address","name":"_depositContract","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"who","type":"address"},{"indexed":false,"internalType":"uint256","name":"amountOfUsdt","type":"uint256"}],"name":"Deposit","type":"event"},{"inputs":[],"name":"USDT","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"who","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"claim","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"input","type":"uint256"}],"name":"deposit","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"get_usdtFromYcrv","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"get_yCrvFromUsdt","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"mint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"mintedUSDT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minted_yCRV","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"unminted_USDT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"input","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"yCrvToken","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"yDeposit","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}]
