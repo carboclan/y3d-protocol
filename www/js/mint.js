@@ -5,6 +5,7 @@ $(function() {
 
 async function main() {
     const App = await init_ethers();
+    const unitedMintAddr = UNITED_MINT_ADDR;
 
 //    _print("============== STAKING ==============")
     /*
@@ -33,12 +34,12 @@ async function main() {
     ])
 
     _print("========== Dashboard ==========")
-    _print(`total minted yyCrv: ${minted_yyCRV / 1e18}`);    
-    _print(`total minted USDT: ${mintedUsdt / 1e6}`);
-    _print(`unminted USDT: ${unmintedUsdt / 1e6}`);
-    _print(`your deposited USDT: ${depositUsdtBalance / 1e6}`);
-    _print(`your current USDT balance (undeposited):  ${usdtBalance / 1e6}`);
-    _print(`your current yCrv balance:  ${yyCrvBalance / 1e18}`);
+    _print(`Total minted yyCrv: ${minted_yyCRV / 1e18}`);    
+    _print(`Total minted USDT: ${mintedUsdt / 1e6}`);
+    _print(`Unminted USDT: ${unmintedUsdt / 1e6}`);
+    _print(`Your deposited USDT: ${depositUsdtBalance / 1e6}`);
+    _print(`Your current USDT balance (undeposited):  ${usdtBalance / 1e6}`);
+    _print(`Your current yyCrv balance:  ${yyCrvBalance / 1e18}`);
 
     const approveUsdtAndDeposit = async function () {
         return uniDepositContract_deposit(depositUsdt, unitedMintAddr, App);
@@ -46,6 +47,10 @@ async function main() {
 
     const approveUsdtDepositAndClaim = async function () {
         return uniDepositContract_deposit_n_claim(depositUsdt, unitedMintAddr, App);
+    }
+
+    const approveUsdtAndDepositWithAmount = async function (amount) {
+        return uniDepositContract_deposit_amount(amount, depositUsdt, unitedMintAddr, App);
     }
 
     const mint_yyCRV = async function () {
@@ -63,6 +68,7 @@ async function main() {
     _print('\n');
     _print('\n');
     _print(`============== Basic Panel ==============`);
+    _print_button_input(`Deposit USDT`, usdtBalance, approveUsdtAndDepositWithAmount);
     _print_button(`Deposit USDT (ALL)`, approveUsdtAndDeposit);
     _print_button(`Deposit, Mint & Claim (ALL)`, approveUsdtDepositAndClaim);
     _print_button(`Claim`, claimMy_yyCrv);
