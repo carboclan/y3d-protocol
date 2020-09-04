@@ -36,7 +36,7 @@ async function main() {
     _print(`Unminted USDT: ${unmintedUsdt / 1e6}`);
     _print(`Your deposited USDT: ${depositUsdtBalance / 1e6}`);
     _print(`Your current USDT balance (undeposited):  ${usdtBalance / 1e6}`);
-    _print(`Your current yCrv balance:  ${yCrvBalance / 1e18}`);
+    _print(`Your current yyCrv balance:  ${yCrvBalance / 1e18}`);
 
     const approveUsdtAndDeposit = async function () {
         return uniDepositContract_deposit(depositUsdt, uniDepositAddr, App);
