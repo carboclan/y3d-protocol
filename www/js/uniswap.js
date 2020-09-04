@@ -52,11 +52,9 @@ async function main() {
 
 
     const INPUT_TOKEN = new ethers.Contract(inputTokenAddr, ERC20_ABI, App.provider);
-    const REWARD_TOKEN = new ethers.Contract(rewardPoolAddr, ERC20_ABI, App.provider);
+    const REWARD_TOKEN = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, App.provider);
     const unstakedAmount = await INPUT_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
     const stakedAmount = await REWARD_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
-    // const earnedYFFI = await REWARD_TOKEN.earned(App.YOUR_ADDRESS) / 1e18;
-    // const earnedLP = await REWARD_TOKEN.unrealizedProfit(App.YOUR_ADDRESS) / 1e18;
 
     const approveTENDAndStake = async function () {
         return rewardsContract_stake(stakingTokenAddr, rewardPoolAddr, App);
@@ -70,9 +68,6 @@ async function main() {
         return rewardsContract_claim(rewardPoolAddr, App);
     };
 
-    const claim_LP = async function() {
-        return rewardsContract_claim_LP(rewardPoolAddr, App);
-    };
 
     const approveTENDAndStakeWithValue = async function (amt) {
         return rewardsContract_stake_amount(amt, stakingTokenAddr, rewardPoolAddr, App);
@@ -81,14 +76,14 @@ async function main() {
     const unstakeWithValue = async function(amt) {
         return rewardsContract_unstake_amount(amt, rewardPoolAddr, App);
     };
-    
+    const earnedYFFI = await REWARD_TOKEN.earned(App.YOUR_ADDRESS) / 1e18;    
+
     _print('\n');
     _print('\n');
     _print(`============== Basic Panel ==============`);
     _print_button(`Stake ${unstakedAmount} ${stakingTokenTicker}`, approveTENDAndStake);
     _print_button(`Unstake ${stakedAmount} ${stakingTokenTicker}`, unstake);
-    // _print_button(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
-    // _print_button(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
+    _print_button(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
     _print('\n');
     _print(`============== High Level Panel ==============`);
     _print_button_input(`Stake ${stakingTokenTicker}`, unstakedAmount, approveTENDAndStakeWithValue);
