@@ -38,7 +38,7 @@ async function initEthers() {
             if (localStorage.hasOwnProperty('addr')) {
                 App.YOUR_ADDRESS = localStorage.getItem('addr');
             } else {
-                App.YOUR_ADDRESS = window.prompt("Enter your eth address.");
+                App.YOUR_ADDRESS = window.prompt("You don't have MetaMask installed! Enter your eth address.");
             }
 
         } else {
