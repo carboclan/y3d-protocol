@@ -10,17 +10,17 @@ async function main() {
     const rewardPoolAddr = WETH_REWARD_ADDR;
     const rewardTokenAddr = PASTA_TOKEN_ADDR;
     const rewardTokenTicker = "Y3D";
+    const miningTokenAddr = "0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1";
 
-    const App = await init_ethers();
+    const App = await initEthers();
 
     _print(`Initialized ${App.YOUR_ADDRESS}`);
     _print("Reading smart contracts...\n");
-    print_warning();    
-   // _print(`<a href="">Y3D : ${rewardTokenAddr}</a> | <a href="https://yieldfarming.info/tools/diff/?contract1=0x08A2E41FB99A7599725190B9C970Ad3893fa33CF&contract2=${rewardTokenAddr}">Diff</a>`);
+    printWarning();
 
     const P_STAKING_POOL = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, App.provider);
     const Y_TOKEN = new ethers.Contract(stakingToken, ERC20_ABI, App.provider);
-    const Mining_TOKEN = new ethers.Contract("0xFA712EE4788C042e2B7BB55E6cb8ec569C4530c1", ERC20_ABI, App.provider);
+    const Mining_TOKEN = new ethers.Contract(miningTokenAddr, ERC20_ABI, App.provider);
 
 
     const stakedYAmount = await P_STAKING_POOL.balanceOf(App.YOUR_ADDRESS) / 1e18;
@@ -36,7 +36,7 @@ async function main() {
     const totalStakedYAmount = await P_STAKING_POOL.totalSupply() / 1e18;
 
     // Find out reward rate
-    const weekly_reward = await get_synth_weekly_rewards(P_STAKING_POOL) / 1e18;
+    const weekly_reward = await getSynthWeeklyRewards(P_STAKING_POOL) / 1e18;
     const nextHalving = await getPeriodFinishForReward(P_STAKING_POOL);
 
     const rewardPerToken = weekly_reward / totalStakedYAmount;
@@ -45,7 +45,7 @@ async function main() {
     const unstakedY = await Y_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
 
     // Find out underlying assets of Y
-    const crv_miningY = await Y_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;    
+    const crv_miningY = await Y_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
 
     const prices = await lookUpPrices(["ethereum", "spaghetti"]);
     const stakingTokenPrice = prices["ethereum"].usd;
@@ -85,35 +85,35 @@ async function main() {
     }*/
 
     const approveTENDAndStake = async function () {
-        return rewardsContract_stake(stakingToken, rewardPoolAddr, App);
+        return yCrvContract_stake(stakingToken, rewardPoolAddr, App);
     };
 
     const unstake = async function() {
-        return rewardsContract_unstake(rewardPoolAddr, App);
+        return yCrvContract_unstake(rewardPoolAddr, App);
     };
 
     const claim = async function() {
-        return rewardsContract_claim(rewardPoolAddr, App);
+        return yCrvContract_claim(rewardPoolAddr, App);
     };
 
     const claim_LP = async function() {
-        return rewardsContract_claim_LP(rewardPoolAddr, App);
+        return yCrvContract_claim_LP(rewardPoolAddr, App);
     };
 
     const exit = async function() {
-        return rewardsContract_exit(rewardPoolAddr, App);
+        return yCrvContract_exit(rewardPoolAddr, App);
     };
 
     const harvest = async function() {
-        return rewardsContract_harvest(rewardPoolAddr, App);
+        return yCrvContract_harvest(rewardPoolAddr, App);
     };
 
     const approveTENDAndStakeWithValue = async function (amt) {
-        return rewardsContract_stake_amount(amt, stakingToken, rewardPoolAddr, App);
+        return yCrvContract_stake_amount(amt, stakingToken, rewardPoolAddr, App);
     };
 
     const unstakeWithValue = async function(amt) {
-        return rewardsContract_unstake_amount(amt, rewardPoolAddr, App);
+        return yCrvContract_unstake_amount(amt, rewardPoolAddr, App);
     };
 
     _print('\n');

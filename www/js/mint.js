@@ -4,7 +4,7 @@ $(function() {
 });
 
 async function main() {
-    const App = await init_ethers();
+    const App = await initEthers();
     const unitedMintAddr = UNITED_MINT_ADDR;
 
     const UNI_DEPOSIT_CONTRACT = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI, App.provider);

@@ -17,7 +17,7 @@ async function main() {
     const stakingTokenTicker = "Uniswap Y3D-yyCrv LP";
     const rewardTokenAddr = PASTA_TOKEN_ADDR;
 
-    const App = await init_ethers();
+    const App = await initEthers();
 
     const Y3D_TOKEN = new ethers.Contract(y3DTokenAddr, ERC20_ABI, App.provider);
     const YYCRV_TOKEN = new ethers.Contract(yyCrvTokenAddr, YYCRV_ABI, App.provider);
@@ -29,7 +29,7 @@ async function main() {
     _print("========== UNISWAP ==========")
     _print(`${totalYYCRVPoolAmount} ${yyCrvTokenTicker}`);
     _print(`${totalY3DPoolAmount} ${y3DTokenTicker}`);
-    _print(`1 Y3D♨️ = ${toDollar(totalYYCRVPoolAmount / totalY3DPoolAmount * stakingTokenPrice)}`);    
+    _print(`1 Y3D♨️ = ${toDollar(totalYYCRVPoolAmount / totalY3DPoolAmount * stakingTokenPrice)}`);
 //    _print("============== STAKING ==============")
     /*
 //    _print(`There are total   : ${totalSupplyY} ${stakingTokenTicker}.`);
@@ -55,28 +55,27 @@ async function main() {
     const REWARD_TOKEN = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, App.provider);
     const unstakedAmount = await INPUT_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
     const stakedAmount = await REWARD_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
+    const earnedYFFI = await REWARD_TOKEN.earned(App.YOUR_ADDRESS) / 1e18;
 
     const approveTENDAndStake = async function () {
-        return rewardsContract_stake(stakingTokenAddr, rewardPoolAddr, App);
+        return uniswapContract_stake(stakingTokenAddr, rewardPoolAddr, App);
     };
 
     const unstake = async function() {
-        return rewardsContract_unstake(rewardPoolAddr, App);
+        return uniswapContract_unstake(rewardPoolAddr, App);
     };
 
     const claim = async function() {
-        return rewardsContract_claim(rewardPoolAddr, App);
+        return uniswapContract_claim(rewardPoolAddr, App);
     };
 
-
     const approveTENDAndStakeWithValue = async function (amt) {
-        return rewardsContract_stake_amount(amt, stakingTokenAddr, rewardPoolAddr, App);
+        return uniswapContract_stake_amount(amt, stakingTokenAddr, rewardPoolAddr, App);
     };
 
     const unstakeWithValue = async function(amt) {
-        return rewardsContract_unstake_amount(amt, rewardPoolAddr, App);
+        return uniswapContract_unstake_amount(amt, rewardPoolAddr, App);
     };
-    const earnedYFFI = await REWARD_TOKEN.earned(App.YOUR_ADDRESS) / 1e18;    
 
     _print('\n');
     _print('\n');
