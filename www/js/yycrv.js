@@ -1,12 +1,11 @@
 $(function () {
-  
   consoleInit();
   start(main);
 });
 
 async function main() {
 
-  print_warning();
+  printWarning();
 
   const yCrvTokenAddr = YCRV_TEST_ADDR;
   const yyCrvTokenAddr = YYCRV_TEST_ADDR;
@@ -15,9 +14,8 @@ async function main() {
   const rewardPoolAddr = YYCRV_TEST_ADDR;
   const rewardTokenAddr = YYCRV_TEST_ADDR;
   const rewardTokenTicker = "yyCrv";
-  
 
-  const App = await init_ethers();
+  const App = await initEthers();
 
   _print(`Initialized ${App.YOUR_ADDRESS}`);
   _print("Reading smart contracts...\n");
