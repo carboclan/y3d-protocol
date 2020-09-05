@@ -202,4 +202,46 @@ const uniDepositContract_withdraw = async function(unitedMintAddr, yyCrvTokenAdd
         alert("You have no tokens to withdraw!!");
     }
 };
+
+const uniDepositContract_withdraw_amount = async function(amount, unitedMintAddr, yyCrvTokenAddr, App) {
+    const signer = App.provider.getSigner();
+
+    const yyCrv_TOKEN_SIGNED = new ethers.Contract(yyCrvTokenAddr, ERC20_ABI, signer);
+    const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI, signer);
+
+    const current_yyCrv = amount;
+    const allowed_yCrv = await yyCrv_TOKEN_SIGNED.allowance(App.YOUR_ADDRESS, unitedMintAddr);
+
+    let allow = Promise.resolve();
+
+    if ((allowed_yCrv / 1e8) < (current_yyCrv / 1e8)) {
+        showLoading();
+        allow = yyCrv_TOKEN_SIGNED.approve(unitedMintAddr, ethers.constants.MaxUint256)
+            .then(function(t) {
+                return App.provider.waitForTransaction(t.hash);
+            }).catch(function() {
+                hideLoading();
+                alert("Try resetting your approval to 0 first");
+            });
+    }
+
+    if ((current_yyCrv / 1e6) > 0) {
+        showLoading();
+        allow.then(async function() {
+            UNI_DEPOSIT_SIGNED.withdraw(current_yyCrv).then(function(t) {
+                App.provider.waitForTransaction(t.hash).then(function() {
+                    hideLoading();
+                });
+            }).catch(function() {
+                hideLoading();
+                _print("Something went wrong.");
+            });
+        }).catch(function () {
+            hideLoading();
+            _print("Something went wrong.");
+        });
+    } else {
+        alert("You have no tokens to withdraw!!");
+    }
+};
 // #endregion Mint Functions
