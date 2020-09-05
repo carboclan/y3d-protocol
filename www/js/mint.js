@@ -66,7 +66,9 @@ async function main() {
     _print_button(`Mint`, mint_yyCRV);
     _print('\n');
     _print(`============== High Level Panel ==============`);
-    _print_button(`Withdraw`, withdraw);    
+    _print_button(`Withdraw`, withdraw);
+    _print('\n');
+    _print('\n');
     _print('<a href="https://rinkeby.etherscan.io/address/0xb7db2f602ea790b21a5519ffcfc256d7618f2fc2#writeContract" target="_blank">Fake USDT watertap ↗️</a>')
 
     hideLoading();
