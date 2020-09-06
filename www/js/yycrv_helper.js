@@ -6,7 +6,7 @@ const yyCrvContract_stake = async function(contractAddr, yCrvTokenAddr, owner, a
     const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
     const amt = ethers.utils.parseEther(amount);
     let allow = Promise.resolve();
-    if (amt > 0) {
+    if (amt.gt(0)) {
         showLoading();
         const allowance = await yCRV_TOKEN.allowance(owner, contractAddr)
         if (allowance == 0) {
@@ -44,7 +44,7 @@ const yyCrvContract_unstake = async function(contractAddr, owner, amount, App) {
     const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
     const amt = ethers.utils.parseEther(amount);
     let allow = Promise.resolve();
-    if (amt > 0) {
+    if (amt.gt(0)) {
         showLoading();
         allow.then(async function() {
             yyCRV.unstake(amt).then(function(t) {
@@ -73,7 +73,7 @@ const yyCrvContract_make_profit = async function(contractAddr, yCrvTokenAddr, am
     const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
     const amt = ethers.utils.parseEther(amount);
     let allow = Promise.resolve();
-    if (amt > 0) {
+    if (amt.gt(0)) {
         showLoading();
         allow = yCRV_TOKEN.approve(contractAddr, ethers.constants.MaxUint256).then(function(t) {
             return App.provider.waitForTransaction(t.hash);
@@ -145,7 +145,7 @@ const yyCrvContract_withdraw = async function(contractAddr, amount, App) {
     const signer = App.provider.getSigner();
     const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
     const amt = ethers.utils.parseEther(amount);
-    if (amt > 0) {
+    if (amt.gt(0)) {
         showLoading();
         yyCRV.withdraw(amt).then(function(t) {
             return App.provider.waitForTransaction(t.hash);
