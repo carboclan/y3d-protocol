@@ -57,16 +57,20 @@ console.log(amount);
         return uniDepositContract_restore_amount(amount, unitedMintAddr, deposit_yyCrv, App);
     }
     
+    const formatUsdt = (val) => ethers.utils.formatUnits(val, 6).toString();
+    const formatYyCrv = (val) => ethers.utils.formatUnits(val, 18).toString();
+
     _print("========== Dashboard ==========")
-    _print(`Total minted yyCrv: ${minted_yyCRV / 1e18}`);
-    _print(`Total minted USDT: ${mintedUsdt / 1e6}`);
-    _print(`Unminted USDT: ${unmintedUsdt / 1e6}`);
-    _print(`Your deposited USDT: ${depositUsdtBalance / 1e6}`);
-    _print(`Your current USDT balance (undeposited):  ${usdtBalance / 1e6}`);
-    _print(`Your current yyCrv balance:  ${yyCrvBalance / 1e18}`);
+    _print(`Currently using contract: ${unitedMintAddr}`);
+    _print(`Total minted yyCrv: ${formatYyCrv(minted_yyCRV)}`);
+    _print(`Total minted USDT: ${formatUsdt(mintedUsdt)}`);
+    _print(`Unminted USDT: ${formatUsdt(unmintedUsdt)}`);
+    _print(`Your deposited USDT: ${formatUsdt(depositUsdtBalance)}`);
+    _print(`Your current USDT balance (undeposited):  ${formatUsdt(usdtBalance)}`);
+    _print(`Your current yyCrv balance:  ${formatYyCrv(yyCrvBalance)}`);
     _print('\n');
     _print(`============== Basic Panel ==============`);
-    _print_button_input(`Deposit USDT`, usdtBalance/1e6, approveUsdtAndDepositWithAmount);
+    _print_button_input_pure(`Deposit USDT`, formatUsdt(usdtBalance), approveUsdtAndDepositWithAmount);
     _print_button(`Deposit USDT (ALL)`, approveUsdtAndDeposit);
     _print_button(`Deposit, Mint & Claim (ALL)`, approveUsdtDepositAndClaim);
     _print_button(`Claim`, claimMy_yyCrv);
@@ -74,7 +78,7 @@ console.log(amount);
     _print('\n');
     _print(`============== High Level Panel ==============`);
     _print_button(`Restore`, withdraw);
-    _print_button_input(`Restore`, yyCrvBalance/1e18, withdrawWithAmount);
+    _print_button_input_pure(`Restore`, formatYyCrv(yyCrvBalance), withdrawWithAmount);
     _print('\n');
     _print('\n');
     _print('<a href="https://rinkeby.etherscan.io/address/0xb7db2f602ea790b21a5519ffcfc256d7618f2fc2#writeContract" target="_blank">Fake USDT watertap ↗️</a>')
