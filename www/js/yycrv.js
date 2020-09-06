@@ -49,7 +49,7 @@ async function main() {
 
   const make_profit = async function (amount) {
     return yyCrvContract_make_profit(yyCrvTokenAddr, amount, App);
-  };  
+  };
 
   const depositAll = async function () {
     return yyCrvContract_deposit_all(yyCrvTokenAddr, App);
@@ -81,10 +81,10 @@ async function main() {
 
   _print(`Total yCrv staked: ${yyCrvPool}`);
   _print(`Total yyCrv supply: ${yyCrvTotalSupply}`);
-  _print(`yyCrv price: ${Math.round(yyCrvPool/yyCrvTotalSupply*1.05*1000)/1000}$\n`);  
-//  _print(`Minimum Mining Ratio: a%`);
- // _print(`Maximum Mining Ratio: b%`);
- // _print(`Current Mining Ratio: c%\n`);    
+  _print(`yyCrv price: ${Math.round(yyCrvPool/yyCrvTotalSupply*1.05*1000)/1000}$\n`);
+  // _print(`Minimum Mining Ratio: a%`);
+  // _print(`Maximum Mining Ratio: b%`);
+  // _print(`Current Mining Ratio: c%\n`);
   
   _print(`Mining yCrv  : ${miningAmount}`);
   _print(`Mining ratio : ${miningAmount}/${yyCrvTotal} = ${curMiningRatio}%`);
@@ -94,17 +94,18 @@ async function main() {
   _print(`\n`);
 /*  _print(`Minimum Mining Ratio: ${minMiningRatio} %`);
   _print(`Maximum Mining Ratio: ${maxMiningRatio} %`);
-  _print(`Current Mining Ratio: ${curMiningRatio} %`);*/ 
+  _print(`Current Mining Ratio: ${curMiningRatio} %`);*/
 
-  _print(`=== Basic Panel ===`);    
+  _print(`=== Basic Panel ===`);
+  _print(`Stake yCrv to convert yyCrv; Unstake yyCrv to convert yCrv.\n`);
   _print_button_input(`Stake ${stakingTokenTicker}`, yCRVBalance, stake);
-  _print_button_input(`Unstake`, yyCRVBalance, unstake); 
+  _print_button_input(`Unstake ${rewardTokenTicker}`, yyCRVBalance, unstake); 
   _print(`\n`);
-  
-//  _print(`=== Advanced Panel ===`);  
- // _print_button_input(`Donate`, yCRVBalance, make_profit);
-  //_print_button_input(`Rebalance`, yCRVBalance, allIn);  
-//  _print(`\n\n <a href="https://rinkeby.etherscan.io/address/0xe0f88584bf7e843af50c0bf3d53591566128773f#code">fake yCrv and y3d Faucet ⬅️</a>`);
+
+  //  _print(`=== Advanced Panel ===`);
+  // _print_button_input(`Donate`, yCRVBalance, make_profit);
+  //_print_button_input(`Rebalance`, yCRVBalance, allIn);
+  //  _print(`\n\n <a href="https://rinkeby.etherscan.io/address/0xe0f88584bf7e843af50c0bf3d53591566128773f#code">fake yCrv and y3d Faucet ⬅️</a>`);
 
   /*
   _print_button_input(`Withdraw ${rewardTokenTicker}`, 0, withdraw);
