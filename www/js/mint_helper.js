@@ -85,7 +85,6 @@ const uniDepositContract_deposit = async function(usdtAddr, unitedMintAddr, App)
 
 const uniDepositContract_deposit_amount = async function(amount, usdtAddr, unitedMintAddr, App) {
     const signer = App.provider.getSigner();
-    amount *= 1e6;
 
     const USDT_TOKEN_SIGNED = new ethers.Contract(usdtAddr, ERC20_ABI,signer);
     const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI, signer);
@@ -205,7 +204,6 @@ const uniDepositContract_restore = async function(unitedMintAddr, yyCrvTokenAddr
 };
 
 const uniDepositContract_restore_amount = async function(amount, unitedMintAddr, yyCrvTokenAddr, App) {
-    amount *= 1e18;
     const signer = App.provider.getSigner();
 
     const yyCrv_TOKEN_SIGNED = new ethers.Contract(yyCrvTokenAddr, ERC20_ABI, signer);

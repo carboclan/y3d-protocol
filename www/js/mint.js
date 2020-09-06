@@ -33,7 +33,10 @@ async function main() {
     }
 
     const approveUsdtAndDepositWithAmount = async function (amount) {
-        return uniDepositContract_deposit_amount(amount, depositUsdt, unitedMintAddr, App);
+//        amount *= 1000000;
+//        console.log('usdt:', amount);
+console.log(amount);
+        return uniDepositContract_deposit_amount(parseInt(amount), depositUsdt, unitedMintAddr, App);
     }
 
     const mint_yyCRV = async function () {
