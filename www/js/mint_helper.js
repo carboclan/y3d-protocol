@@ -1,11 +1,12 @@
 // #region Mint Functions
-const uniDepositContract_deposit_n_claim = async function(usdtAddr, unitedMintAddr, App) {
+const uniDepositContract_deposit_n_claim = async function(amount, usdtAddr, unitedMintAddr, App) {
     const signer = App.provider.getSigner();
 
     const USDT_TOKEN_SIGNED = new ethers.Contract(usdtAddr, ERC20_ABI,signer);
     const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI ,signer);
 
-    const currentUSDT = await USDT_TOKEN_SIGNED.balanceOf(App.YOUR_ADDRESS);
+//    const currentUSDT = await USDT_TOKEN_SIGNED.balanceOf(App.YOUR_ADDRESS);
+    const currentUSDT = ethers.utils.parseUnits(amount, 6);  
     const allowedUSDT = await USDT_TOKEN_SIGNED.allowance(App.YOUR_ADDRESS, unitedMintAddr);
 
     let allow = Promise.resolve();

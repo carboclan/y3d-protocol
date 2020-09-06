@@ -28,16 +28,15 @@ async function main() {
         return uniDepositContract_deposit(depositUsdt, unitedMintAddr, App);
     }
 
-    const approveUsdtDepositAndClaim = async function () {
-        return uniDepositContract_deposit_n_claim(depositUsdt, unitedMintAddr, App);
+    const approveUsdtDepositAndClaim = async function (amount) {
+        return uniDepositContract_deposit_n_claim(amount, depositUsdt, unitedMintAddr, App);
     }
 
     const approveUsdtAndDepositWithAmount = async function (amount) {
 //        amount *= 1000000;
 //        console.log('usdt:', amount);
 //        console.log(typeof(amount));
-
-console.log(amount);
+//console.log(amount);
         return uniDepositContract_deposit_amount(amount, depositUsdt, unitedMintAddr, App);
     }
 
@@ -49,11 +48,11 @@ console.log(amount);
         return uniDepositContract_claim(unitedMintAddr, App);
     }
 
-    const withdraw = async function () {
-        return uniDepositContract_restore(unitedMintAddr, deposit_yyCrv, App);
-    }
+    /*const restore = async function () {
+        return uniDepositContract_restore_amount(Math.min(minted_yyCRV, yyCrvBalance), unitedMintAddr, deposit_yyCrv, App);
+    }*/
 
-    const withdrawWithAmount = async function (amount) {
+    const restoreWithAmount = async function (amount) {
         return uniDepositContract_restore_amount(amount, unitedMintAddr, deposit_yyCrv, App);
     }
     
@@ -70,15 +69,15 @@ console.log(amount);
     _print(`Your current yyCrv balance:  ${formatYyCrv(yyCrvBalance)}`);
     _print('\n');
     _print(`============== Basic Panel ==============`);
+    _print_button(`Deposit USDT (ALL)`, approveUsdtAndDeposit);    
     _print_button_input_pure(`Deposit USDT`, formatUsdt(usdtBalance), approveUsdtAndDepositWithAmount);
-    _print_button(`Deposit USDT (ALL)`, approveUsdtAndDeposit);
-    _print_button(`Deposit, Mint & Claim (ALL)`, approveUsdtDepositAndClaim);
-    _print_button(`Claim`, claimMy_yyCrv);
     _print_button(`Mint`, mint_yyCRV);
+    _print_button(`Claim`, claimMy_yyCrv);
+    _print_button_input_pure(`Deposit, Mint & Claim`, formatUsdt(usdtBalance), approveUsdtDepositAndClaim);
     _print('\n');
     _print(`============== High Level Panel ==============`);
-    _print_button(`Restore`, withdraw);
-    _print_button_input_pure(`Restore`, formatYyCrv(yyCrvBalance), withdrawWithAmount);
+//    _print_button(`Restore`, restore);
+    _print_button_input_pure(`Restore yyCrv`, formatYyCrv(Math.min(minted_yyCRV, yyCrvBalance)), restoreWithAmount);
     _print('\n');
     _print('\n');
     _print('<a href="https://rinkeby.etherscan.io/address/0xb7db2f602ea790b21a5519ffcfc256d7618f2fc2#writeContract" target="_blank">Fake USDT watertap ↗️</a>')
