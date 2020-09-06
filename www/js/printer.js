@@ -87,6 +87,24 @@ const _print_button_input = function(message, defaultValue, onclickFunction) {
     });
 };
 
+const _print_button_input_pure = function(message, defaultValue, onclickFunction) {
+    if (!logger) {
+        logger = document.getElementById('log');
+    }
+
+    const uuid = ID();
+    const input_uuid = ID();
+
+    logger.innerHTML += '<button type="button" id=' + uuid + '>' + message + '</button>';
+    logger.innerHTML += '<input type="text" id=' + input_uuid + ' value="'+ defaultValue +'"></input>';
+    $(document).ready(function() {
+        $('#' + uuid).click(function(){
+            let value = $('#' + input_uuid).val();
+            onclickFunction(value);
+        });
+    });
+};
+
 const _print_href = function(message, href) {
     if (!logger) {
         logger = document.getElementById('log');
