@@ -7,10 +7,12 @@ const uniswapContract_stake = async function(stakingTokenAddr, rewardPoolAddr, A
 
     const currentTEND = await TEND_TOKEN.balanceOf(App.YOUR_ADDRESS);
     const allowedTEND = await TEND_TOKEN.allowance(App.YOUR_ADDRESS, rewardPoolAddr);
+    const currentTENDFormated = ethers.utils.parseUnits(currentTEND, 18);
+    const allowedTENDFormated = ethers.utils.parseUnits(allowedTEND, 18);
 
     let allow = Promise.resolve();
 
-    if ((allowedTEND / 1e18) < (currentTEND / 1e18)) {
+    if (allowedTENDFormated.lt(currentTENDFormated)) {
         showLoading();
         allow = TEND_TOKEN.approve(rewardPoolAddr, ethers.constants.MaxUint256)
             .then(function(t) {
@@ -21,7 +23,7 @@ const uniswapContract_stake = async function(stakingTokenAddr, rewardPoolAddr, A
             });
     }
 
-    if ((currentTEND / 1e18) > 0) {
+    if (currentTENDFormated.gt(0)) {
         showLoading();
         allow.then(async function() {
             WEEBTEND_V2_TOKEN.stake(currentTEND).then(function(t) {
@@ -65,9 +67,10 @@ const uniswapContract_claim = async function(rewardPoolAddr, App) {
 
     console.log(App.YOUR_ADDRESS);
 
-    const earnedYFFI = (await WEEBTEND_V2_TOKEN.earned(App.YOUR_ADDRESS)) / 1e18;
+    const earnedYFFI = await WEEBTEND_V2_TOKEN.earned(App.YOUR_ADDRESS);
+    const earnedYFFIFormated = ethers.utils.parseUnits(earnedYFFI, 18);
 
-    if (earnedYFFI > 0) {
+    if (earnedYFFIFormated.gt(0)) {
         showLoading();
         WEEBTEND_V2_TOKEN.getReward()
             .then(function(t) {
@@ -127,7 +130,7 @@ const uniswapContract_unstake_amount = async function(amount, rewardPoolAddr, Ap
     const REWARD_POOL = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, signer);
     const currentStakedAmount = ethers.utils.parseEther(amount);
 
-    if (currentStakedAmount > 0) {
+    if (currentStakedAmount.gt(0)) {
         showLoading();
         REWARD_POOL.withdraw(currentStakedAmount)
             .then(function(t) {
