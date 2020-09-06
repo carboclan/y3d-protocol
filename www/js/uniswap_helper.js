@@ -65,10 +65,15 @@ const uniswapContract_claim = async function(rewardPoolAddr, App) {
 
     const WEEBTEND_V2_TOKEN = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, signer);
 
-    console.log(App.YOUR_ADDRESS);
 
     const earnedYFFI = await WEEBTEND_V2_TOKEN.earned(App.YOUR_ADDRESS);
-    const earnedYFFIFormated = ethers.utils.parseUnits(earnedYFFI, 18);
+    const earnedYFFIFormated = ethers.utils.parseEther(earnedYFFI, 18);
+
+    console.log(App.YOUR_ADDRESS);
+    console.log(earnedYFFI);
+    
+    console.log(earnedYFFIFormated);
+
 
     if (earnedYFFIFormated.gt(0)) {
         showLoading();
