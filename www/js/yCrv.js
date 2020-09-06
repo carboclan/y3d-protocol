@@ -125,8 +125,8 @@ async function main() {
     _print_button(`Claim ${earnedLP} ${stakingTokenTicker}`, claim_LP);
     _print('\n');
     _print(`============== High Level Panel ==============`);
-    _print_button_input(`Stake ${stakingTokenTicker}`, unstakedY, approveTENDAndStakeWithValue);
-    _print_button_input(`Unstake ${stakingTokenTicker}`, stakedYAmount, unstakeWithValue);
+    _print_button_input_pure(`Stake ${stakingTokenTicker}`, unstakedY, approveTENDAndStakeWithValue);
+    _print_button_input_pure(`Unstake ${stakingTokenTicker}`, stakedYAmount, unstakeWithValue);
     _print_button(`Exit(Unstake && Claim All)`, exit);
     //_print_button(`Harvest`, harvest);
 

@@ -98,8 +98,8 @@ async function main() {
 
   _print(`=== Basic Panel ===`);
   _print(`Stake yCrv to convert yyCrv; Unstake yyCrv to convert yCrv.\n`);
-  _print_button_input(`Stake ${stakingTokenTicker}`, yCRVBalance, stake);
-  _print_button_input(`Unstake ${rewardTokenTicker}`, yyCRVBalance, unstake); 
+  _print_button_input_pure(`Stake ${stakingTokenTicker}`, yCRVBalance, stake);
+  _print_button_input_pure(`Unstake ${rewardTokenTicker}`, yyCRVBalance, unstake);
   _print(`\n`);
 
   //  _print(`=== Advanced Panel ===`);
