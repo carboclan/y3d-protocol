@@ -47,11 +47,11 @@ async function main() {
     }
 
     const withdraw = async function () {
-        return uniDepositContract_withdraw(unitedMintAddr, deposit_yyCrv, App);
+        return uniDepositContract_restore(unitedMintAddr, deposit_yyCrv, App);
     }
 
     const withdrawWithAmount = async function (amount) {
-        return uniDepositContract_withdraw_amount(amount, unitedMintAddr, deposit_yyCrv, App);
+        return uniDepositContract_restore_amount(amount, unitedMintAddr, deposit_yyCrv, App);
     }
     
     _print("========== Dashboard ==========")
@@ -70,8 +70,8 @@ async function main() {
     _print_button(`Mint`, mint_yyCRV);
     _print('\n');
     _print(`============== High Level Panel ==============`);
-    _print_button(`Withdraw`, withdraw);
-    _print_button_input(`Withdraw`, yyCrvBalance, withdrawWithAmount);
+    _print_button(`Restore`, withdraw);
+    _print_button_input(`Restore`, yyCrvBalance, withdrawWithAmount);
     _print('\n');
     _print('\n');
     _print('<a href="https://rinkeby.etherscan.io/address/0xb7db2f602ea790b21a5519ffcfc256d7618f2fc2#writeContract" target="_blank">Fake USDT watertap ↗️</a>')

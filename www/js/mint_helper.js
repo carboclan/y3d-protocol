@@ -161,7 +161,7 @@ const uniDepositContract_claim = async function(unitedMintAddr, App) {
     }
 };
 
-const uniDepositContract_withdraw = async function(unitedMintAddr, yyCrvTokenAddr, App) {
+const uniDepositContract_restore = async function(unitedMintAddr, yyCrvTokenAddr, App) {
     const signer = App.provider.getSigner();
 
     const yyCrv_TOKEN_SIGNED = new ethers.Contract(yyCrvTokenAddr, ERC20_ABI, signer);
@@ -186,7 +186,7 @@ const uniDepositContract_withdraw = async function(unitedMintAddr, yyCrvTokenAdd
     if ((current_yyCrv / 1e6) > 0) {
         showLoading();
         allow.then(async function() {
-            UNI_DEPOSIT_SIGNED.withdraw(current_yyCrv).then(function(t) {
+            UNI_DEPOSIT_SIGNED.restore(current_yyCrv).then(function(t) {
                 App.provider.waitForTransaction(t.hash).then(function() {
                     hideLoading();
                 });
@@ -203,7 +203,7 @@ const uniDepositContract_withdraw = async function(unitedMintAddr, yyCrvTokenAdd
     }
 };
 
-const uniDepositContract_withdraw_amount = async function(amount, unitedMintAddr, yyCrvTokenAddr, App) {
+const uniDepositContract_restore_amount = async function(amount, unitedMintAddr, yyCrvTokenAddr, App) {
     const signer = App.provider.getSigner();
 
     const yyCrv_TOKEN_SIGNED = new ethers.Contract(yyCrvTokenAddr, ERC20_ABI, signer);
@@ -228,7 +228,7 @@ const uniDepositContract_withdraw_amount = async function(amount, unitedMintAddr
     if ((current_yyCrv / 1e6) > 0) {
         showLoading();
         allow.then(async function() {
-            UNI_DEPOSIT_SIGNED.withdraw(current_yyCrv).then(function(t) {
+            UNI_DEPOSIT_SIGNED.restore(current_yyCrv).then(function(t) {
                 App.provider.waitForTransaction(t.hash).then(function() {
                     hideLoading();
                 });
@@ -241,7 +241,7 @@ const uniDepositContract_withdraw_amount = async function(amount, unitedMintAddr
             _print("Something went wrong.");
         });
     } else {
-        alert("You have no tokens to withdraw!!");
+        alert("You have no tokens to restore!!");
     }
 };
 // #endregion Mint Functions
