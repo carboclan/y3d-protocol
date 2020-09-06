@@ -85,8 +85,8 @@ async function main() {
     _print_button(`Claim ${earnedYFFI} ${rewardTokenTicker}`, claim);
     _print('\n');
     _print(`============== High Level Panel ==============`);
-    _print_button_input(`Stake ${stakingTokenTicker}`, unstakedAmount, approveTENDAndStakeWithValue);
-    _print_button_input(`Unstake ${stakingTokenTicker}`, stakedAmount, unstakeWithValue);
+    _print_button_input_pure(`Stake ${stakingTokenTicker}`, unstakedAmount, approveTENDAndStakeWithValue);
+    _print_button_input_pure(`Unstake ${stakingTokenTicker}`, stakedAmount, unstakeWithValue);
 
     hideLoading();
 }
