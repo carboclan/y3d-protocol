@@ -9,10 +9,8 @@ async function main() {
 
     const UNI_DEPOSIT_CONTRACT = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI, App.provider);
     const depositUsdt = await UNI_DEPOSIT_CONTRACT.USDT();
-    // const deposit_yCrv = await UNI_DEPOSIT_CONTRACT.yCrv();
     const deposit_yyCrv = await UNI_DEPOSIT_CONTRACT.yyCrv();
     const USDT_TOKEN = new ethers.Contract(depositUsdt, ERC20_ABI, App.provider);
-    // const yCrv_TOKEN = new ethers.Contract(deposit_yCrv, ERC20_ABI, App.provider);
     const yyCrv_TOKEN = new ethers.Contract(deposit_yyCrv, YYCRV_ABI, App.provider);
 
     const [ mintedUsdt, unmintedUsdt, minted_yyCRV] = await Promise.all([

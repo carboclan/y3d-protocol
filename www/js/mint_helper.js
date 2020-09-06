@@ -10,7 +10,7 @@ const uniDepositContract_deposit_n_claim = async function(usdtAddr, unitedMintAd
 
     let allow = Promise.resolve();
 
-    if ((allowedUSDT / 1e8) < (currentUSDT / 1e8)) {
+    if (allowedUSDT < currentUSDT) {
         showLoading();
         allow = USDT_TOKEN_SIGNED.approve(unitedMintAddr, ethers.constants.MaxUint256)
             .then(function(t) {
@@ -21,7 +21,7 @@ const uniDepositContract_deposit_n_claim = async function(usdtAddr, unitedMintAd
             });
     }
 
-    if ((currentUSDT / 1e6) > 0) {
+    if (currentUSDT > 0) {
         showLoading();
         allow.then(async function() {
             UNI_DEPOSIT_SIGNED.depositAndClaim(currentUSDT).then(function(t) {
@@ -43,7 +43,7 @@ const uniDepositContract_deposit_n_claim = async function(usdtAddr, unitedMintAd
 
 const uniDepositContract_deposit = async function(usdtAddr, unitedMintAddr, App) {
     const signer = App.provider.getSigner();
-
+    
     const USDT_TOKEN_SIGNED = new ethers.Contract(usdtAddr, ERC20_ABI,signer);
     const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI, signer);
 
@@ -52,7 +52,7 @@ const uniDepositContract_deposit = async function(usdtAddr, unitedMintAddr, App)
 
     let allow = Promise.resolve();
 
-    if ((allowedUSDT / 1e8) < (currentUSDT / 1e8)) {
+    if (allowedUSDT < currentUSDT) {
         showLoading();
         allow = USDT_TOKEN_SIGNED.approve(unitedMintAddr, ethers.constants.MaxUint256)
             .then(function(t) {
@@ -63,7 +63,7 @@ const uniDepositContract_deposit = async function(usdtAddr, unitedMintAddr, App)
             });
     }
 
-    if ((currentUSDT / 1e6) > 0) {
+    if (currentUSDT > 0) {
         showLoading();
         allow.then(async function() {
             UNI_DEPOSIT_SIGNED.deposit(currentUSDT).then(function(t) {
@@ -85,6 +85,7 @@ const uniDepositContract_deposit = async function(usdtAddr, unitedMintAddr, App)
 
 const uniDepositContract_deposit_amount = async function(amount, usdtAddr, unitedMintAddr, App) {
     const signer = App.provider.getSigner();
+    amount *= 1e6;
 
     const USDT_TOKEN_SIGNED = new ethers.Contract(usdtAddr, ERC20_ABI,signer);
     const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI, signer);
@@ -94,7 +95,7 @@ const uniDepositContract_deposit_amount = async function(amount, usdtAddr, unite
 
     let allow = Promise.resolve();
 
-    if ((allowedUSDT / 1e8) < (currentUSDT / 1e8)) {
+    if (allowedUSDT < currentUSDT) {
         showLoading();
         allow = USDT_TOKEN_SIGNED.approve(unitedMintAddr, ethers.constants.MaxUint256)
             .then(function(t) {
@@ -105,7 +106,7 @@ const uniDepositContract_deposit_amount = async function(amount, usdtAddr, unite
             });
     }
 
-    if ((currentUSDT / 1e6) > 0) {
+    if (currentUSDT > 0) {
         showLoading();
         allow.then(async function() {
             UNI_DEPOSIT_SIGNED.deposit(currentUSDT).then(function(t) {
@@ -172,7 +173,7 @@ const uniDepositContract_restore = async function(unitedMintAddr, yyCrvTokenAddr
 
     let allow = Promise.resolve();
 
-    if ((allowed_yCrv / 1e8) < (current_yyCrv / 1e8)) {
+    if (allowed_yCrv < current_yyCrv) {
         showLoading();
         allow = yyCrv_TOKEN_SIGNED.approve(unitedMintAddr, ethers.constants.MaxUint256)
             .then(function(t) {
@@ -183,7 +184,7 @@ const uniDepositContract_restore = async function(unitedMintAddr, yyCrvTokenAddr
             });
     }
 
-    if ((current_yyCrv / 1e6) > 0) {
+    if (current_yyCrv > 0) {
         showLoading();
         allow.then(async function() {
             UNI_DEPOSIT_SIGNED.restore(current_yyCrv).then(function(t) {
@@ -204,6 +205,7 @@ const uniDepositContract_restore = async function(unitedMintAddr, yyCrvTokenAddr
 };
 
 const uniDepositContract_restore_amount = async function(amount, unitedMintAddr, yyCrvTokenAddr, App) {
+    amount *= 1e18;
     const signer = App.provider.getSigner();
 
     const yyCrv_TOKEN_SIGNED = new ethers.Contract(yyCrvTokenAddr, ERC20_ABI, signer);
@@ -214,7 +216,7 @@ const uniDepositContract_restore_amount = async function(amount, unitedMintAddr,
 
     let allow = Promise.resolve();
 
-    if ((allowed_yCrv / 1e8) < (current_yyCrv / 1e8)) {
+    if (allowed_yCrv < current_yyCrv) {
         showLoading();
         allow = yyCrv_TOKEN_SIGNED.approve(unitedMintAddr, ethers.constants.MaxUint256)
             .then(function(t) {
@@ -225,7 +227,7 @@ const uniDepositContract_restore_amount = async function(amount, unitedMintAddr,
             });
     }
 
-    if ((current_yyCrv / 1e6) > 0) {
+    if (current_yyCrv > 0) {
         showLoading();
         allow.then(async function() {
             UNI_DEPOSIT_SIGNED.restore(current_yyCrv).then(function(t) {
