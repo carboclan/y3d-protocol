@@ -77,7 +77,7 @@ async function main() {
     _print('\n');
     _print(`============== High Level Panel ==============`);
 //    _print_button(`Restore`, restore);
-    _print_button_input_pure(`Restore yyCrv`, formatYyCrv(Math.min(minted_yyCRV, yyCrvBalance)), restoreWithAmount);
+    _print_button_input_pure(`Restore yyCrv`, formatYyCrv(yyCrvBalance), restoreWithAmount);
 
 /*    _print('\n');
     _print('\n');
