@@ -85,6 +85,25 @@ const uniswapContract_claim = async function(rewardPoolAddr, App) {
     }
 };
 
+const uniswapContract_claim_LP = async function(rewardPoolAddr, App) {
+    const signer = App.provider.getSigner();
+    const UNISWAP_TOKEN = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, signer);
+    const earnedLP = await UNISWAP_TOKEN.unrealizedProfit(App.YOUR_ADDRESS);
+
+    console.log(App.YOUR_ADDRESS);
+    console.log(earnedLP, earnedLP.gt(0))
+
+    if (earnedLP.gt(0)) {
+        showLoading();
+        UNISWAP_TOKEN.claim()
+            .then(function(t) {
+                return App.provider.waitForTransaction(t.hash);
+            }).catch(function() {
+            hideLoading();
+        });
+    }
+};
+
 const uniswapContract_stake_amount = async function(amount, stakingTokenAddr, rewardPoolAddr, App) {
 
     const signer = App.provider.getSigner();
