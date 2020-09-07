@@ -24,7 +24,7 @@ async function main() {
 
     const totalY3DPoolAmount = await Y3D_TOKEN.balanceOf(uniSwapPoolAddr) / 1e18;
     const totalYYCRVPoolAmount = await YYCRV_TOKEN.balanceOf(uniSwapPoolAddr) / 1e18;
-    const stakingTokenPrice = 1.07;
+    const stakingTokenPrice = 1.09;
 
     _print("========== UNISWAP ==========")
     _print(`${totalYYCRVPoolAmount} ${yyCrvTokenTicker}`);
