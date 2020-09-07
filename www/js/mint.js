@@ -60,12 +60,12 @@ async function main() {
     const formatYyCrv = (val) => ethers.utils.formatUnits(val, 18).toString();
 
     _print("========== Dashboard ==========")
-    _print(`Currently using contract: ${unitedMintAddr}`);
+    _print(`United Mint Contract: <a href="https://etherscan.io/address/${unitedMintAddr}">${unitedMintAddr} </a>`);
     _print(`Total minted yyCrv: ${formatYyCrv(minted_yyCRV)}`);
     _print(`Total minted USDT: ${formatUsdt(mintedUsdt)}`);
     _print(`Unminted USDT: ${formatUsdt(unmintedUsdt)}`);
     _print(`Your deposited USDT: ${formatUsdt(depositUsdtBalance)}`);
-    _print(`Your current USDT balance (undeposited):  ${formatUsdt(usdtBalance)}`);
+    _print(`Your current USDT balance(undeposited):  ${formatUsdt(usdtBalance)}`);
     _print(`Your current yyCrv balance:  ${formatYyCrv(yyCrvBalance)}`);
     _print('\n');
     _print(`============== Basic Panel ==============`);
@@ -78,9 +78,10 @@ async function main() {
     _print(`============== High Level Panel ==============`);
 //    _print_button(`Restore`, restore);
     _print_button_input_pure(`Restore yyCrv`, formatYyCrv(Math.min(minted_yyCRV, yyCrvBalance)), restoreWithAmount);
-    _print('\n');
+
+/*    _print('\n');
     _print('\n');
     _print('<a href="https://rinkeby.etherscan.io/address/0xb7db2f602ea790b21a5519ffcfc256d7618f2fc2#writeContract" target="_blank">Fake USDT watertap ↗️</a>')
-
+*/
     hideLoading();
 }
