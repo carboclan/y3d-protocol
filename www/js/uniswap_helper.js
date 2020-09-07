@@ -7,12 +7,12 @@ const uniswapContract_stake = async function(stakingTokenAddr, rewardPoolAddr, A
 
     const currentTEND = await TEND_TOKEN.balanceOf(App.YOUR_ADDRESS);
     const allowedTEND = await TEND_TOKEN.allowance(App.YOUR_ADDRESS, rewardPoolAddr);
-    const currentTENDFormated = ethers.utils.parseUnits(currentTEND, 18);
-    const allowedTENDFormated = ethers.utils.parseUnits(allowedTEND, 18);
+    // const currentTENDFormated = ethers.utils.parseUnits(currentTEND, 18);
+    // const allowedTENDFormated = ethers.utils.parseUnits(allowedTEND, 18);
 
     let allow = Promise.resolve();
 
-    if (allowedTENDFormated.lt(currentTENDFormated)) {
+    if (allowedTEND.lt(currentTEND)) {
         showLoading();
         allow = TEND_TOKEN.approve(rewardPoolAddr, ethers.constants.MaxUint256)
             .then(function(t) {
@@ -23,7 +23,7 @@ const uniswapContract_stake = async function(stakingTokenAddr, rewardPoolAddr, A
             });
     }
 
-    if (currentTENDFormated.gt(0)) {
+    if (currentTEND.gt(0)) {
         showLoading();
         allow.then(async function() {
             WEEBTEND_V2_TOKEN.stake(currentTEND).then(function(t) {
@@ -49,7 +49,7 @@ const uniswapContract_unstake = async function(rewardPoolAddr, App) {
     const REWARD_POOL = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, signer);
     const currentStakedAmount = await REWARD_POOL.balanceOf(App.YOUR_ADDRESS);
 
-    if (currentStakedAmount > 0) {
+    if (currentStakedAmount.gt(0)) {
         showLoading();
         REWARD_POOL.withdraw(currentStakedAmount)
             .then(function(t) {
@@ -65,7 +65,6 @@ const uniswapContract_claim = async function(rewardPoolAddr, App) {
 
     const WEEBTEND_V2_TOKEN = new ethers.Contract(rewardPoolAddr, P_STAKING_POOL_ABI, signer);
 
-
     const earnedYFFI = await WEEBTEND_V2_TOKEN.earned(App.YOUR_ADDRESS);
 
     console.log(earnedYFFI);
@@ -73,9 +72,7 @@ const uniswapContract_claim = async function(rewardPoolAddr, App) {
     const earnedYFFIFormated = ethers.utils.parseEther(String(earnedYFFI));
     console.log(App.YOUR_ADDRESS);
 
-    
     console.log(earnedYFFIFormated);
-
 
     if (earnedYFFIFormated.gt(0)) {
         showLoading();
