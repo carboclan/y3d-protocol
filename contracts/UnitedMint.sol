@@ -277,7 +277,7 @@ interface IUSDT {
     function allowance(address _owner, address _spender) external view returns (uint remaining);
 }
 
-// Dependency file: src/IyyCrv.sol
+// Dependency file: src/IyswUSD.sol
 
 
 
@@ -286,7 +286,7 @@ interface IUSDT {
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
  */
-interface IyyCrv {
+interface IyswUSD {
 
     function stake(uint256 _amount) external;
     function unstake(uint256 _shares) external;
@@ -373,136 +373,140 @@ pragma solidity >=0.4.21 <0.7.0;
 // import "@openzeppelin/contracts/math/SafeMath.sol";
 // import "src/IyDeposit.sol";
 // import "src/IUSDT.sol";
-// import "src/IyyCrv.sol";
+// import "src/IyswUSD.sol";
 
 /**
- * UniMint - Crowdfunding USDT to print yyCrv.
+ * UniMint - Crowdfunding USDT to print swUSD together
  */
 
 contract UnitedMint {
-    using SafeMath for uint256;
+    using SafeMath for uint;
 
     address constant public USDT = address(0xdAC17F958D2ee523a2206206994597C13D831ec7);
-    address constant public yCrv = address(0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8);
-    address constant public yyCrv = address(0x199ddb4BDF09f699d2Cf9CA10212Bd5E3B570aC2);
-    address constant public yDeposit = address(0xbBC81d23Ea2c3ec7e56D39296F0cbB648873a5d3);
+    address constant public swUSD = address(0x77C6E4a580c0dCE4E5c7a17d0bc077188a83A059);
+    address constant public yswUSD = address(0x2b1120F0C8238C098C767282092D49d9ac527e8C);
+    address constant public yDeposit = address(0x329239599afB305DA0A2eC69c58F8a6697F9F88d);
+  
+    mapping(address=>uint) _balance; // unminted USDT
 
-    mapping(address => uint256) _balance; // unminted USDT
-
-    function setBalance(address who, uint256 amount) internal {
+    function setBalance(address who, uint amount) internal {
         _balance[who] = amount;
     }
-
-    function balanceOf(address who) public view returns (uint256) {
+    function balanceOf(address who) public view returns (uint) {
         return _balance[who];
     }
 
-    uint256 public mintedUSDT; // USDT involved in minting yCRV
+    uint public mintedUSDT; // USDT involved in minting swUSD
 
     constructor() public {
-        IUSDT(USDT).approve(yDeposit, uint256(-1));
-        IERC20(yCrv).approve(yyCrv, uint256(-1));
+       IUSDT(USDT).approve(yDeposit, uint(-1));
+       IERC20(swUSD).approve(yswUSD, uint(-1));        
     }
 
-    function unminted_USDT() public view returns (uint256) {
+    function unminted_USDT() view public returns (uint) {
         return IERC20(USDT).balanceOf(address(this));
+    }    
+    function minted_swUSD() view public returns (uint) {
+        return IERC20(swUSD).balanceOf(address(this));
     }
-
-    function minted_yCRV() public view returns (uint256) {
-        return IERC20(yCrv).balanceOf(address(this));
+    function minted_yswUSD() view public returns (uint) {
+        return IERC20(yswUSD).balanceOf(address(this));
     }
-
-    function minted_yyCRV() public view returns (uint256) {
-        return IERC20(yyCrv).balanceOf(address(this));
+    function get_yswUSDFromUsdt(uint amount) public view returns (uint) {
+        return amount.mul(minted_yswUSD()).div(mintedUSDT);
     }
-
-    function get_yyCrvFromUsdt(uint256 amount) public view returns (uint256) {
-        return amount.mul(minted_yyCRV()).div(mintedUSDT);
-    }
-
-    function get_usdtFromYycrv(uint256 amount) public view returns (uint256) {
-        return amount.mul(mintedUSDT).div(minted_yyCRV());
-    }
+    function get_usdtFromyswUSD(uint amount) public view returns (uint) {
+        return amount.mul(mintedUSDT).div(minted_yswUSD());
+    }    
 
     event Deposit(address indexed who, uint usdt);
-    event Claim(address indexed who, uint usdt, uint yyCrv);
-    event Restore(address indexed who, uint yyCrv, uint usdt);
+    event Claim(address indexed who, uint usdt, uint yswUSD);
+    event Restore(address indexed who, uint yswUSD, uint usdt);
 
     /**
-     * @dev Deposit usdt or claim yyCrv directly if balance of yyCrv is sufficient
+     * @dev Deposit usdt or claim yswUSD directly if balance of yswUSD is sufficient
      */
-    function deposit(uint256 input) external {
-        require(input != 0, "Empty usdt");
+    function deposit(uint input) external {
+        require(input != 0, "Empty usdt");        
         IUSDT(USDT).transferFrom(msg.sender, address(this), input);
         if (input > mintedUSDT) {
             setBalance(msg.sender, balanceOf(msg.sender).add(input));
             emit Deposit(msg.sender, input);
         } else {
-            uint256 output = get_yyCrvFromUsdt(input);
+            uint output = get_yswUSDFromUsdt(input);
             mintedUSDT = mintedUSDT.sub(input);
-            IERC20(yyCrv).transfer(msg.sender, output);
+            IERC20(yswUSD).transfer(msg.sender, output);
             emit Claim(msg.sender, input, output);
         }
     }
 
     /**
-     * @dev Mint all unminted_USDT into yyCrv
+     * @dev withdraw unminted USDT
+     */
+    function withdraw() external {
+        uint output = balanceOf(msg.sender);
+        setBalance(msg.sender, 0);   
+        IUSDT(USDT).transfer(msg.sender, output);
+    }
+
+    /**
+     * @dev Mint all unminted_USDT into yswUSD
      */
     function mint() public {
         require(unminted_USDT() > 0, "Empty usdt");
         mintedUSDT = mintedUSDT.add(unminted_USDT());
-        IyDeposit(yDeposit).add_liquidity([0, 0, unminted_USDT(), 0], 0);
-        IyyCrv(yyCrv).stake(minted_yCRV());
+        IyDeposit(yDeposit).add_liquidity([0,0,unminted_USDT(),0], 0);
+        IyswUSD(yswUSD).stake(minted_swUSD());
     }
 
     /**
-     * @dev Claim yyCrv back, if the balance is sufficient, execute mint()
+     * @dev Claim yswUSD back, if the balance is sufficient, execute mint()
      */
     function claim() public {
-        uint256 input = balanceOf(msg.sender);
+        uint input = balanceOf(msg.sender);
         require(input != 0, "You don't have USDT balance to withdraw");
-        uint256 r; // requirement yCrv
+        uint r; // requirement swUSD
         if (mintedUSDT == 0) {
             mint();
-            r = get_yyCrvFromUsdt(input);
+            r = get_yswUSDFromUsdt(input);
         } else {
-            r = get_yyCrvFromUsdt(input);
-            if (r > minted_yyCRV()) mint();
-            r = get_yyCrvFromUsdt(input);
+            r = get_yswUSDFromUsdt(input);
+            if (r > minted_yswUSD()) mint(); 
+            r = get_yswUSDFromUsdt(input);
         }
         mintedUSDT = mintedUSDT.sub(input);        
-        IERC20(yyCrv).transfer(msg.sender, r);
+        IERC20(yswUSD).transfer(msg.sender, r);
         setBalance(msg.sender, 0);
         emit Claim(msg.sender, input, r);
     }
 
     /**
-     * @dev Try to claim unminted usdt by yyCrv if the balance is sufficient
+     * @dev Try to claim unminted usdt by yswUSD if the balance is sufficient
      */
     function restore(uint input) external {
-        require(input != 0, "Empty yyCrv");
-        require(minted_yyCRV() != 0, "No yyCrv price at this moment");
-        uint output = get_yyCrvFromUsdt(unminted_USDT());
+        require(input != 0, "Empty yswUSD");
+        require(minted_yswUSD() != 0, "No yswUSD price at this moment");
+        uint output = get_yswUSDFromUsdt(unminted_USDT());
         if (output < input) input = output;
-        output = get_usdtFromYycrv(input);
+        output = get_usdtFromyswUSD(input);
         mintedUSDT = mintedUSDT.add(output);
-        IERC20(yyCrv).transferFrom(msg.sender, address(this), input);
+        IERC20(yswUSD).transferFrom(msg.sender, address(this), input);
         IUSDT(USDT).transfer(msg.sender, output);
         emit Restore(msg.sender, input, output);
     }    
 
     /**
-     * @dev Deposit usdt and claim yyCrv in any case
+     * @dev Deposit usdt and claim yswUSD in any case
      */
-    function depositAndClaim(uint256 input) external {
-        require(input != 0, "Empty usdt");
+    function depositAndClaim(uint input) external {
+        require(input != 0, "Empty usdt");        
         IUSDT(USDT).transferFrom(msg.sender, address(this), input);
         if (input > mintedUSDT) {
             mint();
         }
-        uint256 output = get_yyCrvFromUsdt(input);
+        uint output = get_yswUSDFromUsdt(input);
         mintedUSDT = mintedUSDT.sub(input);
-        IERC20(yyCrv).transfer(msg.sender, output);
+        IERC20(yswUSD).transfer(msg.sender, output);
         emit Claim(msg.sender, input, output);
     }
 }

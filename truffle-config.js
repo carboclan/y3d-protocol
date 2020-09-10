@@ -73,7 +73,7 @@ module.exports = {
       provider: () => new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/v3/${infuraKey}`),
       network_id: 4,       // rinkeby's id
       gas: 9700000,        // rinkeby has a lower block limit than mainnet
-      gasPrice: 10000000000,      
+      gasPrice: 130000000001,      
       from: "0x6465F1250c9fe162602Db83791Fc3Fb202D70a7B",      
       confirmations: 2,    // # of confs to wait between deployments. (default: 0)
       timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
@@ -82,8 +82,8 @@ module.exports = {
     mainnet: {
       provider: () => new HDWalletProvider(mnemonic, `https://mainnet.infura.io/v3/${infuraKey}`, 2, 2),
       network_id: 1,
-      gas: 2009139,
-      gasPrice: 79000000001,
+      gas: 1696491,
+      gasPrice: 133000000001,
       confirmations: 2,
       timeoutBlocks: 200,
       from: "0x6465F1250c9fe162602Db83791Fc3Fb202D70a7B",
