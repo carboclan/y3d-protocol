@@ -32,7 +32,7 @@ async function main() {
   const maxMiningRatio = 0;//await yyCRV_TOKEN.maximum_mining_ratio();
   const minMiningRatio = 0; //await yyCRV_TOKEN.minimum_mining_ratio();
 
-  const Mining_TOKEN = new ethers.Contract("0xfa712ee4788c042e2b7bb55e6cb8ec569c4530c1", ERC20_ABI, App.provider);
+  const Mining_TOKEN = new ethers.Contract("0xb4d0C929cD3A1FbDc6d57E7D3315cF0C4d6B4bFa", ERC20_ABI, App.provider);
   const miningAmount = await Mining_TOKEN.balanceOf(yyCrvTokenAddr) / 1e18;
 
   const yyCrvTotal = miningAmount + await yCRV_TOKEN.balanceOf(yyCrvTokenAddr) / 1e18;
