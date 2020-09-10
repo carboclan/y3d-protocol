@@ -131,7 +131,7 @@ async function main() {
     _print('\n');
     _print("  ======== Dashboard ==========")
     _print(`United Mint Contract: <a href="https://etherscan.io/address/${unitedMintAddr2}">${unitedMintAddr2} </a>`);
-    _print(`Total minted yyCrv: ${formatYyCrv(minted_yyCRV2)}`);
+    _print(`Total minted yswUSD: ${formatYyCrv(minted_yyCRV2)}`);
     _print(`Total minted USDT: ${formatUsdt(mintedUsdt2)}`);
     _print(`Unminted USDT: ${formatUsdt(unmintedUsdt2)}`);
     _print(`Your deposited USDT: ${formatUsdt(depositUsdtBalance2)}`);
