@@ -1,34 +1,91 @@
-// #region Mint Functions
-const uniDepositContract_deposit_n_claim = async function(amount, usdtAddr, unitedMintAddr, App) {
+// #region yyCRV Functions
+// ============================== yyCRV ==============================
+const yyCrvContract_stake = async function(contractAddr, yCrvTokenAddr, owner, amount, App) {
     const signer = App.provider.getSigner();
-
-    const USDT_TOKEN_SIGNED = new ethers.Contract(usdtAddr, ERC20_ABI,signer);
-    const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI ,signer);
-
-//    const currentUSDT = await USDT_TOKEN_SIGNED.balanceOf(App.YOUR_ADDRESS);
-    const currentUSDT = ethers.utils.parseUnits(amount, 6);  
-    const allowedUSDT = await USDT_TOKEN_SIGNED.allowance(App.YOUR_ADDRESS, unitedMintAddr);
-
+    const yCRV_TOKEN = new ethers.Contract(yCrvTokenAddr, YCRV_ABI, signer);
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    const amt = ethers.utils.parseEther(amount);
     let allow = Promise.resolve();
-
-    if (allowedUSDT.lt(currentUSDT)) {
+    if (amt.gt(0)) {
         showLoading();
-        allow = USDT_TOKEN_SIGNED.approve(unitedMintAddr, ethers.constants.MaxUint256)
-            .then(function(t) {
+        const allowance = await yCRV_TOKEN.allowance(owner, contractAddr)
+        if (allowance == 0) {
+            allow = yCRV_TOKEN.approve(contractAddr, ethers.constants.MaxUint256).then(function(t) {
                 return App.provider.waitForTransaction(t.hash);
-            }).catch(function() {
+            }).catch(function(e) {
                 hideLoading();
+                console.log(e)
                 alert("Try resetting your approval to 0 first");
             });
-    }
+        }
 
-    if (currentUSDT.gt(0)) {
+        allow.then(async function() {
+            yyCRV.stake(amt).then(function(t) {
+                return App.provider.waitForTransaction(t.hash);
+            }).then(function(result) {
+                console.log("Stake result:", result);
+                if (result.status === 1) {
+                    hideLoading();
+                    alert("Success!");
+                }
+            }).catch(function() {
+                hideLoading();
+                alert("Something went wrong.");
+            });
+        }).catch(function () {
+            hideLoading();
+            _print("Something went wrong.");
+        });
+    }
+};
+
+const yyCrvContract_unstake = async function(contractAddr, owner, amount, App) {
+    const signer = App.provider.getSigner();
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    const amt = ethers.utils.parseEther(amount);
+    let allow = Promise.resolve();
+    if (amt.gt(0)) {
         showLoading();
         allow.then(async function() {
-            UNI_DEPOSIT_SIGNED.depositAndClaim(currentUSDT).then(function(t) {
-                App.provider.waitForTransaction(t.hash).then(function() {
+            yyCRV.unstake(amt).then(function(t) {
+                return App.provider.waitForTransaction(t.hash);
+            }).then(function(result) {
+                console.log("Unstake result:", result);
+                if (result.status === 1) {
                     hideLoading();
-                });
+                    alert("Success!");
+                }
+            }).catch(function(e) {
+                console.log("Unstake error:", e);
+                hideLoading();
+                alert("Something went wrong, \"" + e.message + "\".");
+            });
+        }).catch(function () {
+            hideLoading();
+            _print("Something went wrong.");
+        });
+    }
+};
+
+const yyCrvContract_make_profit = async function(contractAddr, yCrvTokenAddr, amount, App) {
+    const signer = App.provider.getSigner();
+    const yCRV_TOKEN = new ethers.Contract(yCrvTokenAddr, YCRV_ABI, signer);
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    const amt = ethers.utils.parseEther(amount);
+    let allow = Promise.resolve();
+    if (amt.gt(0)) {
+        showLoading();
+        allow = yCRV_TOKEN.approve(contractAddr, ethers.constants.MaxUint256).then(function(t) {
+            return App.provider.waitForTransaction(t.hash);
+        }).catch(function(e) {
+            hideLoading();
+            console.log(e)
+            alert("Try resetting your approval to 0 first");
+        });
+
+        allow.then(async function() {
+            yyCRV.make_profit_external(amt).then(function(t) {
+                return App.provider.waitForTransaction(t.hash);
             }).catch(function() {
                 hideLoading();
                 _print("Something went wrong.");
@@ -37,213 +94,64 @@ const uniDepositContract_deposit_n_claim = async function(amount, usdtAddr, unit
             hideLoading();
             _print("Something went wrong.");
         });
-    } else {
-        alert("You have no tokens to deposit!!");
     }
 };
 
-const uniDepositContract_deposit = async function(usdtAddr, unitedMintAddr, App) {
+const yyCrvContract_deposit_all = async function(contractAddr, App) {
     const signer = App.provider.getSigner();
-
-    const USDT_TOKEN_SIGNED = new ethers.Contract(usdtAddr, ERC20_ABI,signer);
-    const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI, signer);
-
-    const currentUSDT = await USDT_TOKEN_SIGNED.balanceOf(App.YOUR_ADDRESS);
-    const allowedUSDT = await USDT_TOKEN_SIGNED.allowance(App.YOUR_ADDRESS, unitedMintAddr);
-
-    let allow = Promise.resolve();
-
-    if (allowedUSDT.lt(currentUSDT)) {
-        showLoading();
-        allow = USDT_TOKEN_SIGNED.approve(unitedMintAddr, ethers.constants.MaxUint256)
-            .then(function(t) {
-                return App.provider.waitForTransaction(t.hash);
-            }).catch(function() {
-                hideLoading();
-                alert("Try resetting your approval to 0 first");
-            });
-    }
-
-    if (currentUSDT.gt(0)) {
-        showLoading();
-        allow.then(async function() {
-            UNI_DEPOSIT_SIGNED.deposit(currentUSDT).then(function(t) {
-                App.provider.waitForTransaction(t.hash).then(function() {
-                    hideLoading();
-                });
-            }).catch(function() {
-                hideLoading();
-                _print("Something went wrong.");
-            });
-        }).catch(function () {
-            hideLoading();
-            _print("Something went wrong.");
-        });
-    } else {
-        alert("You have no tokens to deposit!!");
-    }
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    showLoading();
+    yyCRV.deposit_all().then(function(t) {
+        return App.provider.waitForTransaction(t.hash);
+    }).catch(function() {
+        hideLoading();
+    });
 };
 
-const uniDepositContract_deposit_amount = async function(amount, usdtAddr, unitedMintAddr, App) {
+const yyCrvContract_deposit = async function(contractAddr, App) {
     const signer = App.provider.getSigner();
-
-    const USDT_TOKEN_SIGNED = new ethers.Contract(usdtAddr, ERC20_ABI,signer);
-    const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI, signer);
-    console.info('uniDepositContract_deposit_amount::amount', amount)
-    const currentUSDT = ethers.utils.parseUnits(amount, 6);
-    console.info('uniDepositContract_deposit_amount::currentUSDT', currentUSDT)
-    const allowedUSDT = await USDT_TOKEN_SIGNED.allowance(App.YOUR_ADDRESS, unitedMintAddr);
-
-    let allow = Promise.resolve();
-
-    if (allowedUSDT.lt(currentUSDT)) {
-        showLoading();
-        allow = USDT_TOKEN_SIGNED.approve(unitedMintAddr, ethers.constants.MaxUint256)
-            .then(function(t) {
-                return App.provider.waitForTransaction(t.hash);
-            }).catch(function() {
-                hideLoading();
-                alert("Try resetting your approval to 0 first");
-            });
-    }
-
-    if (currentUSDT.gt(0)) {
-        showLoading();
-        allow.then(async function() {
-            UNI_DEPOSIT_SIGNED.deposit(currentUSDT).then(function(t) {
-                App.provider.waitForTransaction(t.hash).then(function() {
-                    hideLoading();
-                });
-            }).catch(function() {
-                hideLoading();
-                _print("Something went wrong.");
-            });
-        }).catch(function () {
-            hideLoading();
-            _print("Something went wrong.");
-        });
-    } else {
-        alert("You have no tokens to deposit!!");
-    }
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    showLoading();
+    yyCRV.deposit().then(function(t) {
+        return App.provider.waitForTransaction(t.hash);
+    }).catch(function() {
+        hideLoading();
+    });
 };
 
-const uniDepositContract_mint = async function(unitedMintAddr, App) {
+const yyCrvContract_harvest_to_consul = async function(contractAddr, App) {
     const signer = App.provider.getSigner();
-    const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI ,signer);
-    const currentUnmintedUsdt = await UNI_DEPOSIT_SIGNED.unminted_USDT();
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    showLoading();
+    yyCRV.harvest_to_consul().then(function(t) {
+        return App.provider.waitForTransaction(t.hash);
+    }).catch(function() {
+        hideLoading();
+    });
+};
 
-    if (currentUnmintedUsdt > 0) {
+const yyCrvContract_harvest_to_uniswap = async function(contractAddr, App) {
+    const signer = App.provider.getSigner();
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    showLoading();
+    yyCRV.harvest_to_uniswap().then(function(t) {
+        return App.provider.waitForTransaction(t.hash);
+    }).catch(function() {
+        hideLoading();
+    });
+};
+
+const yyCrvContract_withdraw = async function(contractAddr, amount, App) {
+    const signer = App.provider.getSigner();
+    const yyCRV = new ethers.Contract(contractAddr, YYCRV_ABI, signer);
+    const amt = ethers.utils.parseEther(amount);
+    if (amt.gt(0)) {
         showLoading();
-        UNI_DEPOSIT_SIGNED.mint()
-            .then(function(t) {
-                return App.provider.waitForTransaction(t.hash);
-            }).catch(function() {
+        yyCRV.withdraw(amt).then(function(t) {
+            return App.provider.waitForTransaction(t.hash);
+        }).catch(function() {
             hideLoading();
         });
-    } else {
-        alert("Current have no USDT for yCrv to mint!!");
     }
 };
-
-const uniDepositContract_claim = async function(unitedMintAddr, App) {
-    const signer = App.provider.getSigner();
-    const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI ,signer);
-    const currentMinted_yyCrv = await UNI_DEPOSIT_SIGNED.minted_yyCRV();
-
-    if (currentMinted_yyCrv > 0) {
-        showLoading();
-        UNI_DEPOSIT_SIGNED.claim()
-            .then(function(t) {
-                return App.provider.waitForTransaction(t.hash);
-            }).catch(function() {
-            hideLoading();
-        });
-    } else {
-        alert("Current there are no yyCrv to claim!!");
-    }
-};
-
-const uniDepositContract_restore = async function(unitedMintAddr, yyCrvTokenAddr, App) {
-    const signer = App.provider.getSigner();
-
-    const yyCrv_TOKEN_SIGNED = new ethers.Contract(yyCrvTokenAddr, ERC20_ABI, signer);
-    const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI, signer);
-
-    const current_yyCrv = await yyCrv_TOKEN_SIGNED.balanceOf(App.YOUR_ADDRESS);
-    const allowed_yCrv = await yyCrv_TOKEN_SIGNED.allowance(App.YOUR_ADDRESS, unitedMintAddr);
-
-    let allow = Promise.resolve();
-
-    if (allowed_yCrv.lt(current_yyCrv)) {
-        showLoading();
-        allow = yyCrv_TOKEN_SIGNED.approve(unitedMintAddr, ethers.constants.MaxUint256)
-            .then(function(t) {
-                return App.provider.waitForTransaction(t.hash);
-            }).catch(function() {
-                hideLoading();
-                alert("Try resetting your approval to 0 first");
-            });
-    }
-
-    if (current_yyCrv.gt(0)) {
-        showLoading();
-        allow.then(async function() {
-            UNI_DEPOSIT_SIGNED.restore(current_yyCrv).then(function(t) {
-                App.provider.waitForTransaction(t.hash).then(function() {
-                    hideLoading();
-                });
-            }).catch(function() {
-                hideLoading();
-                _print("Something went wrong.");
-            });
-        }).catch(function () {
-            hideLoading();
-            _print("Something went wrong.");
-        });
-    } else {
-        alert("You have no tokens to withdraw!!");
-    }
-};
-
-const uniDepositContract_restore_amount = async function(amount, unitedMintAddr, yyCrvTokenAddr, App) {
-    const signer = App.provider.getSigner();
-
-    const yyCrv_TOKEN_SIGNED = new ethers.Contract(yyCrvTokenAddr, ERC20_ABI, signer);
-    const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI, signer);
-
-    const current_yyCrv = ethers.utils.parseUnits(amount, 18);
-    const allowed_yCrv = await yyCrv_TOKEN_SIGNED.allowance(App.YOUR_ADDRESS, unitedMintAddr);
-
-    let allow = Promise.resolve();
-
-    if (allowed_yCrv.lt(current_yyCrv)) {
-        showLoading();
-        allow = yyCrv_TOKEN_SIGNED.approve(unitedMintAddr, ethers.constants.MaxUint256)
-            .then(function(t) {
-                return App.provider.waitForTransaction(t.hash);
-            }).catch(function() {
-                hideLoading();
-                alert("Try resetting your approval to 0 first");
-            });
-    }
-
-    if (current_yyCrv.gt(0)) {
-        showLoading();
-        allow.then(async function() {
-            UNI_DEPOSIT_SIGNED.restore(current_yyCrv).then(function(t) {
-                App.provider.waitForTransaction(t.hash).then(function() {
-                    hideLoading();
-                });
-            }).catch(function() {
-                hideLoading();
-                _print("Something went wrong.");
-            });
-        }).catch(function () {
-            hideLoading();
-            _print("Something went wrong.");
-        });
-    } else {
-        alert("You have no tokens to restore!!");
-    }
-};
-// #endregion Mint Functions
+// #endregion yyCRV Functions
