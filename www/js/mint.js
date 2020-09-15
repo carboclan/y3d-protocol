@@ -89,7 +89,7 @@ async function main() {
     }
 
     const claimMy_yyCrv2 = async function () {
-        return uniDepositContract_claim(unitedMintAddr2, App);
+        return uniDepositContract_claim2(unitedMintAddr2, App);
     }
 
     const restoreWithAmount2 = async function (amount) {

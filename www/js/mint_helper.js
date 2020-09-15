@@ -163,6 +163,24 @@ const uniDepositContract_claim = async function(unitedMintAddr, App) {
     }
 };
 
+const uniDepositContract_claim2 = async function(unitedMintAddr, App) {
+    const signer = App.provider.getSigner();
+    const UNI_DEPOSIT_SIGNED = new ethers.Contract(unitedMintAddr, UNITED_MINT_ABI ,signer);
+    const currentMinted_yyCrv = await UNI_DEPOSIT_SIGNED.minted_yswUSD();
+
+    if (currentMinted_yyCrv > 0) {
+        showLoading();
+        UNI_DEPOSIT_SIGNED.claim()
+            .then(function(t) {
+                return App.provider.waitForTransaction(t.hash);
+            }).catch(function() {
+            hideLoading();
+        });
+    } else {
+        alert("Current there are no yyCrv to claim!!");
+    }
+};
+
 const uniDepositContract_restore = async function(unitedMintAddr, yyCrvTokenAddr, App) {
     const signer = App.provider.getSigner();
 
