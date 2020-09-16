@@ -93,7 +93,7 @@ async function main() {
     }
 
     const restoreWithAmount2 = async function (amount) {
-        return uniDepositContract_restore_amount(amount, unitedMintAddr2, deposit_yyCrv2, App);
+        return uniDepositContract_restore_amount(amount, unitedMintAddr2, deposit_yswUSD, App);
     }
     
 
