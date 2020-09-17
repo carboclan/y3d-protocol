@@ -27,7 +27,7 @@ async function deployToken(deployer, network, accounts) {
   //2.
   
 //  console.log('Deploy Pool');
- await deployer.deploy(mint); 
+// await deployer.deploy(mint); 
 
   
   // Put mining
