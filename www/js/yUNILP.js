@@ -24,7 +24,6 @@ async function main() {
   const yUNI_TOKEN = new ethers.Contract(yUNITokenAddr, YUNI_ABI, App.provider);
   const uNIBalance = await UNI_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
   const yUNIBalance = await yUNI_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
-  console.log('uNIBalance', uNIBalance, 'yUNIBalance', yUNIBalance)
   const withdrawFeeRatio = await yUNI_TOKEN.fee(App.YOUR_ADDRESS) / 10;
   const yUNITotalSupply = await yUNI_TOKEN.totalSupply() / 1e18;
   const yUNIPool = await yUNI_TOKEN.pool() / 1e18;
