@@ -20,6 +20,7 @@ async function main() {
   _print(`${stakingTokenTicker} Address: <a href="https://etherscan.io/address/${uNITokenAddr}#code">${uNITokenAddr}</a>`);
   _print(`${rewardTokenTicker} Address: <a href="https://etherscan.io/address/${yUNITokenAddr}#code">${yUNITokenAddr}</a> | <a href="https://www.diffchecker.com/5rWn2D7L">Diff</a>\n`);
 
+
   const UNI_TOKEN = new ethers.Contract(uNITokenAddr, UNI_ABI, App.provider);
   const yUNI_TOKEN = new ethers.Contract(yUNITokenAddr, YUNI_ABI, App.provider);
   const uNIBalance = await UNI_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
