@@ -9,7 +9,7 @@ async function main() {
 
   const uNITokenAddr = "0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852";
   const yUNITokenAddr = "0x59eC1d5869133a3fBd4421421E48BB94C5644a49";
-  const miningTokenAddr = "0x8D7Cd1F7c76393f26aa1fc699206e28501E8a220";
+  const miningTokenAddr = "0x6C3e4cb2E96B01F4b866965A91ed4437839A121a";
   const stakingTokenTicker = "Uniswap-ETH/USDT-LP";
   const rewardTokenTicker = "yUniswap-ETH/USDT-LP";
 
@@ -31,11 +31,11 @@ async function main() {
   const maxMiningRatio = 0; //await yUNI_TOKEN.maximum_mining_ratio();
   const minMiningRatio = 0; //await yUNI_TOKEN.minimum_mining_ratio();
 
-  // const Mining_TOKEN = new ethers.Contract(miningTokenAddr, ERC20_ABI, App.provider);
-  // const miningAmount = await Mining_TOKEN.balanceOf(yUNITokenAddr) / 1e18;
+  const Mining_TOKEN = new ethers.Contract(miningTokenAddr, ERC20_ABI, App.provider);
+  const miningAmount = await Mining_TOKEN.balanceOf(yUNITokenAddr) / 1e18;
 
-  // const yyCrvTotal = miningAmount + await UNI_TOKEN.balanceOf(yUNITokenAddr) / 1e18;
-  // const curMiningRatio = (miningAmount/yyCrvTotal*100).toFixed(2);
+  const yUNITotal = miningAmount + await UNI_TOKEN.balanceOf(yUNITokenAddr) / 1e18;
+  const curMiningRatio = (miningAmount/yUNITotal*100).toFixed(2);
 
 
   const stake = async function (amount) {
@@ -80,10 +80,10 @@ async function main() {
 
   _print(`Total ${stakingTokenTicker} staked: ${yUNIPool}`);
   _print(`Total ${rewardTokenTicker} supply: ${yUNITotalSupply}`);
-  _print(`${rewardTokenTicker} price: ${Math.round(yUNIPool/yUNITotalSupply*1.05*1000)/1000}$\n`);
+  // _print(`${rewardTokenTicker} price: ${Math.round(yUNIPool/yUNITotalSupply*1.05*1000)/1000}$\n`);
   
-  // _print(`Mining swUSD  : ${miningAmount}`);
-  // _print(`Mining ratio : ${miningAmount}/${yyCrvTotal} = ${curMiningRatio}%`);
+  _print(`Mining ${stakingTokenTicker} : ${miningAmount}`);
+  _print(`Mining ratio : ${miningAmount}/${yUNITotal} = ${curMiningRatio}%`);
   _print(`P3D ratio    : 5%`);
   _print(`\n`);
 
