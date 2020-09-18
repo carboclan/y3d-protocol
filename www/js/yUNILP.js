@@ -7,8 +7,8 @@ async function main() {
 
   printWarning();
 
-  const uNITokenAddr = "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984";
-  const yUNITokenAddr = "0x74867442D019c49B99a6e1ba7d7c65E41CB54235";
+  const uNITokenAddr = "0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852";
+  const yUNITokenAddr = "0x59eC1d5869133a3fBd4421421E48BB94C5644a49";
   const miningTokenAddr = "0x8D7Cd1F7c76393f26aa1fc699206e28501E8a220";
   const stakingTokenTicker = "UNI";
   const rewardTokenTicker = "yUNI";
@@ -20,9 +20,8 @@ async function main() {
   _print(`${stakingTokenTicker} Address: <a href="https://etherscan.io/address/${uNITokenAddr}#code">${uNITokenAddr}</a>`);
   _print(`${rewardTokenTicker} Address: <a href="https://etherscan.io/address/${yUNITokenAddr}#code">${yUNITokenAddr}</a> | <a href="https://www.diffchecker.com/5rWn2D7L">Diff</a>\n`);
 
-  const UNI_TOKEN = new ethers.Contract(uNITokenAddr, YCRV_ABI, App.provider);
-  const yUNI_TOKEN = new ethers.Contract(yUNITokenAddr, YYCRV_ABI, App.provider);
-  console.warn(await UNI_TOKEN.balanceOf(App.YOUR_ADDRESS))
+  const UNI_TOKEN = new ethers.Contract(uNITokenAddr, UNI_ABI, App.provider);
+  const yUNI_TOKEN = new ethers.Contract(yUNITokenAddr, YUNI_ABI, App.provider);
   const uNIBalance = await UNI_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
   const yUNIBalance = await yUNI_TOKEN.balanceOf(App.YOUR_ADDRESS) / 1e18;
   const withdrawFeeRatio = await yUNI_TOKEN.fee(App.YOUR_ADDRESS) / 10;
