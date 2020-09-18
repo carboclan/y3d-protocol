@@ -10,8 +10,8 @@ async function main() {
   const uNITokenAddr = "0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852";
   const yUNITokenAddr = "0x59eC1d5869133a3fBd4421421E48BB94C5644a49";
   const miningTokenAddr = "0x8D7Cd1F7c76393f26aa1fc699206e28501E8a220";
-  const stakingTokenTicker = "UNI";
-  const rewardTokenTicker = "yUNI";
+  const stakingTokenTicker = "Uniswap-ETH/USDT-LP";
+  const rewardTokenTicker = "yUniswap-ETH/USDT-LP";
 
   const App = await initEthers();
 
@@ -83,7 +83,7 @@ async function main() {
   
   // _print(`Mining swUSD  : ${miningAmount}`);
   // _print(`Mining ratio : ${miningAmount}/${yyCrvTotal} = ${curMiningRatio}%`);
-  _print(`P3D ratio    : 1%`);
+  _print(`P3D ratio    : 5%`);
   _print(`\n`);
 
   _print(`=== Basic Panel ===`);
